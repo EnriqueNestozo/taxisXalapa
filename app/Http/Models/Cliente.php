@@ -19,4 +19,8 @@ class Cliente extends Model
     public function registrosDiarios(){
         return $this->hasMany('App\Models\RegistroDiario','cliente_id');
     }
+
+    public function registrosRecurrentes(){
+        return $this->hasMany('App\Models\RegistroRecurrente','cliente_id');
+    }
 }
