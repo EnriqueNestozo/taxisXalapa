@@ -32,7 +32,8 @@ class CreateRegistrosRecurrentesTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('registros_recurrentes');
     }
 }

@@ -24,6 +24,7 @@ class CreateConductoresTable extends Migration
             $table->string('curp',30)->nullable();
             $table->string('rfc',20)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

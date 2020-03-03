@@ -15,9 +15,10 @@ class CreateUnidadesTable extends Migration
     {
         Schema::create('unidades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('conductor_id');
-            $table->foreign('conductor_id')->references('id')->on('conductores');
+            $table->string('placas',10)->nullable();
+            $table->string('numero',5)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,16 +21,15 @@ class CreateClientesTable extends Migration
             $table->string('telefono_fijo',10)->nullable();
             $table->string('celular',10)->nullable();
             $table->string('genero',1)->nullable();
-            $table->unsignedBigInteger('direccion_id');
-            $table->foreign('direccion_id')->references('id')->on('direcciones');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return voids
      */
     public function down()
     {

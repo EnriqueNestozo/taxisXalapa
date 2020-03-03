@@ -20,7 +20,10 @@ class CreateDireccionesTable extends Migration
             $table->string('numero',5);
             $table->string('referencia',250)->nullable();
             $table->string('localidad',200)->nullable();
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +34,7 @@ class CreateDireccionesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('direcciones');
     }
 }

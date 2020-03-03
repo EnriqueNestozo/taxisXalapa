@@ -15,7 +15,12 @@ class CreateConductoresUnidadesTable extends Migration
     {
         Schema::create('conductores_unidades', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('conductor_id');
+            $table->unsignedBigInteger('unidad_id');
+            $table->foreign('unidad_id')->references('id')->on('unidades');
+            $table->foreign('conductor_id')->references('id')->on('conductores');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +31,7 @@ class CreateConductoresUnidadesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('conductores_unidades');
     }
 }
