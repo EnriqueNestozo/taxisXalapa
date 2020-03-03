@@ -38,4 +38,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function registrosRecurrentes(){
+        return $this->hasMany('App\Models\RegistroRecurrente','user_id');
+    }
+
+    public function registrosDiarios(){
+        return $this->hasMany('App\Models\RegistroDiario','user_id');
+    }
 }

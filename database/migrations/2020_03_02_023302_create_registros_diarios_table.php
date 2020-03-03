@@ -18,8 +18,12 @@ class CreateRegistrosDiariosTable extends Migration
             $table->dateTime('hora');
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('direccion_id');
+            $table->unsignedBigInteger('unidad_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->foreign('direccion_id')->references('id')->on('direcciones');
+            $table->foreign('unidad_id')->references('id')->on('unidades');
             $table->timestamps();
             $table->softDeletes();
         });
