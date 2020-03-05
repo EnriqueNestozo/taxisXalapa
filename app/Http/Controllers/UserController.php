@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('client-credential');
+
+    }
     /**
      * Display a listing of the users
      *
@@ -83,5 +88,10 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+    }
+
+    public function getUserData(){
+        $user = User::all();
+        return response()->json($user);
     }
 }
