@@ -93,7 +93,7 @@
 @push('js')
   <script>
     $(document).ready(function(){
-      $.get("{{route('user.info')}}", function(data, status){
+      $.post("{{route('auth.verification')}}", function(data, status){
         console.log(data[0]);
       }).fail(function(xhr, textStatus, errorThrown){
         alert(xhr.responseText);
