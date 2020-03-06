@@ -22,4 +22,5 @@ Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit
 Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 Route::get('user-info','UserController@getUserData')->name('user.info');
+
 Route::post('authenticate','Auth\AuthAPIController@authenticate')->name('auth.verification');
