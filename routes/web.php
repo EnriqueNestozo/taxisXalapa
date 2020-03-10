@@ -49,10 +49,10 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 // });
 
 // Route::group(['middleware' => 'auth'], function () {
-// 	Route::resource('user', 'UserController', ['except' => ['show']]);
-// 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-// 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-// 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+	Route::resource('user', 'UserController', ['except' => ['show']]);
+	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
+	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 // });
 
 Auth::routes();
@@ -60,9 +60,21 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('table-list', function () {
-		return view('pages.table_list');
-	})->name('table');
+	Route::get('listado-unidades', function () {
+		return view('pages.listado_unidades');
+	})->name('listado-unidades');
+
+	Route::get('listado-diarios', function () {
+		return view('pages.listado_registros_diarios');
+	})->name('listado-diarios');
+
+	Route::get('listado-recurrentes', function () {
+		return view('pages.listado_registros_recurrentes');
+	})->name('listado-recurrentes');
+	
+	Route::get('listado-clientes', function () {
+		return view('pages.listado_clientes');
+	})->name('listado-clientes');
 
 	Route::get('typography', function () {
 		return view('pages.typography');

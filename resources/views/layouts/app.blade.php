@@ -28,7 +28,8 @@
             @include('layouts.page_templates.guest')
         @endguest
         
-        <div class="fixed-plugin">
+        <!-- Engrane de configuracion -->
+         <!-- <div class="fixed-plugin">
           <div class="dropdown show-dropdown">
             <a href="#" data-toggle="dropdown">
               <i class="fa fa-cog fa-2x"> </i>
@@ -71,14 +72,14 @@
               </li>
               <li class="button-container">
                 <a href="https://www.creative-tim.com/product/material-dashboard-laravel" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-              </li>
+              </li> -->
               <!-- <li class="header-title">Want more components?</li>
                   <li class="button-container">
                       <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
                         Get the pro version
                       </a>
                   </li> -->
-              <li class="button-container">
+              <!-- <li class="button-container">
                 <a href="https://material-dashboard-laravel.creative-tim.com/docs/getting-started/laravel-setup.html" target="_blank" class="btn btn-default btn-block">
                   View Documentation
                 </a>
@@ -100,7 +101,7 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div>  -->
         <!--   Core JS Files   -->
         <script src="{!!url('material/js/core/jquery.min.js')!!}"></script>
         

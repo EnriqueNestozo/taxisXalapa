@@ -39,7 +39,7 @@ class ClienteController extends Controller
 
     public function listClients()
     {
-        $listadoClientes = Cliente::findAll();
+        $listadoClientes = Cliente::all();
         return response()->json($listadoClientes,201);
     }
 

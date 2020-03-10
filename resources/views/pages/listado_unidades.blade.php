@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'table', 'titlePage' => __('Table List')])
+@extends('layouts.app', ['activePage' => 'listado_unidades', 'titlePage' => __('Unidades')])
 
 @section('content')
 <div class="content">
@@ -7,8 +7,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">Simple Table</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
+            <h4 class="card-title ">Unidades registradas</h4>
+            <p class="card-category">Listado de unidades</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">

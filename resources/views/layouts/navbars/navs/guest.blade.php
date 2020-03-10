@@ -10,7 +10,7 @@
       <span class="navbar-toggler-icon icon-bar"></span>
       <span class="navbar-toggler-icon icon-bar"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end">
+    <!-- <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a href="{{ route('home') }}" class="nav-link">
@@ -33,7 +33,7 @@
           </a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </nav>
 <!-- End Navbar -->

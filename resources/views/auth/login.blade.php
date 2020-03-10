@@ -59,7 +59,7 @@
             </div>
             <div class="form-check mr-auto ml-3 mt-3">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember me') }}
+                <input class="form-check-input" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Recuerdame') }}
                 <span class="form-check-sign">
                   <span class="check"></span>
                 </span>
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="card-footer justify-content-center">
-            <button type="submit" class="btn btn-primary btn-link btn-lg">{{ __('Lets Go') }}</button>
+            <button type="submit" class="btn btn-primary btn-link btn-lg">{{ __('Ingresar') }}</button>
           </div>
         </div>
       </form>
@@ -75,13 +75,13 @@
         <div class="col-6">
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="text-light">
-                    <small>{{ __('Forgot password?') }}</small>
+                    <small>{{ __('Olvidaste tu contraseña?') }}</small>
                 </a>
             @endif
         </div>
         <div class="col-6 text-right">
             <a href="{{ route('register') }}" class="text-light">
-                <small>{{ __('Create new account') }}</small>
+                <small>{{ __('Crea una nueva cuenta') }}</small>
             </a>
         </div>
       </div>
@@ -93,7 +93,7 @@
 @push('js')
   <script>
     $(document).ready(function(){
-      $.post("{{route('auth.verification')}}", function(data, status){
+      $.post("{{route('api.auth.verification')}}", function(data, status){
         console.log(data[0]);
       }).fail(function(xhr, textStatus, errorThrown){
         alert(xhr.responseText);
