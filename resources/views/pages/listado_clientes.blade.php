@@ -83,11 +83,14 @@
 <script>
   $(document).ready(function() {
     cargarListado();
+    
     // $('#listado').DataTable();
   } );
 
   function cargarListado(){
-    var token = 'dd16ddd35df118b102b99f1e99c7a553a2ffd3ff4e9a3df2ddc01c6389d947cd147ebfb5c936d17b';
+    var data = sessionStorage.getItem('token');
+    console.log( data );
+    // var token = 'aab1846e14a2a7d487234332faa9431fdf01e9e9635858f9a815e9815080e5f531c360a9f08af152';
     $('#listado').DataTable({
       processing: true,
       serverSide: true,
@@ -100,8 +103,8 @@
         type: "GET",
         dataType: 'json',
         headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+ token,
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+data,
         }
       },
       columns: [

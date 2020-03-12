@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 //Api para clientes
 Route::get('clientes/{idCliente}','ClienteController@show');
-Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list');
+Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list')->middleware('auth:api');
 Route::post('clientes','ClienteController@create');
 Route::put('clientes/update','ClienteController@update');
 Route::delete('clientes/delete','ClienteController@delete');
@@ -35,9 +35,9 @@ Route::put('direcciones/update','DireccionController@update');
 Route::delete('direcciones/delete','DireccionController@delete');
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route::resource('user', 'UserController', ['except' => ['show']]);
 // Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
@@ -45,4 +45,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 // Route::get('user-info','UserController@getUserData')->name('user.info');
 
-Route::post('authenticate','Auth\AuthAPIController@authenticate')->name('api.auth.verification');
+// Route::post('authenticate','Auth\AuthAPIController@authenticate')->name('api.auth.verification');
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'Auth\AuthAPIController@login')->name('api.login');
+    Route::post('signup', 'Auth\AuthAPIController@signup')->name('api.signup');
+  
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('logout', 'Auth\AuthAPIController@logout');
+        Route::get('user', 'Auth\AuthAPIController@user');
+    });
+});

@@ -152,7 +152,7 @@
         <script>
           //Variables globales
           var routeBase			    = '{!! url('') !!}';
-
+  
         </script>
         @stack('js')
     </body>

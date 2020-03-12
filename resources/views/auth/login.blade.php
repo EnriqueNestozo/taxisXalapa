@@ -34,7 +34,7 @@
                     <i class="material-icons">email</i>
                   </span>
                 </div>
-                <input type="email" name="email" class="form-control" placeholder="{{ __('Email...') }}" value="{{ old('email', 'admin@material.com') }}" required>
+                <input id="email" type="email" name="email" class="form-control" placeholder="{{ __('Email...') }}" value="{{ old('email', 'admin@material.com') }}" required>
               </div>
               @if ($errors->has('email'))
                 <div id="email-error" class="error text-danger pl-3" for="email" style="display: block;">
@@ -93,10 +93,29 @@
 @push('js')
   <script>
     $(document).ready(function(){
-      $.post("{{route('api.auth.verification')}}", function(data, status){
-        console.log(data[0]);
-      }).fail(function(xhr, textStatus, errorThrown){
-        alert(xhr.responseText);
+
+    });
+
+    $("form").on('submit', function(e){
+      e.preventDefault();
+
+      $.ajax({
+        url: "{{route('api.login')}}",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          email: $('#email').val(),
+          password: $("#password").val()
+        },
+        success: function(data) {
+          sessionStorage.setItem('token', String(data.access_token));
+          console.log(sessionStorage.getItem('token'));
+          window.location.href = "{{route('home')}}"
+        },
+        error: function(data){
+          console.log(data);
+          alert(data);
+        }
       });
     });
   </script>
