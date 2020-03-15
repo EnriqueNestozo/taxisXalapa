@@ -55,7 +55,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 // });
 
-Auth::routes();
+// Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 

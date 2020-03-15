@@ -8,8 +8,7 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
       <form class="form" method="POST" action="{{ route('login') }}">
-        @csrf
-
+        <input type="hidden" id="csrf" value="{!! csrf_token() !!}">
         <div class="card card-login card-hidden mb-3">
           <div class="card-header card-header-primary text-center">
             <h4 class="card-title"><strong>Inicio de sesión</strong></h4>
@@ -98,7 +97,7 @@
 
     $("form").on('submit', function(e){
       e.preventDefault();
-
+      console.log($('#csrf').val());
       $.ajax({
         url: "{{route('api.login')}}",
         type: 'POST',
@@ -109,12 +108,25 @@
         },
         success: function(data) {
           sessionStorage.setItem('token', String(data.access_token));
-          console.log(sessionStorage.getItem('token'));
-          window.location.href = "{{route('home')}}"
+          $.ajax({
+            url: "{{route('login')}}",
+            type: 'POST',
+            dataType: 'json',
+            headers:{
+              'X-CSRF-TOKEN': $('#csrf').val()
+            },
+            data: {
+              email: $('#email').val(),
+              password: $("#password").val()
+            },
+            complete: function(data){
+              window.location.href = "{{route('home')}}"
+            }
+      });
         },
         error: function(data){
           console.log(data);
-          alert(data);
+          alert('Usuario y/o correo incorrectos');
         }
       });
     });

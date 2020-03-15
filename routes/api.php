@@ -21,18 +21,18 @@ Route::put('clientes/update','ClienteController@update');
 Route::delete('clientes/delete','ClienteController@delete');
 
 //Api para unidades
-Route::get('unidades/{idUnidad}','UnidadesController@show');
-Route::get('unidades-list','UnidadesController@listUnits');
-Route::post('unidades','UnidadesController@create');
-Route::put('unidades/update','UnidadesController@update');
-Route::delete('unidades/delete','UnidadesController@delete');
+// Route::get('unidades/{idUnidad}','UnidadesController@show');
+// Route::get('unidades-list','UnidadesController@listUnits');
+// Route::post('unidades','UnidadesController@create');
+// Route::put('unidades/update','UnidadesController@update');
+// Route::delete('unidades/delete','UnidadesController@delete');
 
 //Api para direcciones
-Route::get('direcciones/{idDireccion}','DireccionController@show');
-Route::get('direcciones-list','DireccionController@listClients');
-Route::post('direcciones','DireccionController@create');
-Route::put('direcciones/update','DireccionController@update');
-Route::delete('direcciones/delete','DireccionController@delete');
+// Route::get('direcciones/{idDireccion}','DireccionController@show');
+// Route::get('direcciones-list','DireccionController@listClients');
+// Route::post('direcciones','DireccionController@create');
+// Route::put('direcciones/update','DireccionController@update');
+// Route::delete('direcciones/delete','DireccionController@delete');
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
