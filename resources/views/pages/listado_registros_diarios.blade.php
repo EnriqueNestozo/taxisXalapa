@@ -7,267 +7,23 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
+              <button class="btn btn-primary pull-right">Agregar registro</button>
             <h4 class="card-title ">Registros diarios</h4>
             <p class="card-category"> Listado de registros diarios</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th>
-                    Salary
-                  </th>
+              <table id="listado" class="table-hover"  style="width:100%">
+                <thead>
+                  <th>N. Registro</th>
+                  <th>Hora</th>
+                  <th>Persona</th>
+                  <th>Dirección</th>
+                  <th>Clave</th>
+                  <th>Acciones</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-primary">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      2
-                    </td>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-primary">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      3
-                    </td>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-primary">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      4
-                    </td>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-primary">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      5
-                    </td>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-primary">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      6
-                    </td>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-primary">
-                      $78,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="card card-plain">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title mt-0"> Table on Plain Background</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="">
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th>
-                    Salary
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td>
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      2
-                    </td>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td>
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      3
-                    </td>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td>
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      4
-                    </td>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td>
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      5
-                    </td>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td>
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      6
-                    </td>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td>
-                      $78,615
-                    </td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>
@@ -278,3 +34,48 @@
   </div>
 </div>
 @endsection
+@push('js')
+<script>
+  $(document).ready(function() {
+    cargarListado();
+  } );
+
+  function cargarListado(){
+    var data = sessionStorage.getItem('token');
+    // var token = 'aab1846e14a2a7d487234332faa9431fdf01e9e9635858f9a815e9815080e5f531c360a9f08af152';
+    $('#listado').DataTable({
+      processing: true,
+      serverSide: true,
+      searching: true,
+      language: {
+        url: routeBase+'/DataTables/DataTable_Spanish.json'
+      },
+      ajax: {
+        url: "{{route('api.registros.diarios.list')}}",
+        type: "GET",
+        dataType: 'json',
+        headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+data,
+        }
+      },
+      columns: [
+          {data: 'num_registro', name: 'num_registro'},
+          {data: 'hora', name: 'hora'},
+          {data: "persona", name: 'persona'},
+          {data: "direccion", name: 'direccion'},
+          {data: 'claveTaxi', name: 'claveTaxi'},
+          {data: 'action', name:'action'}
+      ]
+    });
+  }
+
+  function editarRegistro(id_registro){
+    console.log(id_registro);
+  }
+
+  function eliminarRegistro(id_registro){
+    console.log(id_registro);
+  }
+</script>
+@endpush
