@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-              <button class="btn btn-primary pull-right">Agregar registro</button>
+              <button class="btn btn-primary pull-right" onClick="desplegarModalRegistro()">Agregar registro</button>
             <h4 class="card-title ">Registros diarios</h4>
             <p class="card-category"> Listado de registros diarios</p>
           </div>
@@ -33,11 +33,13 @@
     </div>
   </div>
 </div>
+@include('modals.modalRegistroDiario')
 @endsection
 @push('js')
 <script>
   $(document).ready(function() {
     cargarListado();
+    $('.js-example-basic-single').select2();
   } );
 
   function cargarListado(){
@@ -76,6 +78,11 @@
 
   function eliminarRegistro(id_registro){
     console.log(id_registro);
+  }
+
+  function desplegarModalRegistro(){
+    $('#modalRegistroDiario').modal("show");
+    console.log("se muestra");
   }
 </script>
 @endpush
