@@ -13,10 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+//Api para registros diarios
+Route::post('registrosDiarios','RegistrosDiariosController@create')->name('api.registros.diarios.create')->middleware('auth:api');
+Route::get('registros-diarios-list','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
+
 //Api para clientes
 Route::get('clientes/{idCliente}','ClienteController@show');
 Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list')->middleware('auth:api');
-Route::get('registros-diarios-list','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
 Route::post('clientes','ClienteController@create');
 Route::put('clientes/update','ClienteController@update');
 Route::delete('clientes/delete','ClienteController@delete');

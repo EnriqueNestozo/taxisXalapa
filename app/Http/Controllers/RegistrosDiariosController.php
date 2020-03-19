@@ -21,4 +21,8 @@ class RegistrosDiariosController extends Controller
                     ->make(true);
         return $tabla;
     }
+
+    public function create(Request $request){
+        return response()->json($request,201);
+    }
 }
