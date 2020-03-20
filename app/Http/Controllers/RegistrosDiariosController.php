@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Models\RegistroDiario;
+use App\Http\Models\Cliente;
+use App\Http\Models\Direccion;
 use DataTables;
+use DB;
 
 class RegistrosDiariosController extends Controller
 {
@@ -23,6 +26,42 @@ class RegistrosDiariosController extends Controller
     }
 
     public function create(Request $request){
-        return response()->json($request,201);
+        try{
+            DB::beginTransaction();
+            $registroDiario = new RegistroDiario();
+            $registroDiario->hora = $request->hora;
+            if($request->personaSelect !=null){
+                $registroDiario->cliente_id = $request->personaSelect;
+            }else{
+                $cliente = new Cliente();
+                $cliente->nombre = $request->nombre;
+                $cliente->telefono_fijo = $request->telefono;
+                $cliente->celular = $request->celular;
+                $cliente->save();
+                $registroDiario->cliente_id = $cliente->id;
+            }
+            if($request->direccionSelect !=null){
+                $registroDiario->cliente_id = $request->direccionSelect;
+            }else{
+                $direccion = new Direccion();
+                //OBSERVACION: DE MOMENTO SE GUARDA TODO EN CALLE, FALTA VER SI SE VA A SEPARAR COMO ESTA EN LA BD, si todo va en calle hay que hacer colonia y numero nullable
+                $direccion->calle = $request->direccion;
+                $direccion->referencia = $request->referencia;
+                // $direccion->entre_calles = $request->entre_calles;
+                $direccion->save();
+                $registroDiario->direccion_id = $direccion->id;
+            }
+            //Hay que hacer que pueda guardarse nulo en bd
+            $registroDiario->unidad_id = $request->clave;
+            $registroDiario->user_id = 1;
+            $registroDiario->save();
+            DB::commit();
+            return response()->json($request,201);
+        }catch (\PDOException $e) {
+            DB::rollBack();
+            return response()->json($e,500);
+        }
+        
+        
     }
 }

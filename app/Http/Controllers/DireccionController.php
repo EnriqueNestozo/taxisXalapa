@@ -37,9 +37,9 @@ class DireccionController extends Controller
         return response()->json($direccion,201);
     }
 
-    public function listClients($idCliente)
+    public function getDirecciones($idCliente)
     {
-        $listadoDirecciones = Direccion::all();
+        $listadoDirecciones = Direccion::where('cliente_id',$idCliente)->get();
         return response()->json($listadoDirecciones,201);
     }
 }

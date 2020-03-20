@@ -54,4 +54,10 @@ class ClienteController extends Controller
         // return response()->json($listadoClientes,201);
     }
 
+    public function getClientes()
+    {
+        $listadoClientes = Cliente::all();
+        return response()->json($listadoClientes,201);
+    }
+
 }

@@ -37,7 +37,7 @@ class UnidadController extends Controller
         return response()->json($unidad,201);
     }
 
-    public function listClients()
+    public function getUnidades()
     {
         $listadounidades = Unidad::all();
         return response()->json($listadounidades,201);

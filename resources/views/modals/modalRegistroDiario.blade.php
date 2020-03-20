@@ -20,19 +20,18 @@
             <div class="form-group" id="personaDiv">
               <label for="persona" class="col-form-label">Persona:</label>
               <br>
-              <select class="clave" id="personaSelect" name="personaSelect">
-                  <option value="-1">Seleccione una persona...</option>
-                  <option value="0">María del carmen sanchez</option>
-                  <option value="1">José Angel Perez Cruz</option>
-                  <option value="2">José Miguel Velez</option>
-                  <option value="3">Angel Ochoa</option>
+              <select class="clave" id="personaSelect" name="personaSelect" style="width: 100%">
               </select>
               <input type="text" class="form-control" id="persona" maxlength="100" placeholder="Sino existe escriba el nombre" name="persona">
               <span id="persona-error" class="error text-danger" for="persona" style="display:none">Campo faltante</span>
             </div>
             <div class="form-group" id="direccionDiv">
               <label for="direccion" class="col-form-label">Dirección:</label>
-              <input type="text" class="form-control" id="direccion" maxlength="100" name="direccion">
+              <br>
+              <select class="clave" id="direccionSelect" name="direccionSelect" style="width: 100%">
+                <option value="">Seleccione una dirección...</option>
+              </select>
+              <input type="text" class="form-control" id="direccion" maxlength="100" name="direccion" placeholder="Sino escriba la dirección">
               <span id="direccion-error" class="error text-danger" for="direccion" style="display:none">Campo faltante</span>
             </div>
             <div class="form-group" id="entre_callesDiv">
@@ -57,14 +56,8 @@
             </div>
             <div class="form-group" id="claveDiv">
               <label for="clave" class="col-form-label">Clave:</label>
-              <br>
-              <select class="clave" id="clave" name="clave">
-                  <option value="-1">Seleccione una clave...</option>
-                  <option value="AL">sffdfs423</option>
-                  <option value="WY">dfsdf2346</option>
+              <select class="clave" id="clave" name="clave"  style="width: 100%">
               </select>
-              <br>
-              <span id="clave-error" class="error text-danger" for="clave" style="display:none">Campo faltante</span>
             </div>
 
           </div>

@@ -20,13 +20,15 @@ Route::get('registros-diarios-list','RegistrosDiariosController@listRecords')->n
 //Api para clientes
 Route::get('clientes/{idCliente}','ClienteController@show');
 Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list')->middleware('auth:api');
+Route::get('get-clientes','ClienteController@getClientes')->name('api.get.clientes')->middleware('auth:api');
 Route::post('clientes','ClienteController@create');
 Route::put('clientes/update','ClienteController@update');
 Route::delete('clientes/delete','ClienteController@delete');
 
 //Api para unidades
 // Route::get('unidades/{idUnidad}','UnidadesController@show');
-// Route::get('unidades-list','UnidadesController@listUnits');
+Route::get('unidades-list','UnidadController@listUnits')->name('api.unidades.list')->middleware('auth:api');
+Route::get('get-unidades','UnidadController@getUnidades')->name('api.get.unidades')->middleware('auth:api');
 // Route::post('unidades','UnidadesController@create');
 // Route::put('unidades/update','UnidadesController@update');
 // Route::delete('unidades/delete','UnidadesController@delete');
@@ -34,6 +36,7 @@ Route::delete('clientes/delete','ClienteController@delete');
 //Api para direcciones
 // Route::get('direcciones/{idDireccion}','DireccionController@show');
 // Route::get('direcciones-list','DireccionController@listClients');
+Route::get('get-direcciones/{idCliente}','DireccionController@getDirecciones')->name('api.get.direcciones')->middleware('auth:api');
 // Route::post('direcciones','DireccionController@create');
 // Route::put('direcciones/update','DireccionController@update');
 // Route::delete('direcciones/delete','DireccionController@delete');
