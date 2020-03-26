@@ -13,14 +13,14 @@ class Direccion extends Model
     ];
 
     public function cliente(){
-        return $this->belongsTo('App\Models\Cliente','cliente_id');
+        return $this->belongsTo('App\Http\Models\Cliente','cliente_id');
     }
 
     public function registrosDiarios(){
-        return $this->hasMany('App\Models\RegistroDiario','direccion_id');
+        return $this->hasMany('App\Http\Models\RegistroDiario','direccion_id');
     }
 
     public function registrosRecurrentes(){
-        return $this->hasMany('App\Models\RegistroRecurrente','direccion_id');
+        return $this->hasMany('App\Http\Models\RegistroRecurrente','direccion_id');
     }
 }

@@ -13,14 +13,14 @@ class Cliente extends Model
     ];
 
     public function direcciones(){
-        return $this->hasMany('App\Models\Direccion','cliente_id');
+        return $this->hasMany('App\Http\Models\Direccion','cliente_id');
     }
 
     public function registrosDiarios(){
-        return $this->hasMany('App\Models\RegistroDiario','cliente_id');
+        return $this->hasMany('App\Http\Models\RegistroDiario','cliente_id');
     }
 
     public function registrosRecurrentes(){
-        return $this->hasMany('App\Models\RegistroRecurrente','cliente_id');
+        return $this->hasMany('App\Http\Models\RegistroRecurrente','cliente_id');
     }
 }

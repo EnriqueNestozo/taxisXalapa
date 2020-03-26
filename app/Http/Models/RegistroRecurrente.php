@@ -13,18 +13,18 @@ class RegistroRecurrente extends Model
     ];
 
     public function cliente(){
-        return $this->belongsTo('App\Models\Cliente','cliente_id');
+        return $this->belongsTo('App\Http\Models\Cliente','cliente_id');
     }
 
     public function direccion(){
-        return $this->belongsTo('App\Models\Direccion','direccion_id');
+        return $this->belongsTo('App\Http\Models\Direccion','direccion_id');
     }
 
     public function unidad(){
-        return $this->belongsTo('App\Models\Unidad','unidad_id');
+        return $this->belongsTo('App\Http\Models\Unidad','unidad_id');
     }
 
     public function user(){
-        return $this->belongsTo('App\Models\User','user_id');
+        return $this->belongsTo('App\Http\Models\User','user_id');
     }
 }

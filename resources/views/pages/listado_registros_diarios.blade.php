@@ -54,6 +54,12 @@
       if( $('#persona').val() !='' || $('#personaSelect').val() != '' ){
         $('#personaDiv').removeClass('has-danger');
         $('#persona-error').hide();
+        if($('#persona').val() !=''){
+          $('#personaSelect').prop('disabled',true);
+        }
+      }else{
+        $('#personaSelect').prop('disabled',false);
+        $('#persona').prop('disabled',false);
       }
     });
 
@@ -63,7 +69,15 @@
         $('#persona-error').hide();
         if( $('#personaSelect').val() !='' ){
           obtenerListadoDirecciones();
+          $('#persona').prop('disabled',true);
         }
+      }else{
+        $('#personaSelect').prop('disabled',false);
+        $('#persona').prop('disabled',false);
+        $('#direccionSelect').empty();
+        html = '';
+        html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
+        $('#direccionSelect').append(html);
       }
     });
 
@@ -111,6 +125,7 @@
       processing: true,
       serverSide: true,
       searching: true,
+      destroy: true,
       language: {
         url: routeBase+'/DataTables/DataTable_Spanish.json'
       },
@@ -124,11 +139,11 @@
         }
       },
       columns: [
-          {data: 'num_registro', name: 'num_registro'},
+          {data: 'id', name: 'id'},
           {data: 'hora', name: 'hora'},
-          {data: "persona", name: 'persona'},
-          {data: "direccion", name: 'direccion'},
-          {data: 'claveTaxi', name: 'claveTaxi'},
+          {data: "cliente.nombre", name: 'cliente.nombre'},
+          {data: "direccion.calle", name: 'direccion.calle'},
+          {data: 'unidad.numero_economico', name: 'unidad.numero_economico', "defaultContent":""},
           {data: 'action', name:'action'}
       ]
     });
@@ -170,12 +185,10 @@
           'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-          console.log();
           $('#personaSelect').empty();
           html = '';
           html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
           for (let index = 0; index < result.length; index++) {
-            console.log("a",result[index]);
             html += '<option ';
             html += ' value="'+result[index].id+'" ';
             html += '>'+result[index].nombre+'</option>';
@@ -190,21 +203,22 @@
 
   function obtenerListadoDirecciones(){
     var data = sessionStorage.getItem('token');
+    var personaid = $('#personaSelect').val();
+    $('#direccionSelect').empty();
     $.get({
-        url: "{{route('api.get.direcciones',"+ $('#personaSelect').val() +" )}}",
-        dataType: 'json',
+        url: routeBase+"/api/get-direcciones/"+personaid,
+        dataType: 'json',   
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer '+data,
         },
       success: function( result ) {
-        $('#direccionSelect').empty();
         html = '';
         html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
         for (let index = 0; index < result.length; index++) {
           html += '<option ';
           html += ' value="'+result[index].id+'" ';
-          html += '>'+result[index].nombre+'</option>';
+          html += '>'+result[index].calle+'</option>';
         }
         $('#direccionSelect').append(html);
       },
@@ -228,6 +242,7 @@
   }
 
   function registrarViaje(){
+    console.log("registra");
     if(validarDatos() == 0 ){
       var data = sessionStorage.getItem('token');
       $.post({
@@ -239,14 +254,22 @@
           'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-          console.log(result);
           $("#registroDiarioBtn").html("Registrar");
           $("#registroDiarioBtn").prop('disabled', false);
+          $('#registroDiarioForm').trigger("reset");
+          $('#modalRegistroDiario').modal('hide');
+          console.log("success registro");
+          cargarListado();
+          obtenerListadoPersonas();
+          $('#personaSelect').prop('disabled',false);
+          $('#persona').prop('disabled',false);
+          md.showNotification('bottom','right','success','Registro creado correctamente');
         },
         error: function(result){
           console.log(result);
           $("#registroDiarioBtn").html("Registrar");
           $("#registroDiarioBtn").prop('disabled', false);
+          md.showNotification('bottom','right','danger','Ha ocurrido un error al crear el registro');
         }
       });
     }else{

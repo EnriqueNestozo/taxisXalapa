@@ -40,10 +40,10 @@ class User extends Authenticatable
     ];
 
     public function registrosRecurrentes(){
-        return $this->hasMany('App\Models\RegistroRecurrente','user_id');
+        return $this->hasMany('App\Http\Models\RegistroRecurrente','user_id');
     }
 
     public function registrosDiarios(){
-        return $this->hasMany('App\Models\RegistroDiario','user_id');
+        return $this->hasMany('App\Http\Models\RegistroDiario','user_id');
     }
 }

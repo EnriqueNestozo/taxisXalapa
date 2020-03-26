@@ -11,17 +11,18 @@ use DB;
 
 class RegistrosDiariosController extends Controller
 {
-    public function listRecords(){
-        $listadoRegistros = RegistroDiario::all();
+    public function listRecords(){  
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion')->get();
+        
         $tabla = Datatables::of($listadoRegistros)
-                    ->addColumn('action',function($fila){
-                        $accion = null;
-                        $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Registro' onClick='editarRegistro(".$fila->id.")'><i class='material-icons'>edit</i></button>";
-                        $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
-                        return $accion;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+            ->addColumn('action',function($fila){
+                $accion = null;
+                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Registro' onClick='editarRegistro(".$fila->id.")'><i class='material-icons'>edit</i></button>";
+                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                return $accion;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         return $tabla;
     }
 
@@ -31,10 +32,11 @@ class RegistrosDiariosController extends Controller
             $registroDiario = new RegistroDiario();
             $registroDiario->hora = $request->hora;
             if($request->personaSelect !=null){
+                $cliente = Cliente::find($request->personaSelect);
                 $registroDiario->cliente_id = $request->personaSelect;
             }else{
                 $cliente = new Cliente();
-                $cliente->nombre = $request->nombre;
+                $cliente->nombre = $request->persona;
                 $cliente->telefono_fijo = $request->telefono;
                 $cliente->celular = $request->celular;
                 $cliente->save();
@@ -47,6 +49,7 @@ class RegistrosDiariosController extends Controller
                 //OBSERVACION: DE MOMENTO SE GUARDA TODO EN CALLE, FALTA VER SI SE VA A SEPARAR COMO ESTA EN LA BD, si todo va en calle hay que hacer colonia y numero nullable
                 $direccion->calle = $request->direccion;
                 $direccion->referencia = $request->referencia;
+                $direccion->cliente_id = $cliente->id;  //AQUI TRUENA, porque el cliente
                 // $direccion->entre_calles = $request->entre_calles;
                 $direccion->save();
                 $registroDiario->direccion_id = $direccion->id;
