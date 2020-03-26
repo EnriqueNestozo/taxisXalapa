@@ -29,6 +29,8 @@ class RegistrosDiariosController extends Controller
     public function create(Request $request){
         try{
             DB::beginTransaction();
+            $cliente = null;
+            $direccion = null;
             $registroDiario = new RegistroDiario();
             $registroDiario->hora = $request->hora;
             if($request->personaSelect !=null){
@@ -42,8 +44,9 @@ class RegistrosDiariosController extends Controller
                 $cliente->save();
                 $registroDiario->cliente_id = $cliente->id;
             }
+            // dd($registroDiario);
             if($request->direccionSelect !=null){
-                $registroDiario->cliente_id = $request->direccionSelect;
+                $registroDiario->direccion_id = $request->direccionSelect;
             }else{
                 $direccion = new Direccion();
                 //OBSERVACION: DE MOMENTO SE GUARDA TODO EN CALLE, FALTA VER SI SE VA A SEPARAR COMO ESTA EN LA BD, si todo va en calle hay que hacer colonia y numero nullable
