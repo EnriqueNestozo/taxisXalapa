@@ -16,13 +16,14 @@ use Illuminate\Http\Request;
 //Api para registros diarios
 Route::post('registrosDiarios','RegistrosDiariosController@create')->name('api.registros.diarios.create')->middleware('auth:api');
 Route::get('registros-diarios-list','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
-
+Route::get('registros-diarios/{idRegistro}','RegistrosDiariosController@show')->name('api.get.registro')->middleware('auth:api');
+Route::post('registros-diarios-delete','RegistrosDiariosController@delete')->name('api.delete.registro')->middleware('auth:api');
 //Api para clientes
-Route::get('clientes/{idCliente}','ClienteController@show');
+Route::get('clientes/{idCliente}','ClienteController@show')->name('api.get.cliente')->middleware('auth:api');
 Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list')->middleware('auth:api');
 Route::get('get-clientes','ClienteController@getClientes')->name('api.get.clientes')->middleware('auth:api');
 Route::post('clientes','ClienteController@create');
-Route::put('clientes/update','ClienteController@update');
+Route::put('clientes-update','ClienteController@update')->name('api.update.cliente')->middleware('auth:api');
 Route::delete('clientes/delete','ClienteController@delete');
 
 //Api para unidades

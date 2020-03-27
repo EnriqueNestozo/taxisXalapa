@@ -11,6 +11,8 @@
         <form id="registroDiarioForm">
         <div class="row">
           <div class="col-xls-5 col-sm-5 col-md-5">
+            <input type="text" style="display:none" id="idRegistro" name="idRegistro">
+            <input type="text" style="display:none" id="idCliente" name="idCliente">
             <div class="form-group" id="horaDiv">
                 <label for="hora" class="col-form-label">Hora:</label>
                 <br>
@@ -37,12 +39,12 @@
             <div class="form-group" id="entre_callesDiv">
               <label for="entre_calles" class="col-form-label">Entre calles:</label>
               <input type="text" class="form-control" id="entre_calles" maxlength="100" name="entre_calles">
-              <span id="entre_calle-error" class="error text-danger" for="entre_calles" style="display:none">Campo faltante</span>
+              <!-- <span id="entre_calle-error" class="error text-danger" for="entre_calles" style="display:none">Campo faltante</span> -->
             </div>
             <div class="form-group" id="referenciaDiv">
               <label for="referencia" class="col-form-label">Referencia:</label>
               <input type="text" class="form-control" id="referencia" maxlength="100" name="referencia">
-              <span id="referencia-error" class="error text-danger" for="referencia" style="display:none">Campo faltante</span>
+              <!-- <span id="referencia-error" class="error text-danger" for="referencia" style="display:none">Campo faltante</span> -->
             </div>
             <div class="form-group" id="telefonoDiv">
               <label for="telefono" class="col-form-label">Teléfono:</label>

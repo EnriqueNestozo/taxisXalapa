@@ -123,6 +123,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/js/i18n/defaults-es_ES.min.js"></script>
         <!--  Plugin for select2 -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+        <!-- Plugin for Mask -->
+        <script src="{{asset('js')}}/jquery.mask.js"></script>
         <!-- Forms Validations Plugin -->
         <script src="{{ asset('material') }}/js/plugins/jquery.validate.min.js"></script>
         <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
