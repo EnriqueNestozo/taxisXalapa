@@ -13,7 +13,7 @@ use DB;
 class RegistrosDiariosController extends Controller
 {
     public function listRecords(){  
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion')->get();
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion','user')->get();
         
         $tabla = Datatables::of($listadoRegistros)
             ->addColumn('action',function($fila){
@@ -58,13 +58,13 @@ class RegistrosDiariosController extends Controller
                 $direccion->calle = $request->direccion;
                 $direccion->referencia = ($request->referencia)? $request->referencia : '';
                 $direccion->cliente_id = $cliente->id;  //AQUI TRUENA, porque el cliente
-                // $direccion->entre_calles = ($request->entre_calles)? $request->entre_calles : '';
+                $direccion->entre_calles = ($request->entre_calles)? $request->entre_calles : '';
                 $direccion->save();
                 $registroDiario->direccion_id = $direccion->id;
             }
             //Hay que hacer que pueda guardarse nulo en bd
             $registroDiario->unidad_id = $request->clave;
-            $registroDiario->user_id = 1;
+            $registroDiario->user_id = $request->idUser;
             $registroDiario->save();
             DB::commit();
             return response()->json($request,201);

@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Models;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class RegistroDiario extends Model
 {
+    use SoftDeletes;
     protected $table = 'registros_diarios';
 
     protected $fillable = [

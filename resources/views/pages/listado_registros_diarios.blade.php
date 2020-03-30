@@ -20,6 +20,7 @@
                   <th>Persona</th>
                   <th>Dirección</th>
                   <th>Clave</th>
+                  <th>Quien lo registró</th>
                   <th>Acciones</th>
                 </thead>
                 <tbody>
@@ -44,6 +45,18 @@
     $('.clave').select2();
     $('#telefono').mask('000-000-00-00');
     $('#celular').mask('000-000-00-00');
+
+    $('#modalRegistroDiario').on('hidden.bs.modal', function () {
+      $('#registroDiarioForm').trigger("reset");
+      $('#persona').prop('disabled',false);
+      $('#direccion').prop('disabled',false);
+      $('#referencia').prop('disabled',false);
+      $('#telefono').prop('disabled',false);
+      $('#celular').prop('disabled',false);
+      $('#personaSelect').prop('disabled',false);
+      $('#direccionSelect').prop('disabled',false);
+    });
+
     $('#hora').focusout(function(){
       if( $('#hora').val() !='' ){
         $('#horaDiv').removeClass(' has-danger');
@@ -56,7 +69,11 @@
         $('#personaDiv').removeClass('has-danger');
         $('#persona-error').hide();
         if($('#persona').val() !=''){
+          $('#direccionSelect').empty();
           $('#personaSelect').prop('disabled',true);
+          html = '';
+          html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+          $('#direccionSelect').append(html);
         }
       }else{
         $('#personaSelect').prop('disabled',false);
@@ -70,6 +87,23 @@
         $('#persona-error').hide();
         if( $('#personaSelect').val() !='' ){
           obtenerListadoDirecciones();
+          $.get({
+            url: routeBase+ '/api/clientes/'+$('#personaSelect').val(),
+            dataType: 'json',
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+            },
+            success: function( result ) {
+              $('#telefono').val(result['telefono_fijo']);
+              $('#celular').val(result['celular']);
+              $('#telefono').prop('disabled',true);
+              $('#celular').prop('disabled',true);
+            },
+            error: function(result){
+              console.log(result);
+            }
+          });
           $('#persona').prop('disabled',true);
         }
       }else{
@@ -79,6 +113,10 @@
         html = '';
         html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
         $('#direccionSelect').append(html);
+        $('#telefono').val('');
+        $('#celular').val('');
+        $('#telefono').prop('disabled',false);
+        $('#celular').prop('disabled',false);
       }
     });
 
@@ -95,11 +133,28 @@
     });
 
     $('#direccionSelect').change(function(){
+      var data = sessionStorage.getItem('token');
       if( $('#direccion').val() !='' || $('#direccionSelect').val() !=-''){
         $('#direccionDiv').removeClass(' has-danger');
         $('#direccion-error').hide();
         if($('#direccionSelect').val() !=null ){
-          //Mandar a buscar los datos de la direccion
+          $.get({
+            url: routeBase+ '/api/direcciones/'+$('#direccionSelect').val(),
+            dataType: 'json',
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': 'Bearer '+data,
+            },
+            success: function( result ) {
+              $('#referencia').val(result['referencia']);
+              $('#entre_calles').val(result['entre_calles']);
+              console.log(result);
+              $('#referencia').prop('disabled',true);
+            },
+            error: function(result){
+              console.log(result);
+            }
+          });
           $('#direccion').prop('disabled',true);
       }
       }else{
@@ -167,6 +222,7 @@
           {data: "cliente.nombre", name: 'cliente.nombre'},
           {data: "direccion.calle", name: 'direccion.calle'},
           {data: 'unidad.numero_economico', name: 'unidad.numero_economico', "defaultContent":""},
+          {data: 'user.name'},
           {data: 'action', name:'action'}
       ]
     });
@@ -276,7 +332,9 @@
           });
           console.log(objeto[0]['referencia']);
           $('#referencia').val(objeto[0]['referencia']);
-        }, 500);
+          $('#entre_calles').val(objeto[0]['entre_calles']);
+          
+        }, 1000);
         
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
         $('#celular').val(clientes['celular']).trigger('change');
@@ -333,6 +391,7 @@
   }
 
   function desplegarModalRegistro(){
+    $('#personaSelect').val('').trigger('change');
     $('#modalRegistroDiario').modal("show");
     
   }
@@ -341,9 +400,12 @@
     if(validarDatos() == 0 ){
       console.log("registra");
       var data = sessionStorage.getItem('token');
+      var arrayDeDatos = $("#registroDiarioForm").serializeArray();
+      arrayDeDatos.push({name:'idUser', value:sessionStorage.getItem('user')});
+
       $.post({
         url: "{{route('api.registros.diarios.create')}}",
-        data:$("#registroDiarioForm").serialize(),
+        data: arrayDeDatos,
         dataType: 'json',
         headers: {
           'Accept': 'application/json',
@@ -354,11 +416,17 @@
           $("#registroDiarioBtn").prop('disabled', false);
           $('#registroDiarioForm').trigger("reset");
           $('#modalRegistroDiario').modal('hide');
+          $('#direccionSelect').empty();
+          html = '';
+          html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+          $('#direccionSelect').append(html);
           console.log("success registro");
           cargarListado();
           obtenerListadoPersonas();
           $('#personaSelect').prop('disabled',false);
+          $('#direccionSelect').prop('disabled',false);
           $('#persona').prop('disabled',false);
+          $('#direccion').prop('disabled',false);
           $('#idRegistro').val('');
           $('#idCliente').val('');
           md.showNotification('bottom','right','success','Registro creado correctamente');
