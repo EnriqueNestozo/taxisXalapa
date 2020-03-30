@@ -7,6 +7,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
+            <button class="btn btn-primary pull-right" onClick="desplegarModalCliente()">Agregar registro</button>
             <h4 class="card-title ">Clientes registrados</h4>
             <p class="card-category"> Listado de clientes</p>
           </div>
@@ -70,14 +71,20 @@
     </div>
   </div>
 </div>
+@include('modals.modalDatosCliente')
 @endsection
 @push('js')
 <script>
   $(document).ready(function() {
     cargarListado();
-    
+    $('#telefono').mask('000-000-00-00');
+    $('#celular').mask('000-000-00-00');
     // $('#listado').DataTable();
   } );
+
+  $('#modalDatosCliente').on('hidden.bs.modal', function () {
+      $('#datosClienteForm').trigger("reset");
+  });
 
   function cargarListado(){
     var data = sessionStorage.getItem('token');
@@ -113,7 +120,24 @@
   }
 
   function editarCliente(id_cliente){
-    console.log(id_cliente);
+    $.get({
+      url: routeBase+"/api/clientes/"+id_cliente, 
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+      },
+      success: function( result ) {
+        $('#nombre').val(result['nombre']);
+        $('#telefono').val(result['telefono_fijo']).trigger('change');
+        $('#celular').val(result['celular']).trigger('change');
+        $('#idCliente').val(result['id']);
+        $('#modalDatosCliente').modal("show");
+      },
+      error: function(result){
+        md.showNotification('bottom','right','danger','No se han podido cargar los datos del cliente, intentelo de nuevo');
+      }
+    });
   }
 
   function eliminarCliente(id_cliente){
@@ -151,6 +175,31 @@
         });
       }
     })
+  }
+
+  function registrarDatosCliente(){
+    $.post({
+      url: "{{route('api.create.cliente')}}",
+      data: $("#datosClienteForm").serialize(),   
+      dataType: 'json',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+      },
+      success: function( result ) {
+        md.showNotification('bottom','right','success','Cliente creado correctamente');
+        $('#datosClienteForm').trigger("reset");
+        $('#modalDatosCliente').modal("hide");
+        cargarListado();
+      },
+      error: function(result){
+        md.showNotification('bottom','right','danger','No se han podido cargar los datos del cliente, intentelo de nuevo');
+      }
+    });
+  }
+
+  function desplegarModalCliente(){
+    $('#modalDatosCliente').modal("show");
   }
 </script>
 @endpush

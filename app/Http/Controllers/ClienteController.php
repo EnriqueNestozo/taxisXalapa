@@ -14,7 +14,16 @@ class ClienteController extends Controller
 
     public function create(Request $request)
     {
-        $cliente = Cliente::create($request->all());
+        // dd($request->all());
+        if($request->idCliente){
+            $cliente = Cliente::find($request->idCliente);
+        }else{
+            $cliente = Cliente::create($request->all());
+        }
+        $cliente->nombre = $request->nombre;
+        $cliente->telefono_fijo = ($request->telefono_fijo ? $request->telefono_fijo : '');
+        $cliente->celular = ($request->celular ? $request->celular : '');
+        $cliente->save();
         return response()->json($cliente,201);
     }
 

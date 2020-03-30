@@ -22,7 +22,7 @@ Route::post('registros-diarios-delete','RegistrosDiariosController@delete')->nam
 Route::get('clientes/{idCliente}','ClienteController@show')->name('api.get.cliente')->middleware('auth:api');
 Route::get('clientes-list','ClienteController@listClients')->name('api.clientes.list')->middleware('auth:api');
 Route::get('get-clientes','ClienteController@getClientes')->name('api.get.clientes')->middleware('auth:api');
-Route::post('clientes','ClienteController@create');
+Route::post('clientes','ClienteController@create')->name('api.create.cliente')->middleware('auth:api');
 Route::put('clientes-update','ClienteController@update')->name('api.update.cliente')->middleware('auth:api');
 Route::post('clientes/delete','ClienteController@delete')->name('api.delete.cliente')->middleware('auth:api');
 
