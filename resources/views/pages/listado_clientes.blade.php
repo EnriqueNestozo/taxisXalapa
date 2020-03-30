@@ -18,11 +18,11 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Primer_apellido</th>
-                <th>Segundo_apellido</th>
+                <!-- <th>Primer_apellido</th>
+                <th>Segundo_apellido</th> -->
                 <th>Telefono fijo</th>
                 <th>Celular</th>
-                <th>Género</th>
+                <!-- <th>No. de viajes</th> -->
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,15 +30,7 @@
             
         </tbody>
         <tfoot>
-            <tr>
-              <th>Nombre</th>
-              <th>Primer_apellido</th>
-              <th>Segundo_apellido</th>
-              <th>Telefono fijo</th>
-              <th>Celular</th>
-              <th>Género</th>
-              <th>Acciones</th>
-            </tr>
+            
         </tfoot>
     </table>
 
@@ -95,6 +87,7 @@
       processing: true,
       serverSide: true,
       searching: true,
+      destroy: true,
       language: {
         url: routeBase+'/DataTables/DataTable_Spanish.json'
       },
@@ -109,11 +102,11 @@
       },
       columns: [
           {data: 'nombre', name: 'nombre'},
-          {data: 'primer_apellido', name: 'primer_apellido'},
-          {data: "segundo_apellido", name: 'segundo_apellido'},
-          {data: "telefono_fijo", name: 'telefono_fijo'},
-          {data: 'celular', name: 'celular'},
-          {data: 'genero', name: 'genero'},
+          // {data: 'primer_apellido', name: 'primer_apellido'},
+          // {data: "segundo_apellido", name: 'segundo_apellido'},
+          {data: "telefono_fijo", name: 'telefono_fijo', "defaultContent":""},
+          {data: 'celular', name: 'celular', "defaultContent":""},
+          // {data: 'num_viajes', name: 'num_viajes', "defaultContent":""},
           {data: 'action', name:'action'}
       ]
     });
@@ -121,6 +114,43 @@
 
   function editarCliente(id_cliente){
     console.log(id_cliente);
+  }
+
+  function eliminarCliente(id_cliente){
+    swal({
+      title: '¿Esta seguro que desea eliminar este cliente?',
+      text: "El cliente se eliminará de manera permanente!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      cancelButtonText: 'Cancelar!',
+      confirmButtonText: 'Eliminar!',
+      buttonsStyling: false
+    }).then(function(confirmation) {
+      console.log(confirmation);
+      if (confirmation['dismiss'] != 'cancel') {
+        $.post({
+          url: "{{route('api.delete.cliente')}}",
+          data:{
+            idCliente: id_cliente,
+          },   
+          dataType: 'json',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+          },
+          success: function( result ) {
+            md.showNotification('bottom','right','success','Registro eliminado correctamente');
+            cargarListado();
+          },
+          error: function(result){
+            console.log(result);
+            md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar el registro');
+          }
+        });
+      }
+    })
   }
 </script>
 @endpush

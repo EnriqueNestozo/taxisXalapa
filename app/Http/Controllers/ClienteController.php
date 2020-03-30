@@ -27,7 +27,7 @@ class ClienteController extends Controller
 
     public function delete(Request $request)
     {
-        $cliente = Cliente::find($request->id);
+        $cliente = Cliente::find($request->idCliente);
         $cliente->delete();
         return response()->json(null,204);
     }

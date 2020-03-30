@@ -108,6 +108,7 @@
         },
         success: function(data) {
           sessionStorage.setItem('token', String(data.access_token));
+          sessionStorage.setItem('user', String(data.id_user));
           $.ajax({
             url: "{{route('login')}}",
             type: 'POST',
