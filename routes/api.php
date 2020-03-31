@@ -27,12 +27,12 @@ Route::put('clientes-update','ClienteController@update')->name('api.update.clien
 Route::post('clientes/delete','ClienteController@delete')->name('api.delete.cliente')->middleware('auth:api');
 
 //Api para unidades
-// Route::get('unidades/{idUnidad}','UnidadesController@show');
+Route::get('unidades/{idUnidad}','UnidadController@show')->name('api.get.unidad')->middleware('auth:api');
 Route::get('unidades-list','UnidadController@listUnits')->name('api.unidades.list')->middleware('auth:api');
 Route::get('get-unidades','UnidadController@getUnidades')->name('api.get.unidades')->middleware('auth:api');
-// Route::post('unidades','UnidadesController@create');
+Route::post('unidades','UnidadController@create')->name('api.create.unidad')->middleware('auth:api');
 // Route::put('unidades/update','UnidadesController@update');
-// Route::delete('unidades/delete','UnidadesController@delete');
+Route::post('unidades/delete','UnidadController@delete')->name('api.delete.unidad')->middleware('auth:api');
 
 //Api para direcciones
 Route::get('direcciones/{idDireccion}','DireccionController@show')->name('api.get.direccion')->middleware('auth:api');

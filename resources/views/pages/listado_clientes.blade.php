@@ -7,62 +7,33 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <button class="btn btn-primary pull-right" onClick="desplegarModalCliente()">Agregar registro</button>
+            <button class="btn btn-primary pull-right" onClick="desplegarModalCliente()">Agregar cliente</button>
             <h4 class="card-title ">Clientes registrados</h4>
             <p class="card-category"> Listado de clientes</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-
-
-<table id="listado" class="table-hover"  style="width:100%">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <!-- <th>Primer_apellido</th>
-                <th>Segundo_apellido</th> -->
-                <th>Telefono fijo</th>
-                <th>Celular</th>
-                <!-- <th>No. de viajes</th> -->
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-        <tfoot>
-            
-        </tfoot>
-    </table>
-
-
-              <table class="table">
-                <thead class=" text-primary">
-                  <!-- <th>
-                    ID
-                  </th> -->
-                  
+              
+              <table id="listado" class="table-hover"  style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <!-- <th>Primer_apellido</th>
+                    <th>Segundo_apellido</th> -->
+                    <th>Telefono fijo</th>
+                    <th>Celular</th>
+                    <!-- <th>No. de viajes</th> -->
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <!-- <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-primary">
-                      $36,738
-                    </td>
-                  </tr> -->
-                  
+                    
                 </tbody>
+                <tfoot>
+                    
+                </tfoot>
               </table>
+
             </div>
           </div>
         </div>

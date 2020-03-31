@@ -3,13 +3,15 @@
 namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Unidad extends Model
 {
+    use SoftDeletes;
     protected $table = 'unidades';
 
     protected $fillable = [
-        'placas', 'numero'
+        'placas', 'numero', 'numero_economico'
     ];
 
     public function conductores()

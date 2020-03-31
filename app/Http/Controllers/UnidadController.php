@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Models\Unidad;
+use DataTables;
+use DB;
 
 class UnidadController extends Controller
 {
@@ -13,8 +15,25 @@ class UnidadController extends Controller
 
     public function create(Request $request)
     {
-        $unidad = Unidad::create($request->all());
-        return response()->json($unidad,201);
+        try{
+            DB::beginTransaction();
+            if($request->idUnidad){
+                $unidad = Unidad::find($request->idUnidad);
+                $unidad->placas = ($request->placas)?$request->placas : '';
+                $unidad->numero = ($request->numero)? $request->numero : '';
+                $unidad->numero_economico = $request->numero_economico;
+                $unidad->save();
+            }else{
+                // dd($request->all());
+                $unidad = Unidad::create($request->all());
+            }
+            DB::commit();
+            return response()->json($unidad,201);
+        }catch (\PDOException $e) {
+            DB::rollBack();
+            return response()->json($e,500);
+        }
+        
     }
 
     public function update(Request $request)
@@ -26,7 +45,7 @@ class UnidadController extends Controller
 
     public function delete(Request $request)
     {
-        $unidad = Unidad::find($request->id);
+        $unidad = Unidad::find($request->idUnidad);
         $unidad->delete();
         return response()->json(null,204);
     }
@@ -41,5 +60,21 @@ class UnidadController extends Controller
     {
         $listadounidades = Unidad::all();
         return response()->json($listadounidades,201);
+    }
+
+    public function listUnits()
+    {
+        $listadoUnidades = Unidad::all();
+        $tabla = Datatables::of($listadoUnidades)
+                    ->addColumn('action',function($fila){
+                        $accion = null;
+                        $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Usuario' onClick='editarUnidad(".$fila->id.")'><i class='material-icons'>edit</i></button>";
+                        $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Usuario' onClick='eliminarUnidad(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                        return $accion;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        return $tabla;
+        // return response()->json($listadoClientes,201);
     }
 }
