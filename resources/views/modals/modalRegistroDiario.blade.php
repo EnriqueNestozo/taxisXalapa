@@ -55,14 +55,14 @@
           <div class="col-xls-6 col-sm-6 col-md-6">
             <div class="row">
               <div class="col-12">
-                <div class="form-group" id="direccionDiv">
-                  <label for="direccion" class="col-form-label">Municipio:</label>
+                <div class="form-group" id="municipioDiv">
+                  <label for="municipio" class="col-form-label">Municipio:</label>
                   <br>
-                  <select class="clave" id="direccionSelect" name="direccionSelect" style="width: 100%">
+                  <select class="clave" id="municipioSelect" name="municipioSelect" style="width: 100%">
                     <option value="">Seleccione un municipio...</option>
                   </select>
-                  <input type="text" class="form-control" id="direccion" maxlength="100" name="direccion" placeholder="Sino escriba el municipio">
-                  <span id="direccion-error" class="error text-danger" for="direccion" style="display:none">Campo faltante</span>
+                  <input type="text" class="form-control" id="municipio" maxlength="100" name="municipio" placeholder="Sino escriba el municipio">
+                  <span id="municipio-error" class="error text-danger" for="municipio" style="display:none">Campo faltante</span>
                 </div>
                 <div class="form-group" id="localidadDiv">
                   <label for="localidad" class="col-form-label">Localidad:</label>

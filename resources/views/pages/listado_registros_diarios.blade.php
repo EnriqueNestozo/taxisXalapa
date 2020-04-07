@@ -49,11 +49,14 @@
     $('#telefono').mask('000-000-00-00');
     $('#celular').mask('000-000-00-00');
     $.when( 
-      $.ajax(""),
-      $.ajax(""))
+      $.ajax( "{{route('api.get.municipios')}}" ),
+      $.ajax( "{{route('api.get.municipios')}}"  ))
       .done(function ( v1, v2 ) {
-      console.log( v1 );
-      console.log( v2 ); 
+      console.log("municipios",  v1[0] );
+      // $.each(v1[0], function(key,value){
+      //   $('#municipioSelect')
+      // });
+      $('#municipioSelect').select2({data:v1[0]}).trigger('change');
     });
 
     $('#modalRegistroDiario').on('hidden.bs.modal', function () {

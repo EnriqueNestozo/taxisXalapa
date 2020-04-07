@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class Cat_municipio extends Model
     }
 
     public static function municipios($id){
-        return CatMunicipio::select('id', 'nombre')->where('cve_ent', $id)->orderBy('id', 'ASC')->get();
+        return Cat_municipio::select('id', 'nombre')->where('cve_ent', $id)->orderBy('id', 'ASC')->get();
     }
     
     public function getNombreAttribute($value)

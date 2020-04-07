@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Models\Cat_municipio;
+use App\Http\Models\Cat_localidad;
+use App\Http\Models\Cat_colonia;
 
-
-class CatalogoController extends Controller
+class CatalogosController extends Controller
 {
     public function __construct(){
         // $this->middleware('client-credential');
@@ -12,19 +15,19 @@ class CatalogoController extends Controller
 
     public function getMunicipios()
     {
-        $municipios = Cat_municipio::where('')->get();
-        return response()->json($municipios,201);
+        $municipios = Cat_municipio::select('cve_mun AS id','nombre AS text')->orderBy('nombre')->get()->toArray();
+        return response()->json($municipios);
     }
 
     public function getLocalidades($idMunicipio)
     {
-        $localidades = Cat_localidad::where('',$idMunicipio)->get();
-        return response()->json($localidades,201);
+        $localidades = Cat_localidad::select('cve_loc AS id','nombre')->where('cve_mun',$idMunicipio)->where('cve_ent',30)->get();
+        return response()->json($localidades);
     }
 
-    public function getColonias($idLocalidad)
+    public function getColonias($idMunicipio)
     {
-        $colonias = Conductor::where('',$idLocalidad)->get();
-        return response()->json($colonias,201);
+        $colonias = Cat_colonia::select('id','asentamiento AS nombre')->where('cve_ent',30)->where('cve_mun',$idMunicipio)->get();
+        return response()->json($colonias);
     }
 }
