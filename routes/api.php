@@ -42,6 +42,11 @@ Route::get('get-direcciones/{idCliente}','DireccionController@getDirecciones')->
 // Route::put('direcciones/update','DireccionController@update');
 // Route::delete('direcciones/delete','DireccionController@delete');
 
+//Api para cat municipios, localidades y colonias
+Route::get('municipios','CatalogosController@getMunicipios')->name('api.get.municipios')->middleware('auth:api');
+Route::get('localidades/{idMunicipio}','CatalogosController@getLocalidades')->name('api.get.localidades')->middleware('auth:api');
+Route::get('colonias/{idLocalidad}','CatalogosController@getColonias')->name('api.get.colonias')->middleware('auth:api');
+
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

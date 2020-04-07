@@ -36,6 +36,9 @@
 </div>
 @include('modals.modalRegistroDiario')
 @endsection
+<style>
+
+</style>
 @push('js')
 <script>
   $(document).ready(function() {
@@ -45,6 +48,13 @@
     $('.clave').select2();
     $('#telefono').mask('000-000-00-00');
     $('#celular').mask('000-000-00-00');
+    $.when( 
+      $.ajax(""),
+      $.ajax(""))
+      .done(function ( v1, v2 ) {
+      console.log( v1 );
+      console.log( v2 ); 
+    });
 
     $('#modalRegistroDiario').on('hidden.bs.modal', function () {
       $('#registroDiarioForm').trigger("reset");
@@ -111,7 +121,7 @@
         $('#persona').prop('disabled',false);
         $('#direccionSelect').empty();
         html = '';
-        html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
+        html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
         $('#direccionSelect').append(html);
         $('#telefono').val('');
         $('#celular').val('');

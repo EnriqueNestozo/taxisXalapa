@@ -18,7 +18,7 @@
                   <tr>
                     <th>Placa</th>
                     <th>Número</th>
-                    <th>Número económico</th>
+                    <th>Clave</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
