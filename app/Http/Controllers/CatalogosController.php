@@ -21,13 +21,13 @@ class CatalogosController extends Controller
 
     public function getLocalidades($idMunicipio)
     {
-        $localidades = Cat_localidad::select('cve_loc AS id','nombre')->where('cve_mun',$idMunicipio)->where('cve_ent',30)->get();
+        $localidades = Cat_localidad::select('cve_loc AS id','nombre AS text')->where('cve_mun',$idMunicipio)->where('cve_ent',30)->orderBy('nombre')->get()->toArray();
         return response()->json($localidades);
     }
 
     public function getColonias($idMunicipio)
     {
-        $colonias = Cat_colonia::select('id','asentamiento AS nombre')->where('cve_ent',30)->where('cve_mun',$idMunicipio)->get();
+        $colonias = Cat_colonia::select('id','asentamiento AS text')->where('cve_ent',30)->where('cve_mun',$idMunicipio)->orderBy('asentamiento')->get()->toArray();
         return response()->json($colonias);
     }
 }

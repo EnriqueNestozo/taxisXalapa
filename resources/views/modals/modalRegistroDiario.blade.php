@@ -56,7 +56,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="form-group" id="municipioDiv">
-                  <label for="municipio" class="col-form-label">Municipio:</label>
+                  <label for="municipioSelect" class="col-form-label">Municipio:</label>
                   <br>
                   <select class="clave" id="municipioSelect" name="municipioSelect" style="width: 100%">
                     <option value="">Seleccione un municipio...</option>
