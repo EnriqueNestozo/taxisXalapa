@@ -264,8 +264,8 @@ function limpiarErrores(){
     $('#persona-error').hide();
     $('#municipioDiv').removeClass('has-danger');
     $('#municipio-error').hide();
-    // $('#entre_callesDiv').removeClass('has-danger');
-    // $('#entre_calles-error').hide();
+    $('#calleDiv').removeClass('has-danger');
+    $('#calle-error').hide();
     // $('#referenciaDiv').removeClass('has-danger');
     // $('#referencia-error').hide();
     $('#telefonoDiv').removeClass('has-danger');
@@ -287,10 +287,10 @@ function marcarErrores(){
         $('#municipioDiv').addClass('has-danger');
         $('#municipio-error').show();
     }
-    // if( $('#entre_calles').val()=='' ){
-    //   $('#entre_callesDiv').addClass('has-danger');
-    //   $('#entre_calles-error').show();
-    // }
+    if( $('#calle').val()=='' ){
+      $('#calleDiv').addClass('has-danger');
+      $('#calle-error').show();
+    }
     // if( $('#referencia').val() =='' ){
     //   $('#referenciaDiv').addClass('has-danger');
     //   $('#referencia-error').show();

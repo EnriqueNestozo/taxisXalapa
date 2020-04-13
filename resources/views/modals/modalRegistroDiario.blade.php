@@ -25,7 +25,7 @@
                 <div class="form-group" id="personaDiv">
                   <label for="persona" class="col-form-label">Persona:</label>
                   <br>
-                  <select class="clave" id="personaSelect" name="personaSelect" style="width: 100%">
+                  <select class="special_select" id="personaSelect" name="personaSelect" style="width: 100%">
                   </select>
                   <input type="text" class="form-control" id="persona" maxlength="100" placeholder="Sino existe escriba el nombre" name="persona">
                   <span id="persona-error" class="error text-danger" for="persona" style="display:none">Campo faltante</span>
@@ -58,7 +58,7 @@
                 <div class="form-group" id="municipioDiv">
                   <label for="municipioSelect" class="col-form-label">Municipio:</label>
                   <br>
-                  <select class="clave" id="municipioSelect" name="municipioSelect" style="width: 100%">
+                  <select class="special_select" id="municipioSelect" name="municipioSelect" style="width: 100%">
                     <option value="">Seleccione un municipio...</option>
                   </select>
                   <input type="text" class="form-control" id="municipio" maxlength="100" name="municipio" placeholder="Sino escriba el municipio">
@@ -67,7 +67,7 @@
                 <div class="form-group" id="localidadDiv">
                   <label for="localidad" class="col-form-label">Localidad:</label>
                   <br>
-                  <select class="clave" id="localidadSelect" name="localidadSelect" style="width: 100%">
+                  <select class="special_select" id="localidadSelect" name="localidadSelect" style="width: 100%">
                     <option value="">Seleccione una localidad...</option>
                   </select>
                   <input type="text" class="form-control" id="localidad" maxlength="100" name="localidad" placeholder="Sino escriba la localidad">
@@ -76,7 +76,7 @@
                 <div class="form-group" id="coloniaDiv">
                   <label for="colonia" class="col-form-label">Colonia:</label>
                   <br>
-                  <select class="clave" id="coloniaSelect" name="coloniaSelect" style="width: 100%">
+                  <select class="special_select" id="coloniaSelect" name="coloniaSelect" style="width: 100%">
                     <option value="">Seleccione una colonia...</option>
                   </select>
                   <input type="text" class="form-control" id="colonia" maxlength="100" name="colonia" placeholder="Sino escriba la colonia">
@@ -85,7 +85,7 @@
                 <div class="form-group" id="calleDiv">
                   <label for="calle" class="col-form-label">Calle y número:</label>
                   <input type="text" class="form-control" id="calle" maxlength="100" name="calle">
-                  <!-- <span id="entre_calle-error" class="error text-danger" for="entre_calles" style="display:none">Campo faltante</span> -->
+                  <span id="calle-error" class="error text-danger" for="calle" style="display:none">Campo faltante</span>
                 </div>
                 <div class="form-group" id="entre_callesDiv">
                   <label for="entre_calles" class="col-form-label">Entre calles:</label>
@@ -104,7 +104,7 @@
 
                 <div class="form-group" id="claveDiv">
                   <label for="clave" class="col-form-label">Clave:</label>
-                  <select class="clave" id="clave" name="clave"  style="width: 100%">
+                  <select class="special_select" id="clave" name="clave"  style="width: 100%">
                   </select>
                 </div>
 

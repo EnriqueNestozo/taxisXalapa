@@ -2,9 +2,9 @@ $(document).ready(function() {
   cargarListado();
   obtenerListadoClavesTaxis();
   obtenerListadoPersonas();
-  $('.clave').select2({
+  $('.special_select').select2({
     tags: true,
-    dropdownParent: $('#modalRegistroDiario')
+    // dropdownParent: $('#modalRegistroDiario')
   });
   $('#telefono').mask('000-000-00-00');
   $('#celular').mask('000-000-00-00');
@@ -34,7 +34,7 @@ $(document).ready(function() {
       $('#personaDiv').removeClass('has-danger');
       $('#persona-error').hide();
       if($('#persona').val() !=''){
-        $('#municipioSelect').empty();
+        // $('#municipioSelect').empty();
         $('#personaSelect').prop('disabled',true);
         // html = '';
         // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -108,14 +108,17 @@ $(document).ready(function() {
           $.ajax( routeBase+ '/api/colonias/'+$('#municipioSelect').val() )
         )
           .done(function ( v1,v2) {
+            $('#localidadSelect').empty();
+            $('#coloniaSelect').empty();
+
             // console.log(v1[0],v2[0]);
             // console.log("colonias:  " +v2);
             $('#localidadSelect').select2({data:v1[0]}).trigger('change');
             $('#coloniaSelect').select2({data:v2[0]}).trigger('change');
-            $('.clave').select2({
-              tags: true,
-              dropdownParent: $('#modalRegistroDiario')
-            });
+            // $('.special_select').select2({
+            //   tags: true,
+            //   dropdownParent: $('#modalRegistroDiario')
+            // });
             $('#localidadSelect').val(1).trigger('change');
         });
         // $.get({
@@ -143,12 +146,12 @@ $(document).ready(function() {
     }
   });
 
-  // $('#entre_calles').change(function(){
-  //   if( $('#entre_calles').val() !='' ){
-  //     $('#entre_callesDiv').removeClass(' has-danger');
-  //     $('#entre_calles-error').hide();
-  //   }
-  // });
+  $('#calle').change(function(){
+    if( $('#calle').val() !='' ){
+      $('#calleDiv').removeClass(' has-danger');
+      $('#calle-error').hide();
+    }
+  });
 
   // $('#referencia').change(function(){
   //   if( $('#referencia').val() !='' ){

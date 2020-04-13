@@ -7,6 +7,9 @@ use App\Http\Models\RegistroDiario;
 use App\Http\Models\Cliente;
 use App\Http\Models\Unidad;
 use App\Http\Models\Direccion;
+use App\Http\Models\Cat_municipio;
+use App\Http\Models\Cat_localidad;
+use App\Http\Models\Cat_colonia;
 use DataTables;
 use DB;
 
@@ -56,9 +59,51 @@ class RegistrosDiariosController extends Controller
                 $direccion = new Direccion();
                 //OBSERVACION: DE MOMENTO SE GUARDA TODO EN CALLE, FALTA VER SI SE VA A SEPARAR COMO ESTA EN LA BD, si todo va en calle hay que hacer colonia y numero nullable
                 $direccion->calle = $request->direccion;
+                $direccion->estado_id = '30';
+                if($request->municipioSelect){
+                    $municipio = Cat_municipio::where('cve_mun',$request->municipioSelect)->where('cve_ent',30)->first();
+                    $direccion->municipio_id = $municipio->id;
+                }else{
+                    $cat_municipio = new Cat_municipio();
+                    $cat_municipio->cve_ent = '30';
+                    $ultimoMun = Cat_municipio::latest('cve_mun')->where('cve_ent',30)->first();
+                    $cat_municipio->cve_mun = $ultimoMun->cve_mun + 1;
+                    $cat_municipio->nombre = $request->nuevoMunicipio;
+                    $cat_municipio->save();
+                    $municipio = $cat_municipio;
+                }
+                if($request->localidadSelect){
+                    $localidad = Cat_localidad::where('cve_mun',$municipio->cve_mun)->where('cve_ent',30)->first();
+                    $direccion->localidad_id = $localidad->id;
+                }else{
+                    $cat_localidad = new Cat_localidad();
+                    $cat_localidad->cve_ent = '30';
+                    $cat_localidad->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
+                    $ultimaLoc = Cat_localidad::latest('cve_loc')->where('cve_ent',30)->first();
+                    $cat_localidad->cve_loc = $ultimaLoc->cve_loc + 1;
+                    $cat_localidad->nombre = $request->nuevaLocalidad;
+                    $cat_localidad->save();
+                }
+                //GUARDA MAL LA COLONIA!!!!!!!!!!!!!
+                if($request->coloniaSelect){
+                    $colonia = Cat_colonia::where('cve_mun',$municipio->cve_mun)->where('cve_ent',30)->first();
+                    $direccion->colonia_id = $colonia->id;
+                }else{
+                    $cat_colonia = new Cat_colonia();
+                    $cat_colonia->cve_ent = '30';
+                    $cat_colonia->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
+                    $localidad = ($request->localidadSelect)? Cat_localidad::find($request->localidadSelect) : Cat_localidad::find($cat_localidad->id);
+                    $cat_colonia->ciudad = $localidad->nombre;
+                    $cat_colonia->zona = 'Urbano';
+                    $cat_colonia->asentamiento = $request->nuevaColonia;
+                    $cat_colonia->tipo = 'Colonia';
+                    $cat_colonia->save();
+                }
+                
                 $direccion->referencia = ($request->referencia)? $request->referencia : '';
                 $direccion->cliente_id = $cliente->id;  //AQUI TRUENA, porque el cliente
                 $direccion->entre_calles = ($request->entre_calles)? $request->entre_calles : '';
+                $direccion->calle = $request->calle;
                 $direccion->save();
                 $registroDiario->direccion_id = $direccion->id;
             }
@@ -69,6 +114,7 @@ class RegistrosDiariosController extends Controller
             DB::commit();
             return response()->json($request,201);
         }catch (\PDOException $e) {
+            dd($e);
             DB::rollBack();
             return response()->json($e,500);
         }
