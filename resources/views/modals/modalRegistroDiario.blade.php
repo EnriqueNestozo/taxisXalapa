@@ -55,6 +55,14 @@
           <div class="col-xls-6 col-sm-6 col-md-6">
             <div class="row">
               <div class="col-12">
+                <div class="form-group" id="direccionDiv">
+                  <label for="direccionSelect" class="col-form-label">Dirección:</label>
+                  <br>
+                  <select class="special_select" id="direccionSelect" name="direccionSelect" style="width: 100%">
+                    <option value="">Seleccione una dirección guardada...</option>
+                  </select>
+                </div>
+
                 <div class="form-group" id="municipioDiv">
                   <label for="municipioSelect" class="col-form-label">Municipio:</label>
                   <br>

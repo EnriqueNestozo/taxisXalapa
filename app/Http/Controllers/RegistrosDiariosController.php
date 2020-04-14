@@ -16,7 +16,7 @@ use DB;
 class RegistrosDiariosController extends Controller
 {
     public function listRecords(){  
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion','user')->get();
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->get();
         
         $tabla = Datatables::of($listadoRegistros)
             ->addColumn('action',function($fila){
@@ -25,7 +25,11 @@ class RegistrosDiariosController extends Controller
                 $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
                 return $accion;
             })
-            ->rawColumns(['action'])
+            ->addColumn('direccionCompleta',function($fila){
+                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                return $direccionCompleta;
+            })
+            ->rawColumns(['action','direccionCompleta'])
             ->make(true);
         return $tabla;
     }
@@ -57,7 +61,7 @@ class RegistrosDiariosController extends Controller
                 $registroDiario->direccion_id = $request->direccionSelect;
             }else{
                 $direccion = new Direccion();
-                //OBSERVACION: DE MOMENTO SE GUARDA TODO EN CALLE, FALTA VER SI SE VA A SEPARAR COMO ESTA EN LA BD, si todo va en calle hay que hacer colonia y numero nullable
+                
                 $direccion->calle = $request->direccion;
                 $direccion->estado_id = '30';
                 if($request->municipioSelect){
@@ -68,9 +72,10 @@ class RegistrosDiariosController extends Controller
                     $cat_municipio->cve_ent = '30';
                     $ultimoMun = Cat_municipio::latest('cve_mun')->where('cve_ent',30)->first();
                     $cat_municipio->cve_mun = $ultimoMun->cve_mun + 1;
-                    $cat_municipio->nombre = $request->nuevoMunicipio;
+                    $cat_municipio->nombre = $request->municipio;
                     $cat_municipio->save();
                     $municipio = $cat_municipio;
+                    $direccion->municipio_id = $municipio->id;
                 }
                 if($request->localidadSelect){
                     $localidad = Cat_localidad::where('cve_mun',$municipio->cve_mun)->where('cve_ent',30)->first();
@@ -81,23 +86,26 @@ class RegistrosDiariosController extends Controller
                     $cat_localidad->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
                     $ultimaLoc = Cat_localidad::latest('cve_loc')->where('cve_ent',30)->first();
                     $cat_localidad->cve_loc = $ultimaLoc->cve_loc + 1;
-                    $cat_localidad->nombre = $request->nuevaLocalidad;
+                    $cat_localidad->nombre = $request->localidad;
+                    $cat_localidad->lat_decimal = '00.0000';
+                    $cat_localidad->lon_decimal = '00.0000';
+                    $cat_localidad->altitud = '0';
                     $cat_localidad->save();
+                    $direccion->localidad_id = $cat_localidad->id;
                 }
-                //GUARDA MAL LA COLONIA!!!!!!!!!!!!!
                 if($request->coloniaSelect){
-                    $colonia = Cat_colonia::where('cve_mun',$municipio->cve_mun)->where('cve_ent',30)->first();
-                    $direccion->colonia_id = $colonia->id;
+                    $direccion->colonia_id = $request->coloniaSelect;
                 }else{
                     $cat_colonia = new Cat_colonia();
                     $cat_colonia->cve_ent = '30';
                     $cat_colonia->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
-                    $localidad = ($request->localidadSelect)? Cat_localidad::find($request->localidadSelect) : Cat_localidad::find($cat_localidad->id);
-                    $cat_colonia->ciudad = $localidad->nombre;
+                    $datos_localidad = ($request->localidadSelect)? $localidad : Cat_localidad::find($cat_localidad->id);
+                    $cat_colonia->ciudad = $datos_localidad->nombre;
                     $cat_colonia->zona = 'Urbano';
-                    $cat_colonia->asentamiento = $request->nuevaColonia;
+                    $cat_colonia->asentamiento = $request->colonia;
                     $cat_colonia->tipo = 'Colonia';
                     $cat_colonia->save();
+                    $direccion->colonia_id = $cat_colonia->id;
                 }
                 
                 $direccion->referencia = ($request->referencia)? $request->referencia : '';

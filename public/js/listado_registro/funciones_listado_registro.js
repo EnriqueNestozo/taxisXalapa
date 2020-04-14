@@ -21,7 +21,7 @@ function cargarListado(){
             {data: 'id', name: 'id'},
             {data: 'hora', name: 'hora'},
             {data: "cliente.nombre", name: 'cliente.nombre'},
-            {data: "direccion.calle", name: 'direccion.calle'},
+            {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: 'unidad.numero_economico', name: 'unidad.numero_economico', "defaultContent":""},
             {data: 'user.name'},
             {data: 'action', name:'action'}
@@ -84,7 +84,7 @@ function obtenerListadoPersonas(){
 function obtenerListadoDirecciones(){
     var data = sessionStorage.getItem('token');
     var personaid = $('#personaSelect').val();
-    $('#municipioSelect').empty();
+    $('#direccionSelect').empty();
     $.get({
         url: routeBase+"/api/get-direcciones/"+personaid,
         dataType: 'json',   
@@ -93,14 +93,14 @@ function obtenerListadoDirecciones(){
             'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-        html = '';
-        html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
-        for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].calle+'</option>';
-        }
-        $('#municipioSelect').append(html);
+            html = '';
+            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+            for (let index = 0; index < result.length; index++) {
+                html += '<option ';
+                html += ' value="'+result[index].id+'" ';
+                html += '>'+result[index].calle+', col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
+            }
+            $('#direccionSelect').append(html);
         },
         error: function(result){
             console.log(result);
@@ -249,7 +249,14 @@ function validarDatos(){
     $("#registroDiarioBtn").html("Cargando...");
     $("#registroDiarioBtn").prop('disabled', true);
     limpiarErrores();
-    if($('#hora').val() =='' || ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
+    if(
+        $('#hora').val() =='' || 
+        ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || 
+        ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
+        ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
+        ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
+        $('#calle').val() == '' || 
+        ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
         marcarErrores();
         console.log("faltan datos");
         datosErroneos = 1;
@@ -286,6 +293,14 @@ function marcarErrores(){
     if( $('#municipio').val() =='' && $('#municipioSelect').val() == ''  ){
         $('#municipioDiv').addClass('has-danger');
         $('#municipio-error').show();
+    }
+    if( $('#localidad').val() =='' && $('#localidadSelect').val() == ''  ){
+        $('#localidadDiv').addClass('has-danger');
+        $('#localidad-error').show();
+    }
+    if( $('#colonia').val() =='' && $('#coloniaSelect').val() == ''  ){
+        $('#coloniaDiv').addClass('has-danger');
+        $('#colonia-error').show();
     }
     if( $('#calle').val()=='' ){
       $('#calleDiv').addClass('has-danger');

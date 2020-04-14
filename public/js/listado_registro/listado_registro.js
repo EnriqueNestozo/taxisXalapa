@@ -13,13 +13,18 @@ $(document).ready(function() {
 
   $('#modalRegistroDiario').on('hidden.bs.modal', function () {
     $('#registroDiarioForm').trigger("reset");
+    limpiarErrores();
     $('#persona').prop('disabled',false);
     $('#municipio').prop('disabled',false);
+    $('#localidad').prop('disabled',false);
+    $('#colonia').prop('disabled',false);
     $('#referencia').prop('disabled',false);
     $('#telefono').prop('disabled',false);
     $('#celular').prop('disabled',false);
     $('#personaSelect').prop('disabled',false);
     $('#municipioSelect').prop('disabled',false);
+    $('#localidadSelect').prop('disabled',false);
+    $('#coloniaSelect').prop('disabled',false);
   });
 
   $('#hora').focusout(function(){
@@ -85,6 +90,54 @@ $(document).ready(function() {
     }
   });
 
+  $('#direccionSelect').change(function(){
+    if( $('#direccionSelect').val() !='' ){
+      $('#municipioSelect').val('').trigger('change');
+      $('#municipioSelect').prop('disabled',true);
+      $('#municipio').prop('disabled',true);
+      $('#localidadSelect').val('').trigger('change');
+      $('#localidadSelect').prop('disabled',true);
+      $('#localidad').prop('disabled',true);
+      $('#coloniaSelect').val('').trigger('change');
+      $('#coloniaSelect').prop('disabled',true);
+      $('#colonia').prop('disabled',true);
+      $('#calle').prop('disabled',true);
+      $('#entre_calles').prop('disabled',true);
+      $('#referencia').prop('disabled',true);
+      $.get({
+        url: routeBase+ '/api/direcciones/'+$('#direccionSelect').val(),
+        dataType: 'json',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+        },
+        success: function( result ) {
+          $('#referencia').val(result['referencia']);
+          $('#entre_calles').val(result['entre_calles']);
+          $('#calle').val(result['calle']);
+          // console.log(result);
+          // $('#localidadSelect').select2({data:result}).trigger('change');
+        },
+        error: function(result){
+          console.log(result);
+        }
+      });
+    }else{
+      $('#referencia').val('');
+      $('#entre_calles').val('');
+      $('#calle').val('');
+      $('#municipioSelect').prop('disabled',false);
+      $('#municipio').prop('disabled',false);
+      $('#localidadSelect').prop('disabled',false);
+      $('#localidad').prop('disabled',false);
+      $('#coloniaSelect').prop('disabled',false);
+      $('#colonia').prop('disabled',false);
+      $('#calle').prop('disabled',false);
+      $('#entre_calles').prop('disabled',false);
+      $('#referencia').prop('disabled',false);
+    }
+  });
+
   $('#municipio').change(function(){
     if( $('#municipio').val() !='' || $('#municipioSelect').val() !=-''){
       $('#municipioDiv').removeClass(' has-danger');
@@ -110,7 +163,6 @@ $(document).ready(function() {
           .done(function ( v1,v2) {
             $('#localidadSelect').empty();
             $('#coloniaSelect').empty();
-
             // console.log(v1[0],v2[0]);
             // console.log("colonias:  " +v2);
             $('#localidadSelect').select2({data:v1[0]}).trigger('change');
@@ -120,6 +172,7 @@ $(document).ready(function() {
             //   dropdownParent: $('#modalRegistroDiario')
             // });
             $('#localidadSelect').val(1).trigger('change');
+            $('#coloniaSelect').val('').trigger('change');
         });
         // $.get({
         //   url: routeBase+ '/api/localidades/'+$('#municipioSelect').val(),
@@ -143,6 +196,54 @@ $(document).ready(function() {
     }
     }else{
       $('#municipio').prop('disabled',false);
+    }
+  });
+
+  $('#localidadSelect').change(function(){
+    if( $('#localidadSelect').val() !='' || $('#localidad').val() !='' ){
+      $('#localidadDiv').removeClass(' has-danger');
+      $('#localidad-error').hide();
+      if( $('#localidadSelect').val() !='' ){
+        $('#localidad').prop('disabled',true);
+      }
+    }else{
+      $('#localidad').prop('disabled',false);
+    }
+  });
+
+  $('#localidad').change(function(){
+    if( $('#localidad').val() !='' || $('#localidadSelect').val() !=-''){
+      $('#localidadDiv').removeClass(' has-danger');
+      $('#localidad-error').hide();
+      if( $('#localidad').val() !=''){
+        // $('#localidadSelect').prop('disabled',true);
+        $('#coloniaSelect').prop('disabled',true).trigger('change');
+      }
+    }else{
+      // $('#localidadSelect').prop('disabled',false);
+      $('#coloniaSelect').prop('disabled',false).trigger('change');
+    }
+  });
+
+  $('#coloniaSelect').change(function(){
+    if( $('#coloniaSelect').val() !='' ){
+      $('#coloniaDiv').removeClass(' has-danger');
+      $('#colonia-error').hide();
+      $('#colonia').prop('disabled',true);
+    }else{  
+      $('#colonia').prop('disabled',false);
+    }
+  });
+
+  $('#colonia').change(function(){
+    if( $('#colonia').val() !='' || $('#coloniaSelect').val() !=-''){
+      $('#coloniaDiv').removeClass(' has-danger');
+      $('#colonia-error').hide();
+      if( $('#colonia').val() !=''){
+        $('#coloniaSelect').prop('disabled',true);
+      }
+    }else{
+      $('#coloniaSelect').prop('disabled',false);
     }
   });
 

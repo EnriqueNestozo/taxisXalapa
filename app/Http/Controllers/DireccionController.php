@@ -39,7 +39,7 @@ class DireccionController extends Controller
 
     public function getDirecciones($idCliente)
     {
-        $listadoDirecciones = Direccion::where('cliente_id',$idCliente)->get();
+        $listadoDirecciones = Direccion::with('localidad','colonia')->where('cliente_id',$idCliente)->get();
         return response()->json($listadoDirecciones,201);
     }
 }
