@@ -23,4 +23,16 @@ class Direccion extends Model
     public function registrosRecurrentes(){
         return $this->hasMany('App\Http\Models\RegistroRecurrente','direccion_id');
     }
+
+    public function municipio(){
+        return $this->belongsTo('App\Http\Models\Cat_municipio','municipio_id');
+    }
+
+    public function localidad(){
+        return $this->belongsTo('App\Http\Models\Cat_localidad','localidad_id');
+    }
+
+    public function colonia(){
+        return $this->belongsTo('App\Http\Models\Cat_colonia','colonia_id');
+    }
 }

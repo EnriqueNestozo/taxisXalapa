@@ -31,5 +31,9 @@ class Cat_municipio extends Model
     public function getNombreAttribute($value)
 	{		
 		return mb_strtoupper($value, 'UTF-8');
-	}    
+    }
+    
+    public function direcciones(){
+        return $this->hasMany('App\Http\Models\Direccion','municipio_id');
+    }
 }
