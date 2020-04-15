@@ -12,6 +12,7 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.12/css/bootstrap-select.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -111,8 +112,10 @@
         <script type="text/javascript" src="DataTables/datatables.min.js"></script>
         <!-- <script src="{{ asset('material') }}/js/core/jquery.min.js"></script> -->
         <script src="{{ asset('material') }}/js/core/popper.min.js"></script>
+        
         <script src="{{ asset('material') }}/js/core/bootstrap-material-design.min.js"></script>
-        <script src="{{ asset('material') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+        <!-- <script src="{{ asset('material') }}/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
+        
         <!-- Plugin for the momentJs  -->
         <script src="{{ asset('material') }}/js/plugins/moment.min.js"></script>
         <!--  Plugin for Sweet Alert -->

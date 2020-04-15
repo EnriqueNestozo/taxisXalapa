@@ -10,18 +10,212 @@
       <div class="modal-body">
         <form id="registroDiarioForm">
         <div class="row">
-        
           <div class="col-xls-6 col-sm-6 col-md-6">
+            <div class="custom-control custom-switch" style="padding-left: 35px;">
+              <input type="checkbox" class="custom-control-input" id="customSwitch1">
+              <label class="custom-control-label" for="customSwitch1">Registro recurrente</label>
+            </div>
             <div class="row">
               <div class="col-12">
                 <input type="text" style="display:none" id="idRegistro" name="idRegistro">
                 <input type="text" style="display:none" id="idCliente" name="idCliente">
-                <div class="form-group" id="horaDiv">
+
+                <div class="form-group" id="horaDiv" style="display:none">
                     <label for="hora" class="col-form-label">Hora:</label>
                     <br>
                     <input type="time" class="form-control is-invalid" id="hora" name="hora">
                     <span id="hora-error" class="error text-danger" for="hora" style="display:none">Campo faltante</span>
                 </div>
+
+
+
+                <div class="form-group">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="lunes" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Lunes</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="lunes" name="lunes">
+                      </td>
+                    </tr>
+                    
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="martes" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Martes</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="marte" name="martes">
+                      </td>
+                    </tr>
+
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="miercoles" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Miercoles</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="miercoles" name="miercoles">
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="jueves" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Jueves</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="jueves" name="jueves">
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="viernes" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Viernes</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="viernes" name="viernes">
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="sabado" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Sábado</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="sabado" name="sabado">
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="domingo" checked>
+                            <span class="form-check-sign">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </td>
+                      <td>Domingo</td>
+                      <td>
+                        <input type="time" class="form-control is-invalid" id="domingo" name="domingo">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                  
+                  <!-- <div class="form-check">
+                    <label class="form-check-label">
+                      Martes
+                      <input class="form-check-input" type="checkbox" value="martes" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Miercoles
+                      <input class="form-check-input" type="checkbox" value="miercoles" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Jueves
+                      <input class="form-check-input" type="checkbox" value="jueves" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Viernes
+                      <input class="form-check-input" type="checkbox" value="viernes" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Sábado
+                      <input class="form-check-input" type="checkbox" value="sabado" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      Domingo
+                      <input class="form-check-input" type="checkbox" value="domingo" checked>
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div> -->
+
+
+
+                </div>
+
+
+
                 <div class="form-group" id="personaDiv">
                   <label for="persona" class="col-form-label">Persona:</label>
                   <br>
