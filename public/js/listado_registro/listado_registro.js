@@ -14,6 +14,12 @@ $(document).ready(function() {
   $('#modalRegistroDiario').on('hidden.bs.modal', function () {
     $('#registroDiarioForm').trigger("reset");
     limpiarErrores();
+    obtenerListadoPersonas();
+    cargarSelectsMunicipio();
+    $('#direccionSelect').empty();
+    html = '';
+    html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+    $('#direccionSelect').append(html);
     $('#persona').prop('disabled',false);
     $('#municipio').prop('disabled',false);
     $('#localidad').prop('disabled',false);

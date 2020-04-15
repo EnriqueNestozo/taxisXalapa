@@ -127,11 +127,11 @@ function editarRegistro(id_registro){
         $('#personaSelect').prop('disabled',true);
         $('#persona').prop('disabled',true);
         setTimeout(function(){
-            $('#municipioSelect').val(registro['direccion_id']).trigger('change');
+            $('#direccionSelect').val(registro['direccion_id']).trigger('change');
             var objeto = direcciones.filter(obj => {
-            return obj['id'] == $('#municipioSelect').val()
+                return obj['id'] == $('#direccionSelect').val()
             });
-            // console.log(objeto[0]['referencia']);
+            console.log(objeto[0]['calle']);
             $('#referencia').val(objeto[0]['referencia']);
             $('#entre_calles').val(objeto[0]['entre_calles']);
             
@@ -216,10 +216,10 @@ function registrarViaje(){
             $("#registroDiarioBtn").prop('disabled', false);
             $('#registroDiarioForm').trigger("reset");
             $('#modalRegistroDiario').modal('hide');
-            $('#municipioSelect').empty();
+            $('#direccionSelect').empty();
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
-            $('#municipioSelect').append(html);
+            $('#direccionSelect').append(html);
             // console.log("success registro");
             cargarListado();
             obtenerListadoPersonas();
