@@ -10,13 +10,14 @@ use App\Http\Models\Direccion;
 use App\Http\Models\Cat_municipio;
 use App\Http\Models\Cat_localidad;
 use App\Http\Models\Cat_colonia;
+use App\Http\Models\Horario;
 use DataTables;
 use DB;
 
 class RegistrosDiariosController extends Controller
 {
     public function listRecords(){  
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->get();
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->where('tipo_registro',0)->get();
         
         $tabla = Datatables::of($listadoRegistros)
             ->addColumn('action',function($fila){
@@ -44,7 +45,13 @@ class RegistrosDiariosController extends Controller
         }
         try{
             DB::beginTransaction();
-            $registroDiario->hora = $request->hora;
+            
+            if($request->isRecurrente=='on'){
+                $registroDiario->tipo_registro=1;
+            }else{
+                $registroDiario->tipo_registro=0;
+                $registroDiario->hora = $request->hora;
+            }
             if($request->personaSelect !=null || $request->idCliente !=null ){
                 $cliente = ($request->personaSelect)? Cliente::find($request->personaSelect) : Cliente::find($request->idCliente);
                 $registroDiario->cliente_id = ($request->personaSelect)? $request->personaSelect : $request->idCliente;
@@ -109,16 +116,20 @@ class RegistrosDiariosController extends Controller
                 }
                 
                 $direccion->referencia = ($request->referencia)? $request->referencia : '';
-                $direccion->cliente_id = $cliente->id;  //AQUI TRUENA, porque el cliente
+                $direccion->cliente_id = $cliente->id;
                 $direccion->entre_calles = ($request->entre_calles)? $request->entre_calles : '';
                 $direccion->calle = $request->calle;
                 $direccion->save();
                 $registroDiario->direccion_id = $direccion->id;
             }
-            //Hay que hacer que pueda guardarse nulo en bd
             $registroDiario->unidad_id = $request->clave;
             $registroDiario->user_id = $request->idUser;
             $registroDiario->save();
+
+            if($request->isRecurrente=='on'){
+                $this->guardarHorario($request, $registroDiario->id);
+            }
+            
             DB::commit();
             return response()->json($request,201);
         }catch (\PDOException $e) {
@@ -127,6 +138,53 @@ class RegistrosDiariosController extends Controller
             return response()->json($e,500);
         }
         
+        
+    }
+
+    public function guardarHorario($request, $idRegistro){
+        $horario = new Horario();
+        if($request->lunes){
+            $horario->dia = 'Lunes';
+            $horario->hora = $request->lunes;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->martes){
+            $horario->dia = 'Martes';
+            $horario->hora = $request->martes;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->miercoles){
+            $horario->dia = 'Miercoles';
+            $horario->hora = $request->miercoles;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->jueves){
+            $horario->dia = 'Jueves';
+            $horario->hora = $request->jueves;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->viernes){
+            $horario->dia = 'Viernes';
+            $horario->hora = $request->viernes;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->sabado){
+            $horario->dia = 'Sábado';
+            $horario->hora = $request->sabado;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
+        if($request->domingo){
+            $horario->dia = 'Domingo';
+            $horario->hora = $request->domingo;
+            $horario->registro_id = $idRegistro;
+            $horario->save();
+        }
         
     }
 

@@ -8865,7 +8865,7 @@ a.text-dark:focus {
 
 .btn.btn-primary.btn-link {
   background-color: transparent;
-  color: #9c27b0;
+  color: #e6357e;
   box-shadow: none;
 }
 
@@ -8873,7 +8873,7 @@ a.text-dark:focus {
 .btn.btn-primary.btn-link:focus,
 .btn.btn-primary.btn-link:active {
   background-color: transparent;
-  color: #9c27b0;
+  color: #e6357e;
 }
 
 .btn.btn-secondary {

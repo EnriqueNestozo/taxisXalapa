@@ -29,5 +29,9 @@ class RegistroDiario extends Model
         return $this->belongsTo('App\Http\Models\User','user_id');
     }
 
+    public function horarios(){
+        return $this->hasMany('App\Http\Models\Horario','registro_id');
+    }
+
 
 }

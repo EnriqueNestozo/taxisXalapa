@@ -1,4 +1,4 @@
-<div class="modal fade" role="dialog" id="modalRegistroDiario" aria-hidden="true" >
+<div class="modal fade" role="dialog" id="modalRegistroDiario" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -12,15 +12,15 @@
         <div class="row">
           <div class="col-xls-6 col-sm-6 col-md-6">
             <div class="custom-control custom-switch" style="padding-left: 35px;">
-              <input type="checkbox" class="custom-control-input" id="customSwitch1">
-              <label class="custom-control-label" for="customSwitch1">Registro recurrente</label>
+              <input type="checkbox" class="custom-control-input" id="isRecurrente" name="isRecurrente">
+              <label class="custom-control-label" for="isRecurrente">Registro recurrente</label>
             </div>
             <div class="row">
               <div class="col-12">
                 <input type="text" style="display:none" id="idRegistro" name="idRegistro">
                 <input type="text" style="display:none" id="idCliente" name="idCliente">
 
-                <div class="form-group" id="horaDiv" style="display:none">
+                <div class="form-group" id="horaDiv">
                     <label for="hora" class="col-form-label">Hora:</label>
                     <br>
                     <input type="time" class="form-control is-invalid" id="hora" name="hora">
@@ -29,14 +29,14 @@
 
 
 
-                <div class="form-group">
+                <div class="form-group" style="display:none" id="semanaDiv">
                 <table class="table">
                   <tbody>
                     <tr>
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="lunes" checked>
+                            <input class="form-check-input" type="checkbox" value="lunes" id="lunesCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -54,7 +54,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="martes" checked>
+                            <input class="form-check-input" type="checkbox" value="martes" id="martesCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -63,7 +63,7 @@
                       </td>
                       <td>Martes</td>
                       <td>
-                        <input type="time" class="form-control is-invalid" id="marte" name="martes">
+                        <input type="time" class="form-control is-invalid" id="martes" name="martes">
                       </td>
                     </tr>
 
@@ -72,7 +72,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="miercoles" checked>
+                            <input class="form-check-input" type="checkbox" value="miercoles" id="miercolesCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -89,7 +89,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="jueves" checked>
+                            <input class="form-check-input" type="checkbox" value="jueves" id="juevesCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -106,7 +106,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="viernes" checked>
+                            <input class="form-check-input" type="checkbox" value="viernes" id="viernesCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -123,7 +123,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="sabado" checked>
+                            <input class="form-check-input" type="checkbox" value="sabado" id="sabadoCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
@@ -140,7 +140,7 @@
                       <td>
                         <div class="form-check">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="domingo" checked>
+                            <input class="form-check-input" type="checkbox" value="domingo" id="domingoCheck" checked>
                             <span class="form-check-sign">
                               <span class="check"></span>
                             </span>
