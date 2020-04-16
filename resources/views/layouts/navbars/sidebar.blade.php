@@ -29,6 +29,12 @@
             <p>{{ __('Registros recurrentes') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'listado_servicios' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('listado-servicios') }}">
+          <i class="material-icons">content_paste</i>
+            <p>{{ __('Servicios') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'listado_clientes' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-clientes') }}">
           <i class="material-icons">content_paste</i>

@@ -71,6 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('listado-recurrentes', function () {
 		return view('pages.listado_registros_recurrentes');
 	})->name('listado-recurrentes');
+
+	Route::get('listado-servicios', function () {
+		return view('pages.listado_servicios');
+	})->name('listado-servicios');
 	
 	Route::get('listado-clientes', function () {
 		return view('pages.listado_clientes');
