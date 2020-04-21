@@ -33,45 +33,16 @@ $(document).ready(function() {
     $('#coloniaSelect').prop('disabled',false);
   });
 
-  $('#isRecurrente').change(function(){
-    if( $('#isRecurrente').is(':checked') ){
-      $('#semanaDiv').show();
-      $('#horaDiv').hide();
-    }else{
-      $('#horaDiv').show();
-      $('#semanaDiv').hide();
-    }
-  });
+  // $('#isRecurrente').change(function(){
+  //   if( $('#isRecurrente').is(':checked') ){
+  //     $('#semanaDiv').show();
+  //     $('#horaDiv').hide();
+  //   }else{
+  //     $('#horaDiv').show();
+  //     $('#semanaDiv').hide();
+  //   }
+  // });
 
-  $('#lunesCheck').change(function(){
-    console.log("luines");
-    $('#lunes').prop('disabled', !$('#lunesCheck').is(':checked')).trigger('change');
-  });
-
-  $('#martesCheck').change(function(){
-    console.log(!$('#martesCheck').is(':checked'));
-    $('#martes').prop('disabled', !$('#martesCheck').is(':checked')).trigger('change');
-  });
-
-  $('#miercolesCheck').change(function(){
-    $('#miercoles').prop('disabled', !$('#miercolesCheck').is(':checked')).trigger('change');
-  });
-
-  $('#juevesCheck').change(function(){
-    $('#jueves').prop('disabled', !$('#juevesCheck').is(':checked')).trigger('change');
-  });
-
-  $('#viernesCheck').change(function(){
-    $('#viernes').prop('disabled', !$('#viernesCheck').is(':checked')).trigger('change');
-  });
-
-  $('#sabadoCheck').change(function(){
-    $('#sabado').prop('disabled', !$('#sabadoCheck').is(':checked')).trigger('change');
-  });
-
-  $('#domingoCheck').change(function(){
-    $('#domingo').prop('disabled', !$('#domingoCheck').is(':checked')).trigger('change');
-  });
 
   $('#hora').focusout(function(){
     if( $('#hora').val() !='' ){

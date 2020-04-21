@@ -22,62 +22,9 @@ function cargarListado(){
             {data: 'hora', name: 'hora'},
             {data: "cliente.nombre", name: 'cliente.nombre'},
             {data: "direccionCompleta", name: 'direccionCompleta'},
-            {data: 'unidad.numero_economico', name: 'unidad.numero_economico', "defaultContent":""},
             {data: 'user.name'},
             {data: 'action', name:'action'}
         ]
-    });
-}
-
-function obtenerListadoClavesTaxis(){
-    var data = sessionStorage.getItem('token');
-    $.get({
-        url: rutaListadoClavesTaxis,
-        dataType: 'json',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer '+data,
-        },
-        success: function( result ) {
-            $('#clave').empty();
-            html = '';
-            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
-            for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].numero_economico+'</option>';
-            }
-            $('#clave').append(html);
-        },
-        error: function(result){
-            console.log(result);
-        }
-    });
-}
-
-function obtenerListadoPersonas(){
-    var data = sessionStorage.getItem('token');
-    $.get({
-        url: rutaListadoClientes,
-        dataType: 'json',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer '+data,
-        },
-        success: function( result ) {
-            $('#personaSelect').empty();
-            html = '';
-            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
-            for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].nombre+'</option>';
-            }
-            $('#personaSelect').append(html);
-        },
-        error: function(result){
-            console.log(result);
-        }
     });
 }
 
@@ -370,13 +317,4 @@ function marcarErrores(){
     //   $('#celularDiv').addClass('has-danger');
     //   $('#celular-error').show();
     // }
-}
-
-function cargarSelectsMunicipio(){
-    $.when( 
-        $.ajax( rutaListadoMunicipios ))
-        .done(function ( v1) {
-        $('#municipioSelect').select2({data:v1});
-        $('#municipioSelect').val(87).trigger('change');
-    });
 }

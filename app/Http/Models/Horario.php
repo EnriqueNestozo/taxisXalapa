@@ -9,7 +9,7 @@ class Horario extends Model
     protected $table = 'horario';
 
 
-    public function registroDiarios(){
-        return $this->belongsTo('App\Http\Models\RegistroDiario','registro_id');
+    public function servicio(){
+        return $this->belongsTo('App\Http\Models\RegistroDiario','servicio_id');
     }
 }

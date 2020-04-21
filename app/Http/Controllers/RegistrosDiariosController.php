@@ -141,53 +141,6 @@ class RegistrosDiariosController extends Controller
         
     }
 
-    public function guardarHorario($request, $idRegistro){
-        $horario = new Horario();
-        if($request->lunes){
-            $horario->dia = 'Lunes';
-            $horario->hora = $request->lunes;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->martes){
-            $horario->dia = 'Martes';
-            $horario->hora = $request->martes;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->miercoles){
-            $horario->dia = 'Miercoles';
-            $horario->hora = $request->miercoles;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->jueves){
-            $horario->dia = 'Jueves';
-            $horario->hora = $request->jueves;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->viernes){
-            $horario->dia = 'Viernes';
-            $horario->hora = $request->viernes;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->sabado){
-            $horario->dia = 'Sábado';
-            $horario->hora = $request->sabado;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        if($request->domingo){
-            $horario->dia = 'Domingo';
-            $horario->hora = $request->domingo;
-            $horario->registro_id = $idRegistro;
-            $horario->save();
-        }
-        
-    }
-
     public function show($idRegistro)
     {
         $registro = RegistroDiario::find($idRegistro);

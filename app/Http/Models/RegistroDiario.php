@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class RegistroDiario extends Model
 {
     use SoftDeletes;
-    protected $table = 'registros_diarios';
+    protected $table = 'registros';
 
     protected $fillable = [
         'hora', 'cliente_id', 'direccion_id'

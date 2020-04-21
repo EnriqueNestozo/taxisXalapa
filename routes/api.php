@@ -47,6 +47,11 @@ Route::get('municipios','CatalogosController@getMunicipios')->name('api.get.muni
 Route::get('localidades/{idMunicipio}','CatalogosController@getLocalidades')->name('api.get.localidades');
 Route::get('colonias/{idLocalidad}','CatalogosController@getColonias')->name('api.get.colonias');
 
+//Api para servicios
+Route::get('servicios-list','ServicioController@listRecords')->name('api.servicios.list')->middleware('auth:api');
+Route::post('servicios','ServicioController@create')->name('api.servicios.create')->middleware('auth:api');
+Route::get('servicio/{idRegistro}','ServicioController@show')->name('api.servicio.get')->middleware('auth:api');
+Route::post('servicio-delete','ServicioController@delete')->name('api.servicio.delete')->middleware('auth:api');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
