@@ -13,7 +13,7 @@ class AddTipoRegistroToRegistrosDiariosTable extends Migration
      */
     public function up()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             $table->tinyInteger('tipo_registro');
         });
     }
@@ -25,7 +25,7 @@ class AddTipoRegistroToRegistrosDiariosTable extends Migration
      */
     public function down()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             $table->dropColumn('tipo_registro');
         });
     }

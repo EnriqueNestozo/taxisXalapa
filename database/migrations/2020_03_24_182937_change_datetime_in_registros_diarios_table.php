@@ -13,10 +13,10 @@ class ChangeDatetimeInRegistrosDiariosTable extends Migration
      */
     public function up()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             $table->time('hora')->change();
         });
-        Schema::table('registros_recurrentes', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             $table->time('hora')->change();
         });
     }
@@ -28,7 +28,7 @@ class ChangeDatetimeInRegistrosDiariosTable extends Migration
      */
     public function down()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             //
         });
     }

@@ -17,8 +17,8 @@ class CreateHorarioTable extends Migration
             $table->bigIncrements('id');
             $table->string('dia',15);
             $table->time('hora');
-            $table->unsignedBigInteger('registro_id');
-            $table->foreign('registro_id')->references('id')->on('registros_diarios');
+            $table->unsignedBigInteger('servicio_id');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
             $table->softDeletes();
         });

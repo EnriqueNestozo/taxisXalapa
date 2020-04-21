@@ -13,17 +13,17 @@ class ChangeUnidadIdInRegistrosDiariosTable extends Migration
      */
     public function up()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             $table->dropForeign(['unidad_id']);
             $table->unsignedBigInteger('unidad_id')->nullable()->change();
             $table->foreign('unidad_id')->references('id')->on('unidades');
         });
 
-        Schema::table('registros_recurrentes', function (Blueprint $table) {
-            $table->dropForeign(['unidad_id']);
-            $table->unsignedBigInteger('unidad_id')->nullable()->change();
-            $table->foreign('unidad_id')->references('id')->on('unidades'); 
-        });
+        // Schema::table('registros_recurrentes', function (Blueprint $table) {
+        //     $table->dropForeign(['unidad_id']);
+        //     $table->unsignedBigInteger('unidad_id')->nullable()->change();
+        //     $table->foreign('unidad_id')->references('id')->on('unidades'); 
+        // });
     }
 
     /**
@@ -33,7 +33,7 @@ class ChangeUnidadIdInRegistrosDiariosTable extends Migration
      */
     public function down()
     {
-        Schema::table('registros_diarios', function (Blueprint $table) {
+        Schema::table('registros', function (Blueprint $table) {
             //
         });
     }
