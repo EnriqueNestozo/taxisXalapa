@@ -10,6 +10,6 @@ class Horario extends Model
 
 
     public function servicio(){
-        return $this->belongsTo('App\Http\Models\RegistroDiario','servicio_id');
+        return $this->belongsTo('App\Http\Models\Servicio','servicio_id');
     }
 }

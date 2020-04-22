@@ -11,6 +11,7 @@ use App\Http\Models\Cat_municipio;
 use App\Http\Models\Cat_localidad;
 use App\Http\Models\Cat_colonia;
 use App\Http\Models\Horario;
+use Carbon\Carbon;
 use DataTables;
 use DB;
 
@@ -132,7 +133,7 @@ class ServicioController extends Controller
     }
 
     public function guardarHorario($request, $idServicio){
-        $listadoHorarios = Servicio::where('servicio_id',$idServici)->get();
+        $listadoHorarios = Horario::where('servicio_id',$idServicio)->get();
         foreach ($listadoHorarios as $horario) {
             $horario->delete();
         }
@@ -204,5 +205,62 @@ class ServicioController extends Controller
         $servicio = Servicio::find($request->idServicio);
         $servicio->delete();
         return response()->json("Borrado exitoso!",201);
+    }
+
+    public function listServiciosPendientes(){
+        $fecha =  getdate();
+        $date = Carbon::now();
+        $date2 = Carbon::now();
+        $daysSpanish = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miercoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sabado',
+            7 => 'Domingo',
+        ];
+        $weekday = $daysSpanish[$fecha['wday']];
+        $actualHour = date_format($date,"H:i:s");
+        $dateAfter = $date->addHour();
+        $toHour = date_format($dateAfter,"H:i:s");
+        $actualDate = date_format($date2,"Y-m-d H:i:s");
+        // $listadoServicios = Servicio::whereHas('horarios',function($query) use ($weekday){
+        //     $query->where('dia',$weekday);
+        // })->get();
+        // $listadoServicios = Servicio::with(['horarios','registros'])->whereHas('horarios',function($query) use ($weekday,$actualHour,$toHour){
+        //     $query->where('dia',$weekday);
+        //     $query->whereBetween('hora', [$actualHour,$toHour]);
+        // })->whereHas('registros',function($query) use ($actualDate,$actualHour,$toHour){
+        //     $query->where('created_at','!=',$actualDate);
+        //     $query->whereNotBetween('hora', [$actualHour,$toHour]);
+        // })->orWhereDoesntHave('registros')
+        // ->get(); 
+
+        $listadoServicios = Servicio::with(['horarios'=>function($query) use($weekday,$actualHour,$toHour){
+            //TRAE SOLO EL HORARIO DEL DÍA Y HORA PROXIMA
+            $query->where('dia',$weekday);
+            $query->whereBetween('hora', [$actualHour,$toHour]);
+        }])->where(function ($query) use($weekday,$actualHour,$toHour){
+            //DONDE TENGA UN HORARIO EN DÍA Y HORA PROXIMA
+            $query->whereHas('horarios',function($subquery) use ($weekday,$actualHour,$toHour){
+                $subquery->where('dia',$weekday);
+                $subquery->whereBetween('hora', [$actualHour,$toHour]);
+            });
+        })->where(function ($query) use($weekday,$actualHour,$toHour, $actualDate){
+            //DONDE TENGA REGISTROS CREADOS EN DÍAS PASADOS O DÍA ACTUAL PERO A DIFERENTE HORA O DE PLANO NO TENGA REGISTROS
+            $query->whereHas('registros',function($subquery) use ($actualDate,$actualHour,$toHour){
+                $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+                    $subsubquery->where('created_at','<',$actualDate);
+                });
+                $subquery->orWhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+                    $subsubquery->where('created_at',$actualDate);
+                    $subsubquery->whereNotBetween('hora', [$actualHour,$toHour]);
+                });
+            })->orWhereDoesntHave('registros');
+        })->get(); 
+    
+        // dd($listadoServicios);
+        return $listadoServicios;
     }
 }

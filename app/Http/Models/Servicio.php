@@ -25,5 +25,9 @@ class Servicio extends Model
         return $this->hasMany('App\Http\Models\Horario','servicio_id');
     }
 
+    public function registros(){
+        return $this->hasMany('App\Http\Models\RegistroDiario','servicio_id');
+    }
+
 
 }

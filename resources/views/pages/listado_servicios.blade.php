@@ -16,11 +16,11 @@
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
-                    <th style="width:25%;">No. servicio</th>
+                    <th style="width:10%;">No. servicio</th>
                     <th style="width:25%;">Cliente</th>
                     <th style="width:25%;">Dirección</th>
                     <th style="width:25%;">Quien registró</th>
-                    <th style="width:25%;">Acciones</th>
+                    <th style="width:15%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
