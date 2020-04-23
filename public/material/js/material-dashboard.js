@@ -183,6 +183,26 @@ md = {
     });
   },
 
+  showNotificationService: function(from, align,tipo=null,mensaje=null, urlDestino) {
+    type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary'];
+
+    color = Math.floor((Math.random() * 6) + 1);
+
+    $.notify({
+      icon: "add_alert",
+      message: mensaje,
+      url: urlDestino,
+      target: '_self'
+    }, {
+      type: tipo,
+      timer: 50,
+      placement: {
+        from: from,
+        align: align
+      }
+    });
+  },
+
   initDocumentationCharts: function() {
     if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */

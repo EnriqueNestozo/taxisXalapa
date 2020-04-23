@@ -6,3 +6,12 @@
     @include('layouts.footers.auth')
   </div>
 </div>
+@push('js')
+<script>
+  //Variables globales
+  var routeBase			    = '{!! url('') !!}';
+  $(document).ready(function() {
+    verificarExistenciasDeServicios();
+  });
+</script>
+@endpush

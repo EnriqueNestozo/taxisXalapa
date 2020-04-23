@@ -7,15 +7,17 @@ function verificarExistenciasDeServicios() {
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
         },
         success: function( result ) {
-            console.log(result);
-            md.showNotification('bottom','right','info','Hay un servicio pendiente sin asignar en 1 hora.');
+            // console.log("a");
+            if(result.length > 0){
+                md.showNotificationService('bottom','right','info','Tiene servicios pendientes sin asignar.',routeBase+'/listado-recurrentes');
+            }
         },
         error: function(result){
             console.log(result);
         }
     });
     // md.showNotification('bottom','right','info','Hay un servicio pendiente sin asignar en 1 hora.');
-    // setTimeout(verificarExistenciasDeServicios, 15000);
+    setTimeout(verificarExistenciasDeServicios, 15000);
 }
 
 function cargarSelectsMunicipio(){
