@@ -218,8 +218,8 @@ class ServicioController extends Controller
         $tabla = Datatables::of($listadoServicios)
             ->addColumn('action',function($fila){
                 $accion = null;
-                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Generar registro' onClick='generarRegistro(".$fila->id.")'><i class='material-icons'>library_add</i></button>";
-                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Cancelar Registro' onClick='cancelarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Generar registro' onClick='generarRegistro(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'>assignment_turned_in</i></button>";
+                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Cancelar Registro' onClick='cancelarRegistro(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'    >close</i></button>";
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){

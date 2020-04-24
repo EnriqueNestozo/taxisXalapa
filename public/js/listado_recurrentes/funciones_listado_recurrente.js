@@ -26,3 +26,11 @@ function cargarListado(){
         ]
     });
 }
+
+function generarRegistro(idServicio){
+    console.log(idServicio);
+}
+
+function cancelarRegistro(idServicio){
+    console.log(idServicio);
+}

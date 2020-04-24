@@ -16,13 +16,13 @@
                   <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item">
                       <a class="nav-link active" href="#pendientes" data-toggle="tab">
-                        <i class="material-icons">assignment_late</i> Servicios pendientes
+                        <i class="material-icons" style="font-size: 24px;">assignment_late</i> Servicios pendientes
                         <div class="ripple-container"></div>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#registros" data-toggle="tab">
-                        <i class="material-icons">list</i> Registros recurrentes
+                        <i class="material-icons" style="font-size: 24px;">list</i> Registros recurrentes
                         <div class="ripple-container"></div>
                       </a>
                     </li>
