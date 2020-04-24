@@ -7,9 +7,9 @@ function verificarExistenciasDeServicios() {
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
         },
         success: function( result ) {
-            // console.log("a");
-            if(result.length > 0){
-                md.showNotificationService('bottom','right','info','Tiene servicios pendientes sin asignar.',routeBase+'/listado-recurrentes');
+            // console.log(result);
+            if(result > 0){
+                md.showNotificationService('bottom','right','info','Hay ' + result + ' servicio(s) pendiente(s) sin asignar.',routeBase+'/listado-recurrentes');
             }
         },
         error: function(result){
@@ -17,7 +17,7 @@ function verificarExistenciasDeServicios() {
         }
     });
     // md.showNotification('bottom','right','info','Hay un servicio pendiente sin asignar en 1 hora.');
-    setTimeout(verificarExistenciasDeServicios, 15000);
+    setTimeout(verificarExistenciasDeServicios, 60000);
 }
 
 function cargarSelectsMunicipio(){

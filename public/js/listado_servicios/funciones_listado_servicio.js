@@ -219,6 +219,7 @@ function registrarServicio(){
             $('#municipio').prop('disabled',false);
             $('#idRegistro').val('');
             $('#idCliente').val('');
+            $('#modalRegistroServicio').modal('hide');
             md.showNotification('bottom','right','success','Registro creado correctamente');
         },
         error: function(result){

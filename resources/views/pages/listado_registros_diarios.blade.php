@@ -15,13 +15,13 @@
             <div class="table-responsive">
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
-                  <th>N. Registro</th>
-                  <th>Hora</th>
-                  <th>Persona</th>
-                  <th>Dirección</th>
-                  <th>Clave</th>
-                  <th>Quien lo registró</th>
-                  <th>Acciones</th>
+                  <th style="width:10%;">N. Registro</th>
+                  <th style="width:10%;">Hora</th>
+                  <th style="width:15%;">Persona</th>
+                  <th style="width:20%;">Dirección</th>
+                  <th style="width:10%;">Clave</th>
+                  <th style="width:15%;">Quien lo registró</th>
+                  <th style="width:20%;">Acciones</th>
                 </thead>
                 <tbody>
                   

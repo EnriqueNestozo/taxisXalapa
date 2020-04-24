@@ -52,7 +52,8 @@ Route::get('servicios-list','ServicioController@listRecords')->name('api.servici
 Route::post('servicios','ServicioController@create')->name('api.servicios.create')->middleware('auth:api');
 Route::get('servicio/{idRegistro}','ServicioController@show')->name('api.servicio.get')->middleware('auth:api');
 Route::post('servicio-delete','ServicioController@delete')->name('api.servicio.delete')->middleware('auth:api');
-Route::get('servicios-pendientes','ServicioController@listServiciosPendientes')->name('api.servicios.pendientes')->middleware('auth:api');
+Route::get('servicios-pendientes','ServicioController@numServiciosPendientes')->name('api.servicios.pendientes')->middleware('auth:api');
+Route::get('lista-servicios-pendientes','ServicioController@listaServiciosPendientes')->name('api.servicios.pendientes.list')->middleware('auth:api');
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

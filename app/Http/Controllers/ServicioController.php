@@ -207,7 +207,32 @@ class ServicioController extends Controller
         return response()->json("Borrado exitoso!",201);
     }
 
-    public function listServiciosPendientes(){
+    public function numServiciosPendientes(){
+        $listado = $this->obtenerListaServiciosPendientes();
+        return count($listado);
+    }
+
+    function listaServiciosPendientes(){
+        $listadoServicios = $this->obtenerListaServiciosPendientes();
+        
+        $tabla = Datatables::of($listadoServicios)
+            ->addColumn('action',function($fila){
+                $accion = null;
+                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Generar registro' onClick='generarRegistro(".$fila->id.")'><i class='material-icons'>library_add</i></button>";
+                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Cancelar Registro' onClick='cancelarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                return $accion;
+            })
+            ->addColumn('direccionCompleta',function($fila){
+                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                return $direccionCompleta;
+            })
+            ->rawColumns(['action','direccionCompleta'])
+            ->make(true);
+
+        return $tabla;
+    }
+
+    function obtenerListaServiciosPendientes(){
         $fecha =  getdate();
         $date = Carbon::now();
         $date2 = Carbon::now();
@@ -241,7 +266,7 @@ class ServicioController extends Controller
             //TRAE SOLO EL HORARIO DEL DÍA Y HORA PROXIMA
             $query->where('dia',$weekday);
             $query->whereBetween('hora', [$actualHour,$toHour]);
-        }])->where(function ($query) use($weekday,$actualHour,$toHour){
+        },'direccion.colonia','direccion.localidad','cliente'])->where(function ($query) use($weekday,$actualHour,$toHour){
             //DONDE TENGA UN HORARIO EN DÍA Y HORA PROXIMA
             $query->whereHas('horarios',function($subquery) use ($weekday,$actualHour,$toHour){
                 $subquery->where('dia',$weekday);
@@ -259,8 +284,6 @@ class ServicioController extends Controller
                 });
             })->orWhereDoesntHave('registros');
         })->get(); 
-    
-        // dd($listadoServicios);
         return $listadoServicios;
     }
 }
