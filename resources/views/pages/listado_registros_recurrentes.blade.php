@@ -104,6 +104,7 @@
     </div>
   </div>
 </div>
+@include('modals.modalRegistroDiario')
 @endsection
 @push('js')
 <script>

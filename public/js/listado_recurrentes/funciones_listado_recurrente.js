@@ -29,6 +29,7 @@ function cargarListado(){
 
 function generarRegistro(idServicio){
     console.log(idServicio);
+    $('#modalRegistroDiario').modal('show');
 }
 
 function cancelarRegistro(idServicio){
