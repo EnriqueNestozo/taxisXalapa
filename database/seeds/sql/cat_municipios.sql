@@ -13,7 +13,6 @@
 
 
 -- Volcando estructura de base de datos para db_ci
-CREATE DATABASE IF NOT EXISTS `taxisxalapa` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `taxisxalapa`;
 
 

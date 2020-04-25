@@ -1,4 +1,3 @@
-CREATE DATABASE IF NOT EXISTS `taxisxalapa` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `taxisxalapa`;
 
 
