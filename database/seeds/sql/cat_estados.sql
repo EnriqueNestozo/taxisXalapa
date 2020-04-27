@@ -1,4 +1,4 @@
-USE `taxisxalapa_1`;
+USE `taxisxal_1`;
 
 
 SET FOREIGN_KEY_CHECKS = 0;
