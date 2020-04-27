@@ -15,6 +15,7 @@
             <div class="row">
               <div class="col-12">
                 <input type="text" style="display:none" id="idRegistro" name="idRegistro">
+                <input type="text" style="display:none" id="idServicio" name="idServicio">
                 <input type="text" style="display:none" id="idCliente" name="idCliente">
 
                 <div class="form-group" id="horaDiv">

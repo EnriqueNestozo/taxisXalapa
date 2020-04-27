@@ -200,6 +200,37 @@ class ServicioController extends Controller
         return response()->json($arreglo,201);
     }
 
+    public function showWithCurrentScheedule($idServicio)
+    {
+        $fecha =  getdate();
+        $date = Carbon::now();
+        $date2 = Carbon::now();
+        $daysSpanish = [
+            1 => 'Lunes',
+            2 => 'Martes',
+            3 => 'Miercoles',
+            4 => 'Jueves',
+            5 => 'Viernes',
+            6 => 'Sabado',
+            7 => 'Domingo',
+        ];
+        $weekday = $daysSpanish[$fecha['wday']];
+        $actualHour = date_format($date,"H:i:s");
+        $dateAfter = $date->addHour();
+        $toHour = date_format($dateAfter,"H:i:s");
+        $servicio = Servicio::with(['horarios'=>function($query) use($weekday,$actualHour,$toHour){
+            //TRAE SOLO EL HORARIO DEL DÍA Y HORA PROXIMA
+            $query->where('dia',$weekday);
+            $query->whereBetween('hora', [$actualHour,$toHour]);
+        }])->where('id',$idServicio)->first();
+        $clientes = Cliente::find($servicio->cliente_id);
+        $direcciones = Direccion::where('cliente_id',$servicio->cliente_id)->get();
+        $unidades = Unidad::all();
+        $arreglo = [];
+        array_push($arreglo,$servicio,$clientes,$direcciones,$unidades);
+        return response()->json($arreglo,201);
+    }
+
     public function delete(Request $request)
     {
         $servicio = Servicio::find($request->idServicio);
@@ -212,10 +243,10 @@ class ServicioController extends Controller
         return count($listado);
     }
 
-    function listaServiciosPendientes(){
+    public function listaServiciosPendientes(){
         $listadoServicios = $this->obtenerListaServiciosPendientes();
-        
-        $tabla = Datatables::of($listadoServicios)
+        try{
+            $tabla = Datatables::of($listadoServicios)
             ->addColumn('action',function($fila){
                 $accion = null;
                 $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Generar registro' onClick='generarRegistro(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'>assignment_turned_in</i></button>";
@@ -229,10 +260,14 @@ class ServicioController extends Controller
             ->rawColumns(['action','direccionCompleta'])
             ->make(true);
 
-        return $tabla;
+            return $tabla;
+        }catch(Exception $e){
+            return $e;
+        }
+        
     }
 
-    function obtenerListaServiciosPendientes(){
+    public function obtenerListaServiciosPendientes(){
         $fecha =  getdate();
         $date = Carbon::now();
         $date2 = Carbon::now();
@@ -276,6 +311,7 @@ class ServicioController extends Controller
             //DONDE TENGA REGISTROS CREADOS EN DÍAS PASADOS O DÍA ACTUAL PERO A DIFERENTE HORA O DE PLANO NO TENGA REGISTROS
             $query->whereHas('registros',function($subquery) use ($actualDate,$actualHour,$toHour){
                 $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+                    //FALTA SECCIONAR EL CREATED AT PARA QUE SOLO CUENTE LA FECHA Y NO LA HORA
                     $subsubquery->where('created_at','<',$actualDate);
                 });
                 $subquery->orWhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
@@ -285,5 +321,9 @@ class ServicioController extends Controller
             })->orWhereDoesntHave('registros');
         })->get(); 
         return $listadoServicios;
+    }
+
+    public function obtenerDatosServicioPendiente($idServicio){
+
     }
 }

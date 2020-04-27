@@ -45,13 +45,9 @@ class RegistrosDiariosController extends Controller
         }
         try{
             DB::beginTransaction();
-            
-            if($request->isRecurrente=='on'){
-                $registroDiario->tipo_registro=1;
-            }else{
-                $registroDiario->tipo_registro=0;
-                $registroDiario->hora = $request->hora;
-            }
+            $registroDiario->tipo_registro=$request->tipoRegistro;
+            $registroDiario->hora = $request->hora;
+            $registroDiario->servicio_id= ($request->idServicio)? $request->idServicio : null;
             if($request->personaSelect !=null || $request->idCliente !=null ){
                 $cliente = ($request->personaSelect)? Cliente::find($request->personaSelect) : Cliente::find($request->idCliente);
                 $registroDiario->cliente_id = ($request->personaSelect)? $request->personaSelect : $request->idCliente;
