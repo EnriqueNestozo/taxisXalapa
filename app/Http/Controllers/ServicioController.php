@@ -312,7 +312,7 @@ class ServicioController extends Controller
             $query->whereHas('registros',function($subquery) use ($actualDate,$actualHour,$toHour){
                 $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
                     //FALTA SECCIONAR EL CREATED AT PARA QUE SOLO CUENTE LA FECHA Y NO LA HORA
-                    $subsubquery->where('created_at','<',$actualDate);
+                    $subsubquery->where('created_at', '<', date('Y-m-d').' 00:00:00');
                 });
                 $subquery->orWhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
                     $subsubquery->where('created_at',$actualDate);
