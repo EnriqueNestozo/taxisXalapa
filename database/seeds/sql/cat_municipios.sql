@@ -13,7 +13,7 @@
 
 
 -- Volcando estructura de base de datos para db_ci
-USE `taxisxalapa`;
+USE `taxisxalapa_1`;
 
 
 SET FOREIGN_KEY_CHECKS = 0;
