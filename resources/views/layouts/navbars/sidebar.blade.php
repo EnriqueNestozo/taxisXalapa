@@ -13,8 +13,8 @@
     <ul class="nav">
       <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
-          <i class="material-icons">tablero</i>
-            <p>{{ __('Tablero') }}</p>
+          <i class="material-icons">description</i>
+            <p>{{ __('Reportes') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'listado_registros_diarios' ? ' active' : '' }}">

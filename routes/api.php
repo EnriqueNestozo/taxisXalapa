@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//Api para reportes
+Route::get('registros-list','ReportesController@listRecords')->name('api.registros.list')->middleware('auth:api');
+
 
 //Api para registros diarios
 Route::post('registrosDiarios','RegistrosDiariosController@create')->name('api.registros.diarios.create')->middleware('auth:api');

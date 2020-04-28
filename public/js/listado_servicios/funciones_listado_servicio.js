@@ -6,7 +6,7 @@ function cargarListado(){
         searching: true,
         destroy: true,
         language: {
-        url: routeBase+'/DataTables/DataTable_Spanish.json'
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
         },
         ajax: {
         url: rutaListadoServicios,
