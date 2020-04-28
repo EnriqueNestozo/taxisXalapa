@@ -4,70 +4,26 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
-              <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">description</i>
-                </div>
-                <div style="text-align:center; padding-top:1em">
-                  <h4 class="card-title" >Reporte mensual de servicios</h4>
-                </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">content_copy</i>
               </div>
-  
-              <div class="card-footer">
-                <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
-                </div>
+              <p class="card-category">Used Space</p>
+              <h3 class="card-title">49/50
+                <small>GB</small>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="material-icons text-danger">warning</i>
+                <a href="#pablo">Get More Space...</a>
               </div>
             </div>
-          </a>
+          </div>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
-              <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">description</i>
-                </div>
-                <div style="text-align:center; padding-top:1em">
-                  <h4 class="card-title" >Corte por número de taxi</h4>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
-              <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">description</i>
-                </div>
-                <div style="text-align:center; padding-top:1em">
-                  <h4 class="card-title" >Reporte por cliente, destino, hora</h4>
-                
-                </div>
-              </div>
-  
-              <div class="card-footer">
-                <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
               <div class="card-icon">
@@ -82,8 +38,8 @@
               </div>
             </div>
           </div>
-        </div> -->
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-danger card-header-icon">
               <div class="card-icon">
@@ -98,8 +54,8 @@
               </div>
             </div>
           </div>
-        </div> -->
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
@@ -114,12 +70,9 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
-
-      
-
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -169,10 +122,8 @@
             </div>
           </div>
         </div>
-      </div> -->
-
-
-      <!-- <div class="row">
+      </div>
+      <div class="row">
         <div class="col-lg-6 col-md-12">
           <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
@@ -462,7 +413,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 @endsection
