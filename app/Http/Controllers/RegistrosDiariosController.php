@@ -20,17 +20,32 @@ class RegistrosDiariosController extends Controller
         $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->where('tipo_registro',$tipoRegistro)->get();
         
         $tabla = Datatables::of($listadoRegistros)
+            ->editColumn('estatus',function($fila){
+                $estatus = null;
+                if($fila['estatus']==null){
+                    $estatus= '<span class="badge badge-info">Enviado</span>';
+                }
+                if($fila['estatus']==1){
+                    $estatus= '<span class="badge badge-warning">Sin unidad</span>';
+                }
+                if($fila['estatus']==2){
+                    $estatus= '<span class="badge" style="background-color:red; color:white">Cancelado</span>';
+                }
+                return $estatus;
+            })
             ->addColumn('action',function($fila){
                 $accion = null;
-                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Registro' onClick='editarRegistro(".$fila->id.")'><i class='material-icons'>edit</i></button>";
-                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                if($fila['estatus']!=2){
+                    $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Registro' onClick='editarRegistro(".$fila->id.")'><i class='material-icons'>edit</i></button>";
+                    $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                }
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
                 $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
-            ->rawColumns(['action','direccionCompleta'])
+            ->rawColumns(['estatus','action','direccionCompleta'])
             ->make(true);
         return $tabla;
     }
@@ -119,6 +134,7 @@ class RegistrosDiariosController extends Controller
                 $registroDiario->direccion_id = $direccion->id;
             }
             $registroDiario->unidad_id = $request->clave;
+            $registroDiario->estatus = ($request->clave)? null : 1;
             $registroDiario->user_id = $request->idUser;
             $registroDiario->save();
 
@@ -151,7 +167,9 @@ class RegistrosDiariosController extends Controller
     public function delete(Request $request)
     {
         $registro = RegistroDiario::find($request->idRegistro);
-        $registro->delete();
+        // $registro->delete();
+        $registro->estatus = 2;
+        $registro->save();
         return response()->json("Borrado exitoso!",201);
     }
 }

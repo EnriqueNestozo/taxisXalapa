@@ -52,7 +52,8 @@ function cargarListadoRegistros(){
             {data: "cliente.nombre", name: 'cliente.nombre'},
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
-            {data: 'user.name', defaultContent:' '},
+            {data: 'estatus'},
+            {data: 'user.name'},
             {data: 'action', name:'action'}
         ]
     });
@@ -167,6 +168,7 @@ function registrarViaje(){
             $('#direccionSelect').append(html);
             // console.log("success registro");
             cargarListado();
+            cargarListadoRegistros();
             obtenerListadoPersonas();
             // $('#personaSelect').prop('disabled',false);
             // $('#municipioSelect').prop('disabled',false);

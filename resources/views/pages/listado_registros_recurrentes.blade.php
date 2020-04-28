@@ -33,37 +33,42 @@
             <div class="card-body">
               <div class="tab-content">
                 <div class="tab-pane active" id="pendientes">
-                  <table id="listadoServiciosPendientes" class="table-hover"  style="width:100%">
-                    <thead>
-                      <tr>
-                        <th style="width:10%;">No. servicio</th>
-                        <th style="width:15%;">Hora</th>
-                        <th style="width:25%;">Cliente</th>
-                        <th style="width:25%;">Dirección</th>
-                        <!-- <th style="width:25%;">Estatus</th> -->
-                        <th style="width:25%;">Acciones</th>
-                      </tr>
-                    </thead>
-                      
-                    <tbody>
-                      
-                    </tbody>
-                  </table>
+                  <div class="table-responsive">
+                    <table id="listadoServiciosPendientes" class="table-hover"  style="width:100%">
+                      <thead>
+                        <tr>
+                          <th style="width:10%;">No. servicio</th>
+                          <th style="width:15%;">Hora</th>
+                          <th style="width:25%;">Cliente</th>
+                          <th style="width:25%;">Dirección</th>
+                          <!-- <th style="width:25%;">Estatus</th> -->
+                          <th style="width:25%;">Acciones</th>
+                        </tr>
+                      </thead>
+                        
+                      <tbody>
+                        
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div class="tab-pane" id="registros-recurrentes">
-                  <table id="listadoRegistrosRecurrentes" class="table-hover"  style="width:100%">
-                    <thead>
-                      <th style="width:10%;">N. Registro</th>
-                      <th style="width:10%;">Hora</th>
+                  <div class="table-responsive">
+                    <table id="listadoRegistrosRecurrentes" class="table-hover"  style="width:100%">
+                      <thead>
+                      <th style="width:5%;">N. Registro</th>
+                      <th style="width:5%;">Hora</th>
                       <th style="width:15%;">Persona</th>
-                      <th style="width:20%;">Dirección</th>
+                      <th style="width:25%;">Dirección</th>
                       <th style="width:10%;">Clave</th>
-                      <th style="width:15%;">Quien lo registró</th>
+                      <th style="width:10%;">Estatus</th>
+                      <th style="width:10%;">Quien lo registró</th>
                       <th style="width:20%;">Acciones</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

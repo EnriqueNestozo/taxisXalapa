@@ -23,6 +23,7 @@ function cargarListado(){
             {data: "cliente.nombre", name: 'cliente.nombre'},
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
+            {data: 'estatus'},
             {data: 'user.name'},
             {data: 'action', name:'action'}
         ]
@@ -88,7 +89,10 @@ function editarRegistro(id_registro){
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
         $('#celular').val(clientes['celular']).trigger('change');
         if(registro['unidad_id']!=null){
-            $('#unidad').val(registro['unidad_id']).trigger('change');
+            console.log("unidad "+registro['unidad_id']);
+            $('#clave').val(registro['unidad_id']).trigger('change');
+        }else{
+            $('#clave').val('').trigger('change');
         }
         $('#idRegistro').val(registro['id']);
         $('#idCliente').val(registro['cliente_id']);
@@ -103,14 +107,14 @@ function editarRegistro(id_registro){
 function eliminarRegistro(id_registro){
     var data = sessionStorage.getItem('token');
     swal({
-        title: '¿Esta seguro que desea eliminar el registro?',
-        text: "El registro se eliminará de manera permanente!",
+        title: '¿Esta seguro que desea cancelar el registro?',
+        text: "El registro se cancelará de manera permanente!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonClass: 'btn btn-success',
         cancelButtonClass: 'btn btn-danger',
         cancelButtonText: 'Cancelar!',
-        confirmButtonText: 'Eliminar!',
+        confirmButtonText: 'Continuar!',
         buttonsStyling: false
         }).then(function(confirmation) {
         // console.log(confirmation);
@@ -126,7 +130,7 @@ function eliminarRegistro(id_registro){
                 'Authorization': 'Bearer '+data,
             },
             success: function( result ) {
-                md.showNotification('bottom','right','success','Registro eliminado correctamente');
+                md.showNotification('bottom','right','success','Registro cancelado correctamente');
                 cargarListado();
             },
             error: function(result){

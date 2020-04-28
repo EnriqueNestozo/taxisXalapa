@@ -9,18 +9,19 @@
           <div class="card-header card-header-primary">
               <button class="btn btn-primary pull-right" onClick="desplegarModalRegistro()">Agregar registro</button>
             <h4 class="card-title ">Registros diarios</h4>
-            <p class="card-category"> Listado de registros diarios</p>
+            <p class="card-category">Listado de registros diarios</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
-                  <th style="width:10%;">N. Registro</th>
-                  <th style="width:10%;">Hora</th>
+                  <th style="width:5%;">N. Registro</th>
+                  <th style="width:5%;">Hora</th>
                   <th style="width:15%;">Persona</th>
-                  <th style="width:20%;">Dirección</th>
+                  <th style="width:25%;">Dirección</th>
                   <th style="width:10%;">Clave</th>
-                  <th style="width:15%;">Quien lo registró</th>
+                  <th style="width:10%;">Estatus</th>
+                  <th style="width:10%;">Quien lo registró</th>
                   <th style="width:20%;">Acciones</th>
                 </thead>
                 <tbody>
