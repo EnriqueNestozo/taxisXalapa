@@ -45,7 +45,7 @@ class RegistrosDiariosController extends Controller
         }
         try{
             DB::beginTransaction();
-            $registroDiario->tipo_registro=$request->tipoRegistro;
+            $registroDiario->tipo_registro=($request->tipoRegistro)? ($request->tipoRegistro) : '0';
             $registroDiario->hora = $request->hora;
             $registroDiario->servicio_id= ($request->idServicio)? $request->idServicio : null;
             if($request->personaSelect !=null || $request->idCliente !=null ){

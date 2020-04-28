@@ -117,6 +117,7 @@
   var rutaListadoMunicipios= "{{route('api.get.municipios')}}";
   var rutaCrearRegistroDiario= "{{route('api.registros.diarios.create')}}";
 </script>
+<script src="{{ asset('js') }}/listado_registro/funciones_listado_registro.js"></script>
 <script src="{{ asset('js') }}/listado_recurrentes/listado_recurrentes.js"></script>
 <script src="{{ asset('js') }}/listado_recurrentes/funciones_listado_recurrente.js"></script>
 @endpush

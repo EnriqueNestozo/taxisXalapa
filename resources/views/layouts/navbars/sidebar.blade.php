@@ -50,7 +50,7 @@
       
       <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
-          <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
+          <i class="material-icons">account_box</i>
           <p>{{ __('Usuario') }}
             <b class="caret"></b>
           </p>

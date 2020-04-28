@@ -84,6 +84,9 @@ function cargarDatos(idServicio){
             $('#personaSelect').val(datosGenerales.cliente_id).trigger('change');
             // $('#personaSelect').prop('disabled',true);
             $('#hora').val(datosGenerales.horarios[0].hora).trigger('change');
+            if(datosGenerales.unidad_id !=null){
+                $('#clave').val(datosGenerales.unidad_id).trigger('change');
+            }
             setTimeout(function(){
                 $('#direccionSelect').val(datosGenerales.direccion_id).trigger('change');
                 // $('#direccionSelect').prop('disabled',true);

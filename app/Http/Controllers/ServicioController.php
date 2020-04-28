@@ -118,6 +118,7 @@ class ServicioController extends Controller
                 $servicio->direccion_id = $direccion->id;
             }
             $servicio->user_id = $request->idUser;
+            $servicio->unidad_id = $request->clave;
             $servicio->save();
 
             $this->guardarHorario($request, $servicio->id);
