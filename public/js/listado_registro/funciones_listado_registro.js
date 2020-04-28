@@ -6,16 +6,16 @@ function cargarListado(){
         searching: true,
         destroy: true,
         language: {
-        url: routeBase+'/DataTables/DataTable_Spanish.json'
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
         },
         ajax: {
-        url: rutaListadoRegistrosDiarios,
-        type: "GET",
-        dataType: 'json',
-        headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+data,
-        }
+            url: routeBase+'/api/registros-diarios-list/0',
+            type: "GET",
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+data,
+            }
         },
         columns: [
             {data: 'id', name: 'id'},

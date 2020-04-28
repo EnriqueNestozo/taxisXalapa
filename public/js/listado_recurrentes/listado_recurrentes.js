@@ -10,6 +10,26 @@ $(document).ready(function() {
     $('#celular').mask('000-000-00-00');
     
     cargarSelectsMunicipio();
+
+    // $("#tabs").tabs({
+    //   activate: function (event, ui) {
+    //     var active = $('#tabs').tabs('option', 'active');
+    //     console.log(active);
+    //     // $("#tabid").html('the tab id is ' + $("#tabs ul>li a").eq(active).attr("href"));
+    //   }
+    // });
+    $('#tabs').on('change', function(){
+      console.log( $('#tabs') );
+    });
+
+    $(".tab-r a").click(function(event) { 
+      if(this.id=="tab-registros"){
+        cargarListadoRegistros();
+      }else{
+        console.log("pe");
+        cargarListado();
+      }
+    });
   
     $('#modalRegistroDiario').on('hidden.bs.modal', function () {
       $('#registroDiarioForm').trigger("reset");

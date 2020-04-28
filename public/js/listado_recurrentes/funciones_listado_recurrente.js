@@ -27,6 +27,37 @@ function cargarListado(){
     });
 }
 
+function cargarListadoRegistros(){
+    var data = sessionStorage.getItem('token');
+    $('#listadoRegistrosRecurrentes').DataTable({
+        processing: true,
+        serverSide: true,
+        searching: true,
+        destroy: true,
+        language: {
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
+        },
+        ajax: {
+            url: routeBase+'/api/registros-diarios-list/1' ,
+            type: "GET",
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+data,
+            }
+        },
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'hora', name: 'hora'},
+            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "direccionCompleta", name: 'direccionCompleta'},
+            {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
+            {data: 'user.name', defaultContent:' '},
+            {data: 'action', name:'action'}
+        ]
+    });
+}
+
 function generarRegistro(idServicio){
     cargarDatos(idServicio);
     $('#modalRegistroDiario').modal('show');

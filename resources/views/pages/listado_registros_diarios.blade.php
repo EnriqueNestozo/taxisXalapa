@@ -106,7 +106,6 @@
 @push('js')
 <script>
   //Variables globales de rutas
-  var rutaListadoRegistrosDiarios = "{{route('api.registros.diarios.list')}}";
   var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
   var rutaListadoClientes= "{{route('api.get.clientes')}}";
   var rutaBorradoRegistros= "{{route('api.delete.registro')}}";

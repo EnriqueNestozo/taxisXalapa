@@ -14,14 +14,14 @@
                 <div class="nav-tabs-wrapper">
                   <!-- <span class="nav-tabs-title">Registros recurrentes:</span> -->
                   <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#pendientes" data-toggle="tab">
+                    <li class="nav-item tab-r">
+                      <a class="nav-link active" href="#pendientes" data-toggle="tab" id="tab-pendientes">
                         <i class="material-icons" style="font-size: 24px;">assignment_late</i> Servicios pendientes
                         <div class="ripple-container"></div>
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#registros" data-toggle="tab">
+                    <li class="nav-item tab-r" >
+                      <a class="nav-link" href="#registros-recurrentes" data-toggle="tab" id="tab-registros">
                         <i class="material-icons" style="font-size: 24px;">list</i> Registros recurrentes
                         <div class="ripple-container"></div>
                       </a>
@@ -50,18 +50,18 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="tab-pane" id="registros">
-                <table id="listadoRegistrosRecurrentes" class="table-hover"  style="width:100%">
+                <div class="tab-pane" id="registros-recurrentes">
+                  <table id="listadoRegistrosRecurrentes" class="table-hover"  style="width:100%">
+                    <thead>
+                      <th style="width:10%;">N. Registro</th>
+                      <th style="width:10%;">Hora</th>
+                      <th style="width:15%;">Persona</th>
+                      <th style="width:20%;">Dirección</th>
+                      <th style="width:10%;">Clave</th>
+                      <th style="width:15%;">Quien lo registró</th>
+                      <th style="width:20%;">Acciones</th>
+                    </thead>
                     <tbody>
-                      <tr>
-                        <th style="width:10%;">No. registro</th>
-                        <th style="width:15%;">Hora</th>
-                        <th style="width:20%;">Cliente</th>
-                        <th style="width:20%;">Dirección</th>
-                        <th style="width:10%;">Unidad</th>
-                        <th style="width:10%;">Estatus</th>
-                        <th style="width:15%;">Acciones</th>
-                      </tr>
                     </tbody>
                   </table>
                 </div>

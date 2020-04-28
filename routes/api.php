@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 //Api para registros diarios
 Route::post('registrosDiarios','RegistrosDiariosController@create')->name('api.registros.diarios.create')->middleware('auth:api');
-Route::get('registros-diarios-list','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
+Route::get('registros-diarios-list/{tipoRegistro}','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
 Route::get('registros-diarios/{idRegistro}','RegistrosDiariosController@show')->name('api.get.registro')->middleware('auth:api');
 Route::post('registros-diarios-delete','RegistrosDiariosController@delete')->name('api.delete.registro')->middleware('auth:api');
 //Api para clientes
