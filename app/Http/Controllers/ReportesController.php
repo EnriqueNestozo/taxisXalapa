@@ -40,9 +40,9 @@ class ReportesController extends Controller
             ->editColumn('tipo_registro', function($fila){
                 $tipo = null;
                 if($fila['tipo_registro']==1){
-                    $tipo = "Diario";
-                }else{
                     $tipo = "Recurrente";
+                }else{
+                    $tipo = "Diario";
                 }
                 return $tipo;
             })
