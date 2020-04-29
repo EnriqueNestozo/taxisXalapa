@@ -56,11 +56,11 @@ $(document).ready(function() {
       $('#personaDiv').removeClass('has-danger');
       $('#persona-error').hide();
       if($('#persona').val() !=''){
-        // $('#municipioSelect').empty();
+        $('#direccionSelect').empty();
         $('#personaSelect').prop('disabled',true);
-        // html = '';
-        // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
-        // $('#municipioSelect').append(html);
+        html = '';
+        html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+        $('#direccionSelect').append(html);
       }
     }else{
       $('#personaSelect').prop('disabled',false);
@@ -94,6 +94,10 @@ $(document).ready(function() {
         $('#persona').prop('disabled',true);
       }
     }else{
+      $('#direccionSelect').empty();
+      html = '';
+      html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+      $('#direccionSelect').append(html);
       $('#personaSelect').prop('disabled',false);
       $('#persona').prop('disabled',false);
       
