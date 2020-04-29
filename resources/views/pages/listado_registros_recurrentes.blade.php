@@ -118,6 +118,7 @@
   var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
   var rutaListadoClientes= "{{route('api.get.clientes')}}";
   var rutaBorradoServicios= "{{route('api.servicio.delete')}}";
+  var rutaCancelarRegistro= "{{route('api.servicio.cancel')}}";
   var rutaCrearServicio= "{{route('api.servicios.create')}}";
   var rutaListadoMunicipios= "{{route('api.get.municipios')}}";
   var rutaCrearRegistroDiario= "{{route('api.registros.diarios.create')}}";

@@ -23,7 +23,7 @@ class RegistrosDiariosController extends Controller
             ->editColumn('estatus',function($fila){
                 $estatus = null;
                 if($fila['estatus']==null){
-                    $estatus= '<span class="badge badge-info">Enviado</span>';
+                    $estatus= '<span class="badge badge-info">Listo</span>';
                 }
                 if($fila['estatus']==1){
                     $estatus= '<span class="badge badge-warning">Sin unidad</span>';

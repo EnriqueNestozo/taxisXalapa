@@ -37,7 +37,16 @@ class ReportesController extends Controller
                 $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
-            ->rawColumns(['estatus','direccionCompleta'])
+            ->editColumn('tipo_registro', function($fila){
+                $tipo = null;
+                if($fila['tipo_registro']==1){
+                    $tipo = "Diario";
+                }else{
+                    $tipo = "Recurrente";
+                }
+                return $tipo;
+            })
+            ->rawColumns(['estatus','direccionCompleta','tipo_registro'])
             ->make(true);
         return $tabla;
     }

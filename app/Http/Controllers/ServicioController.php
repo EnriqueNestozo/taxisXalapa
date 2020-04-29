@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Servicio;
 use App\Http\Models\Cliente;
 use App\Http\Models\Unidad;
+use App\Http\Models\RegistroDiario;
 use App\Http\Models\Direccion;
 use App\Http\Models\Cat_municipio;
 use App\Http\Models\Cat_localidad;
@@ -232,11 +233,69 @@ class ServicioController extends Controller
         return response()->json($arreglo,201);
     }
 
+    /*
+        Elimina el servicio completo
+    */
     public function delete(Request $request)
     {
         $servicio = Servicio::find($request->idServicio);
         $servicio->delete();
         return response()->json("Borrado exitoso!",201);
+    }
+
+    /*
+        Cancela el servicio del día
+    */
+    public function cancelarServicio(Request $request){
+        $cliente = null;
+        $direccion = null;
+        $registroDiario = new RegistroDiario();
+
+        try{
+            DB::beginTransaction();
+            
+            $fecha =  getdate();
+            $date = Carbon::now();
+            $date2 = Carbon::now();
+            $daysSpanish = [
+                1 => 'Lunes',
+                2 => 'Martes',
+                3 => 'Miercoles',
+                4 => 'Jueves',
+                5 => 'Viernes',
+                6 => 'Sabado',
+                7 => 'Domingo',
+            ];
+            $weekday = $daysSpanish[$fecha['wday']];
+            $actualHour = date_format($date,"H:i:s");
+            $dateAfter = $date->addHour();
+            $toHour = date_format($dateAfter,"H:i:s");
+            $servicio = Servicio::with(['horarios'=>function($query) use($weekday,$actualHour,$toHour){
+                //TRAE SOLO EL HORARIO DEL DÍA Y HORA PROXIMA
+                $query->where('dia',$weekday);
+                $query->whereBetween('hora', [$actualHour,$toHour]);
+            }])->where('id',$request->idServicio)->first();
+            $registroDiario->hora = $servicio->horarios[0]->hora;
+            $registroDiario->cliente_id = $servicio->cliente_id;
+            $registroDiario->direccion_id = $servicio->direccion_id;
+            $registroDiario->unidad_id = ($servicio->unidad_id)? $servicio->unidad_id : null;
+            $registroDiario->estatus = 2;
+            $registroDiario->user_id = $servicio->user_id;
+            $registroDiario->tipo_registro='1';
+            $registroDiario->servicio_id=$request->idServicio;
+            $registroDiario->save();
+
+            if($request->isRecurrente=='on'){
+                $this->guardarHorario($request, $registroDiario->id);
+            }
+            
+            DB::commit();
+            return response()->json($request,201);
+        }catch (\PDOException $e) {
+            dd($e);
+            DB::rollBack();
+            return response()->json($e,500);
+        }
     }
 
     public function numServiciosPendientes(){

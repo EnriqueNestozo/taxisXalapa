@@ -52,7 +52,7 @@ function cargarListadoRegistros(){
             {data: "cliente.nombre", name: 'cliente.nombre'},
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
-            {data: 'estatus'},
+            {data: 'estatus', defaultContent:' '},
             {data: 'user.name'},
             {data: 'action', name:'action'}
         ]
@@ -65,7 +65,41 @@ function generarRegistro(idServicio){
 }
 
 function cancelarRegistro(idServicio){
-    console.log(idServicio);
+    var data = sessionStorage.getItem('token');
+    swal({
+        title: '¿Esta seguro que desea cancelar el servicio de hoy?',
+        text: "El servicio se cancelará de manera permanente!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'Cancelar!',
+        confirmButtonText: 'Continuar!',
+        buttonsStyling: false
+        }).then(function(confirmation) {
+        // console.log(confirmation);
+        if (confirmation['dismiss'] != 'cancel') {
+            $.post({
+            url: rutaCancelarRegistro,
+            data:{
+                idServicio: idServicio,
+            },   
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+data,
+            },
+            success: function( result ) {
+                md.showNotification('bottom','right','success','Registro cancelado correctamente');
+                cargarListado();
+            },
+            error: function(result){
+                console.log(result);
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar el registro');
+            }
+            });
+        }
+    });
 }
 
 function cargarDatos(idServicio){

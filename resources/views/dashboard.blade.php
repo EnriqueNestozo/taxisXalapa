@@ -1,12 +1,11 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Dashboard')])
+@extends('layouts.app', ['activePage' => 'dashboard', 'titlePage' => __('Reportes')])
 
 @section('content')
   <div class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
+            <div class="card card-stats" onclick="desplegarReporteMensualServicios()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
                   <i class="material-icons">description</i>
@@ -23,11 +22,9 @@
                 </div>
               </div>
             </div>
-          </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
+            <div class="card card-stats" onclick="desplegarReportePorTaxi()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
                   <i class="material-icons">description</i>
@@ -43,11 +40,9 @@
                 </div>
               </div>
             </div>
-          </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6">
-          <a href="">
-            <div class="card card-stats">
+            <div class="card card-stats" onclick="desplegarReporteGeneral()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
                   <i class="material-icons">description</i>
@@ -65,7 +60,6 @@
                 </div>
               </div>
             </div>
-          </a>
         </div>
         <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
@@ -117,6 +111,47 @@
         </div> -->
       </div>
 
+      <div class="row">
+        <div class="col-lg-12 col-md-12" id="tablaReporteMensual" style="display:none">
+          <div class="card">
+            <div class="card-header card-header-tabs card-header-primary">
+              <h3>Reporte mensual de servicios</h3>
+            </div>
+            <div class="card-body">
+
+
+              <div class="row">
+
+              <!-- <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker">
+  <input placeholder="Select date" type="text" id="example" class="form-control">
+  <i class="fas fa-calendar input-prefix" tabindex=0></i>
+</div> -->
+
+
+              <div class="table-responsive">
+                <table id="myTable1" class="display table-hover" style="width:100%">
+                  <thead>
+                    <tr>
+                        <th>N. Registro</th>
+                        <th>Hora</th>
+                        <th>Cliente</th>
+                        <th>Dirección</th>
+                        <th>Unidad</th>
+                        <th>Estatus</th>
+                        <th>Quien registró</th>
+                        <th>Tipo de servicio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
 
       <!-- <div class="row">
@@ -468,10 +503,62 @@
 @endsection
 
 @push('js')
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap- 
+datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
   <script>
     $(document).ready(function() {
+      md.initFormExtendedDatetimepickers();
+      // $('#tablaReporteMensual').hide();
+      $('#tablaReportePorTaxi').hide();
+      
       // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
+    //   $(".datepicker").datepicker({
+    //     viewMode: 'years',
+    //      format: 'mm-yyyy'
+    // });
+      // md.initDashboardPageCharts();
     });
+
+    function desplegarReporteMensualServicios(){
+      console.log("desplegado");
+      $('#tablaReporteMensual').show();
+      $('#myTable1').DataTable( {
+        processing: true,
+        serverSide: true,
+        searching: true,
+        destroy: true,
+        language: {
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'excel', 'pdf',
+        ],
+        ajax: {
+            url: routeBase+'/api/registros-list',
+            type: "GET",
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+            }
+        },
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'hora', name: 'hora'},
+            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "direccionCompleta", name: 'direccionCompleta'},
+            {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
+            {data: 'estatus'},
+            {data: 'user.name'},
+            {data: 'tipo_registro'}
+        ]
+      } );
+    }
+
+    function desplegarReportePorTaxi(){
+      $('#tablaReportePorTaxi').show();
+      
+    }
   </script>
 @endpush
