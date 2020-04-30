@@ -24,7 +24,9 @@
         </li>
       </ul>
     </nav> -->
-    <div class="copyright float-right">
+    <div class="copyright float-right" style="position: fixed;
+  bottom: 0;
+  right: 0;">
       &copy;
       <script>
         document.write(new Date().getFullYear())

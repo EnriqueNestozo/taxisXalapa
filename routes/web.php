@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth/login');
-});
+
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 // Route::group(['middleware' => 'auth'], function () {
 // 	Route::get('table-list', function () {
@@ -60,6 +59,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::get('/', function () {
+		return view('dashboard');
+	});
+	Route::get('/home', 'HomeController@index')->name('home');
+
 	Route::get('listado-unidades', function () {
 		return view('pages.listado_unidades');
 	})->name('listado-unidades');
