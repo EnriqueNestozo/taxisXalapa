@@ -12,13 +12,24 @@
 
           <div class="container">
             <input type="text" style="display:none" id="idUnidad" name="idUnidad">
+            
+            <div class="form-group" id="marcaDiv">
+              <label for="marca" class="col-form-label">Marca:</label>
+              <input type="text" class="form-control is-invalid" id="marca" name="marca" style="padding-top:20px">
+              <span id="marca-error" class="error text-danger" for="marca" style="display:none">Campo faltante</span>
+            </div>
+            <div class="form-group" id="modeloDiv">
+              <label for="modelo" class="col-form-label">Modelo:</label>
+              <input type="text" class="form-control is-invalid" id="modelo" name="modelo" style="padding-top:20px">
+              <span id="modelo-error" class="error text-danger" for="modelo" style="display:none">Campo faltante</span>
+            </div>
             <div class="form-group" id="placasDiv">
-                <label for="placas" class="col-form-label">Placas:</label>
-                <input type="text" class="form-control is-invalid" id="placas" name="placas" style="padding-top:20px">
-                <span id="placas-error" class="error text-danger" for="placas" style="display:none">Campo faltante</span>
+              <label for="placas" class="col-form-label">Placas:</label>
+              <input type="text" class="form-control is-invalid" id="placas" name="placas" style="padding-top:20px">
+              <span id="placas-error" class="error text-danger" for="placas" style="display:none">Campo faltante</span>
             </div>
             <div class="form-group" id="numeroDiv">
-              <label for="numero" class="col-form-label">Número:</label>
+              <label for="numero" class="col-form-label">Clave:</label>
               <input type="text" class="form-control" id="numero" maxlength="100" name="numero" style="padding-top:20px">
               <span id="numero-error" class="error text-danger" for="numero" style="display:none">Campo faltante</span>
             </div>
@@ -27,12 +38,19 @@
               <input type="text" class="form-control" id="numero_economico" maxlength="100" name="numero_economico" style="padding-top:20px">
               <span id="numero_economico-error" class="error text-danger" for="numero_economico" style="display:none">Campo faltante</span>
             </div>
-            <div class="form-group" id="conductorDiv">
-              <label for="conductorSelect" class="col-form-label">Coductor asignado:</label>
-              <select class="clave" id="conductorSelect" maxlength="100" name="conductorSelect" style="padding-top:20px">
-                <option value="">Seleccione un conductor...</option>
+            <div class="form-group" id="conductor1Div">
+              <label for="conductor1Select" class="col-form-label">Chofer 1er. turno:</label>
+              <select class="clave" id="conductor1Select" maxlength="100" name="conductor1Select" style="padding-top:20px">
+                <option value="">Seleccione un chofer...</option>
               </select>
-              <span id="conductorSelect-error" class="error text-danger" for="conductorSelect" style="display:none">Campo faltante</span>
+              <span id="conductor1Select-error" class="error text-danger" for="conductor1Select" style="display:none">Campo faltante</span>
+            </div>
+            <div class="form-group" id="conductor2Div">
+              <label for="conductor2Select" class="col-form-label">Chofer 2do. turno:</label>
+              <select class="clave" id="conductor2Select" maxlength="100" name="conductor2Select" style="padding-top:20px">
+                <option value="">Seleccione un chofer...</option>
+              </select>
+              <span id="conductor2Select-error" class="error text-danger" for="conductor2Select" style="display:none">Campo faltante</span>
             </div>
           </div>
 
