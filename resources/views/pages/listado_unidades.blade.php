@@ -7,7 +7,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-          <button class="btn btn-primary pull-right" onClick="desplegarModalUnidad()">Agregar unidad</button>
+            <button class="btn btn-primary pull-right" onClick="desplegarModalUnidad()">Agregar unidad</button>
+            <button class="btn btn-primary pull-right" onClick="desplegarModalConductor()">Agregar conductor</button>
             <h4 class="card-title ">Unidades registradas</h4>
             <p class="card-category">Listado de unidades</p>
           </div>
@@ -37,12 +38,14 @@
   </div>
 </div>
 @include('modals.modalUnidades')
+@include('modals.modalConductor')
 @endsection
 @push('js')
 <script>
   $(document).ready(function() {
     $('.clave').select2();
     cargarListado();
+
     $('#placas').change(function(){
       if( $('#placas').val() !=''){
         $('#placas-error').hide();
@@ -71,6 +74,22 @@
     //Falta cuando cambie select de conductor
 
   } );
+  
+
+  function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(250)
+                        .height(250);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
   function cargarListado(){
     var data = sessionStorage.getItem('token');
@@ -194,6 +213,10 @@
 
   function desplegarModalUnidad(){
     $('#modalDatosUnidad').modal('show');
+  }
+
+  function desplegarModalConductor(){
+    $('#modalDatosConductor').modal('show');
   }
 
   function validarCampos(){
