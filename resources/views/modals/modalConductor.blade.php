@@ -147,11 +147,6 @@
                     <span id="imgReversoLicencia-error" class="error text-danger" for="imgReversoLicencia" style="display:none">Campo faltante</span>
                 </div>
             </div>
-
-            
-            
-
-
         </form>
       </div>
       <div class="modal-footer">
