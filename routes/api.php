@@ -60,6 +60,11 @@ Route::post('servicio-cancel','ServicioController@cancelarServicio')->name('api.
 Route::get('servicios-pendientes','ServicioController@numServiciosPendientes')->name('api.servicios.pendientes')->middleware('auth:api');
 Route::get('lista-servicios-pendientes','ServicioController@listaServiciosPendientes')->name('api.servicios.pendientes.list')->middleware('auth:api');
 Route::get('servicios-datos/{idServicio}','ServicioController@obtenerDatosServicioPendiente')->name('api.servicios.datos')->middleware('auth:api');
+
+//Api para conductores
+Route::post('conductores','ConductorController@create')->name('api.create.conductor')->middleware('auth:api');
+
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
