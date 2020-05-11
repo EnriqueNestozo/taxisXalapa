@@ -69,9 +69,9 @@ function obtenerListadoClavesTaxis(){
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
             for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].numero_economico+'</option>';
+                html += '<option ';
+                html += ' value="'+result[index].id+'" ';
+                html += '>'+result[index].numero_economico+'</option>';
             }
             $('#clave').append(html);
         },

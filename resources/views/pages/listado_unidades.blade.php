@@ -17,6 +17,7 @@
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
+                    <th>Detalle</th>
                     <th>Placa</th>
                     <th>Número</th>
                     <th>Clave</th>
@@ -41,11 +42,36 @@
 @include('modals.modalConductor')
 @endsection
 @push('js')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
   var rutaListadoUnidades = "{{route('api.unidades.list')}}";
   var rutaRegistroUnidad = "{{route('api.create.unidad')}}";
   var rutaEliminadoUnidad = "{{route('api.delete.unidad')}}";
   var rutaRegistroConductor = "{{route('api.create.conductor')}}";
+  $('#vencimiento').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    minYear: 2015,
+    maxYear: parseInt(moment().format('YYYY'),10),
+    locale:{
+      "monthNames": [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octobre",
+            "Noviembre",
+            "Diciembre"
+          ],
+    },function(start, end, label){
+      $(this).html(start.format('YYYY-MM-D'));
+    }
+  });
 </script>
 <script src="{{ asset('js') }}/listado_unidades/listado_unidades.js"></script>
 <script src="{{ asset('js') }}/listado_unidades/funciones_listado_unidades.js"></script>

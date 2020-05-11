@@ -8,6 +8,7 @@ use App\Http\Models\Documento;
 use App\Http\Controllers\Storage;
 use App\Http\Controllers\File;
 use DB;
+use DateTime;
 
 class ConductorController extends Controller
 {
@@ -19,7 +20,11 @@ class ConductorController extends Controller
     {
         DB::beginTransaction();
         try {  
-            $conductor = Conductor::create($request->all());
+            $datos = $request->all();
+            $fecha = strtotime($request->vencimiento);
+            $newformat = date('Y-m-d',$fecha);
+            $datos['vencimiento'] = $newformat;
+            $conductor = Conductor::create($datos);
             $conductor->save();
             $request->request->add(['id_registro' => $conductor->id]);
             $this->saveDoc($request);
@@ -27,10 +32,9 @@ class ConductorController extends Controller
             return response()->json($conductor,201);
         }catch (\PDOException $e) {      
             DB::rollBack();
-            dd($e);
             $succes = 'Fail'; 
             $folio = 'Intente de nuevo';       
-            return response()->json($conductor,501);
+            return response()->json($e,500);
         }
             
         
@@ -56,10 +60,20 @@ class ConductorController extends Controller
         return response()->json($conductor,201);
     }
 
-    public function listConductores()
-    {
-        $listadoconductores = Conductor::all();
-        return response()->json($listadoconductores,201);
+     //Trae el listado de los 2 turnos de los choferes
+     public function listadoConductores(){
+        $listadoConductores = Conductor::select('id','nombre','primer_apellido','segundo_apellido','turno')->get();
+        // dd($listadoConductores);
+        $turno1 = array();
+        $turno2 = array();
+        foreach ($listadoConductores as $conductor) {
+            if($conductor['turno'] == 1){
+                array_push($turno1, $conductor);
+            }else{
+                array_push($turno2, $conductor);
+            }
+        }
+        return array($turno1,$turno2); 
     }
 
     public function saveDoc(Request $request)

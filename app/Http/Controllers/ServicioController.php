@@ -298,11 +298,13 @@ class ServicioController extends Controller
         }
     }
 
+    //Obtiene el numero de servicios que hay pendientes para mostrar en la notificación
     public function numServiciosPendientes(){
         $listado = $this->obtenerListaServiciosPendientes();
         return count($listado);
     }
 
+    //Obtiene la tabla de los servicios pendientes
     public function listaServiciosPendientes(){
         $listadoServicios = $this->obtenerListaServiciosPendientes();
         try{

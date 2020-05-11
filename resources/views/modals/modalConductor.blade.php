@@ -10,19 +10,17 @@
       <div class="modal-body">
         <form id="datosConductorForm">
             <input type="text" style="display:none" id="idConductor" name="idConductor">
-            <div class="row"> 
-                <div class="form-group col-lg-6 col-md-6 col-sm-6" id="turnoDiv">
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <label for="turno" class="col-form-label">Turno:</label>
                         <select class="custom-select" id="turno" name="turno" style="width: 100%">
                             <option value="1">Mañana</option>
                             <option value="2">Tarde</option>
                         </select>
                     <span id="turno-error" class="error text-danger" for="turno" style="display:none">Campo faltante</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
+                    <br>
+                    <br>
                     <div class="col-12">
                         <img id="previewFotoPersona" src="http://placehold.it/250" alt="your image" />
                     </div>
@@ -30,7 +28,7 @@
                         <input type='file' onchange="readURL(this,'previewFotoPersona');" id="fotoPersona"/> 
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group col-lg-12 col-md-12 col-sm-12" id="nombreDiv">
                         <label for="nombre" class="col-form-label">Nombre:</label>
                         <input type="text" class="form-control is-invalid" id="nombre" name="nombre" style="padding-top:20px">
@@ -72,17 +70,16 @@
                         <span id="celular-error" class="error text-danger" for="celular" style="display:none">Campo faltante</span>
                     </div>
                     <div class="row" style="padding-left:1em;">
-                        <div class="form-group col-6" id="licenciaDiv">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6" id="licenciaDiv">
                             <label for="licencia" class="col-form-label">Licencia tipo:</label>
                             <input type="text" class="form-control" id="licencia" maxlength="100" name="licencia" style="padding-top:20px">
                             <span id="licencia-error" class="error text-danger" for="licencia" style="display:none">Campo faltante</span>
                         </div>
-                        <div class="form-group col-6" id="vencimientoDiv">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6" id="vencimientoDiv">
                             <label for="vencimiento" class="col-form-label">Vencimiento:</label>
-                            <input type="text" class="form-control" id="vencimiento" maxlength="100" name="vencimiento" style="padding-top:20px">
+                            <input type="text" class="form-control" name="vencimiento" id="vencimiento" value="01/01/2020" />
                             <span id="vencimiento-error" class="error text-danger" for="vencimiento" style="display:none">Campo faltante</span>
                         </div>
-                    
                     </div>
                     <div class="form-group col-lg-12 col-md-12 col-sm-12" id="tipo_sangreDiv">
                         <label for="tipo_sangre" class="col-form-label">Tipo de sangre:</label>

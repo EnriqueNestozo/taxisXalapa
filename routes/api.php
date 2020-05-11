@@ -36,7 +36,7 @@ Route::get('get-unidades','UnidadController@getUnidades')->name('api.get.unidade
 Route::post('unidades','UnidadController@create')->name('api.create.unidad')->middleware('auth:api');
 // Route::put('unidades/update','UnidadesController@update');
 Route::post('unidades/delete','UnidadController@delete')->name('api.delete.unidad')->middleware('auth:api');
-
+Route::get('unidades/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.unidad.get')->middleware('auth:api');
 //Api para direcciones
 Route::get('direcciones/{idDireccion}','DireccionController@show')->name('api.get.direccion')->middleware('auth:api');
 // Route::get('direcciones-list','DireccionController@listClients');
@@ -63,6 +63,7 @@ Route::get('servicios-datos/{idServicio}','ServicioController@obtenerDatosServic
 
 //Api para conductores
 Route::post('conductores','ConductorController@create')->name('api.create.conductor')->middleware('auth:api');
+Route::get('conductores','ConductorController@listadoConductores')->name('api.conductores.get')->middleware('auth:api');
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

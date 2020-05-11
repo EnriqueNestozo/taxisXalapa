@@ -52,10 +52,10 @@
               </select>
               <span id="conductor2Select-error" class="error text-danger" for="conductor2Select" style="display:none">Campo faltante</span>
             </div>
-            <div class="form-group" id="tarjetaCirculacionDiv">
-              <label for="tarjetaCirculacion" class="col-form-label">Tarjeta de circulación:</label>
-              <input type="text" class="form-control" id="tarjetaCirculacion" maxlength="100" name="tarjetaCirculacion" style="padding-top:20px">
-              <span id="tarjetaCirculacion-error" class="error text-danger" for="tarjetaCirculacion" style="display:none">Campo faltante</span>
+            <div class="form-group" id="tarjeta_circulacionDiv">
+              <label for="tarjeta_circulacion" class="col-form-label">Tarjeta de circulación:</label>
+              <input type="text" class="form-control" id="tarjeta_circulacion" maxlength="100" name="tarjeta_circulacion" style="padding-top:20px">
+              <span id="tarjeta_circulacion-error" class="error text-danger" for="tarjeta_circulacion" style="display:none">Campo faltante</span>
             </div>
           </div>
 

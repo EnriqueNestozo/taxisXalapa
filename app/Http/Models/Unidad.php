@@ -11,7 +11,7 @@ class Unidad extends Model
     protected $table = 'unidades';
 
     protected $fillable = [
-        'placas', 'numero', 'numero_economico'
+        'placas', 'numero', 'numero_economico','modelo','marca','tarjeta_circulacion'
     ];
 
     public function conductores()

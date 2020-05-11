@@ -12,9 +12,24 @@ function readURL(input,idpreview) {
     }
 }
 
+function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Turno:</td>'+
+            '<td>'+d.turno+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Nombre completo:</td>'+
+            '<td>'+d.nombre+'</td>'+
+        '</tr>'+
+    '</table>';
+}
+
 function cargarListado(){
+    cargarListadoChoferes();
     var data = sessionStorage.getItem('token');
-    $('#listado').DataTable({
+    return $('#listado').DataTable({
         processing: true,
         serverSide: true,
         searching: true,
@@ -32,6 +47,12 @@ function cargarListado(){
         }
         },
         columns: [
+            {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ''
+            },
             {data: 'placas', name: 'placas'},
             {data: "numero", name: 'numero', "defaultContent":""},
             {data: 'numero_economico', name: 'numero_economico', "defaultContent":""},
@@ -46,30 +67,69 @@ function registrarDatosUnidad(){
         $("#registroUnidadbtn").html("Cargando...");
         $("#registroUnidadbtn").prop('disabled', true);
         $.post({
-        url: rutaRegistroUnidad,
-        data:$("#datosUnidadForm").serialize(),
-        dataType: 'JSON',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer '+sessionStorage.getItem('token')
-        },
-        success: function(result){
-            md.showNotification('bottom','right','success','Unidad creado correctamente');
-            cargarListado();
-            limpiarCampos();
-            $('#modalDatosUnidad').modal('hide');
-        },
-        error: function(result){
-            md.showNotification('bottom','right','danger','Ha ocurrido un error al crear la unidad');
-        },
-        complete: function(result){
-            $("#registroUnidadbtn").html("Registrar");
-            $("#registroUnidadbtn").prop('disabled', false);
-        }
+            url: rutaRegistroUnidad,
+            data:$("#datosUnidadForm").serialize(),
+            dataType: 'JSON',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem('token')
+            },
+            success: function(result){
+                md.showNotification('bottom','right','success','Unidad creado correctamente');
+                cargarListado();
+                limpiarCampos();
+                $('#modalDatosUnidad').modal('hide');
+            },
+            error: function(result){
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al crear la unidad');
+            },
+            complete: function(result){
+                $("#registroUnidadbtn").html("Registrar");
+                $("#registroUnidadbtn").prop('disabled', false);
+            }
         });
     }else{
         marcarCamposIncorrectos();
     }
+}
+
+function cargarListadoChoferes(){
+    $('#conductor1Select').empty();
+    $('#conductor2Select').empty();
+    console.log("aqui");
+    $.get({
+        url: routeBase+'/api/conductores',
+        dataType: 'json',
+        headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+        },
+        success: function(result){
+            let turno1 = result[0];
+            let turno2 = result[1];
+            html = '';
+            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
+            turno1.forEach(element => {
+                html += '<option ';
+                html += ' value="'+element.id+'" ';
+                html += '>'+element.nombre+' '+element.primer_apellido+' '+element.segundo_apellido+'</option>';
+            });
+            $('#conductor1Select').append(html);
+
+            html2 = '';
+            html2 = html2 + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
+            turno2.forEach(element => {
+                html2 += '<option ';
+                html2 += ' value="'+element.id+'" ';
+                html2 += '>'+element.nombre+' '+element.primer_apellido+' '+element.segundo_apellido+'</option>';
+            });
+            $('#conductor2Select').append(html2);
+        },
+        error: function(result){
+        console.log(result);
+        md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
+        }
+    });
 }
 
 function editarUnidad(id_unidad){
@@ -81,12 +141,25 @@ function editarUnidad(id_unidad){
         'Authorization': 'Bearer '+sessionStorage.getItem('token'),
         },
         success: function(result){
-        $('#idUnidad').val( result['id'] );
-        $('#placas').val( result['placas'] );
-        $('#numero').val( result['numero'] );
-        $('#numero_economico').val( result['numero_economico'] );
-        //Falta cargar las unidades
-        desplegarModalUnidad();
+            $('#marca').val(result['marca']);
+            $('#modelo').val(result['modelo']);
+            $('#tarjeta_circulacion').val(result['tarjeta_circulacion'])
+            $('#idUnidad').val( result['id'] );
+            $('#placas').val( result['placas'] );
+            $('#numero').val( result['numero'] );
+            $('#numero_economico').val( result['numero_economico'] );
+            if(result.conductores){
+                result.conductores.forEach(element => {
+                    if(element.turno ==1){
+                        $('#conductor1Select').val(element.id).trigger('change');
+                    }
+                    if(element.turno == 2){
+                        $('#conductor2Select').val(element.id).trigger('change');
+                    }
+                });
+                
+            }
+            desplegarModalUnidad();
         },
         error: function(result){
         console.log(result);
@@ -172,9 +245,6 @@ function limpiarErrores(){
     $('#numero_economicoDiv').removeClass(' has-danger');
 }
 
-function limpiarCampos(){
-    $('#datosUnidadForm').trigger("reset");
-}
 
 function registrarDatosConductor(){
     var arrayDeDatos = $("#datosConductorForm").serializeArray();
@@ -202,7 +272,7 @@ function registrarDatosConductor(){
             $("#registroConductorbtn").html("Registrar");
             $("#registroConductorbtn").prop('disabled', false);
             $('#datosConductorForm').trigger("reset");
-            $('#modalRegistroConductor').modal('hide');
+            $('#datosConductorForm').modal('hide');
             // $('#direccionSelect').empty();
             // html = '';
             // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'

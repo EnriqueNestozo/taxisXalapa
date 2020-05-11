@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Models\Unidad;
+use App\Http\Models\ConductorUnidad;
 use DataTables;
 use DB;
 
@@ -17,15 +18,32 @@ class UnidadController extends Controller
     {
         try{
             DB::beginTransaction();
+            $unidad= null;
             if($request->idUnidad){
                 $unidad = Unidad::find($request->idUnidad);
+                $unidad->marca = ($request->marca)?$request->marca : '';
+                $unidad->modelo = ($request->modelo)?$request->modelo : '';
                 $unidad->placas = ($request->placas)?$request->placas : '';
                 $unidad->numero = ($request->numero)? $request->numero : '';
+                $unidad->tarjeta_circulacion = ($request->tarjeta_circulacion)? $request->tarjeta_circulacion : '';
                 $unidad->numero_economico = $request->numero_economico;
                 $unidad->save();
             }else{
                 // dd($request->all());
                 $unidad = Unidad::create($request->all());
+            }
+            $this->borrarConductores($unidad->id);
+            if($request->conductor1Select){
+                $conductorUnidad = new ConductorUnidad();
+                $conductorUnidad->conductor_id = $request->conductor1Select;
+                $conductorUnidad->unidad_id = $unidad->id;
+                $conductorUnidad->save();
+            }
+            if($request->conductor2Select){
+                $conductorUnidad = new ConductorUnidad();
+                $conductorUnidad->conductor_id = $request->conductor2Select;
+                $conductorUnidad->unidad_id = $unidad->id;
+                $conductorUnidad->save();
             }
             DB::commit();
             return response()->json($unidad,201);
@@ -36,6 +54,15 @@ class UnidadController extends Controller
         
     }
 
+    public function borrarConductores($idUnidad){
+        $conductorUnidad = ConductorUnidad::where('unidad_id',$idUnidad)->get();
+        // dd($conductorUnidad);
+        foreach ($conductorUnidad as $conductor) {
+            $conductor->delete();
+        }
+    }
+
+    //Parece que no se usa
     public function update(Request $request)
     {
         $unidad = Unidad::find($request->id);
@@ -52,7 +79,7 @@ class UnidadController extends Controller
 
     public function show($idUnidad)
     {
-        $unidad = Unidad::find($idUnidad);
+        $unidad = Unidad::with('conductores')->find($idUnidad);
         return response()->json($unidad,201);
     }
 
@@ -60,6 +87,12 @@ class UnidadController extends Controller
     {
         $listadounidades = Unidad::all();
         return response()->json($listadounidades,201);
+    }
+
+    public function conductoresPorUnidad($idUnidad){
+        $conductorUnidad = Unidad::with('conductores')->where('id',$idUnidad)->get();
+        dd($conductorUnidad);
+        return response()->json($conductores,201);
     }
 
     public function listUnits()
