@@ -91,13 +91,12 @@ class UnidadController extends Controller
 
     public function conductoresPorUnidad($idUnidad){
         $conductorUnidad = Unidad::with('conductores')->where('id',$idUnidad)->get();
-        dd($conductorUnidad);
-        return response()->json($conductores,201);
+        return response()->json($conductorUnidad,201);
     }
 
     public function listUnits()
     {
-        $listadoUnidades = Unidad::all();
+        $listadoUnidades = Unidad::get();
         $tabla = Datatables::of($listadoUnidades)
                     ->addColumn('action',function($fila){
                         $accion = null;

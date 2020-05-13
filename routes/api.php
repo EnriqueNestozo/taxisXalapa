@@ -29,15 +29,27 @@ Route::post('clientes','ClienteController@create')->name('api.create.cliente')->
 Route::put('clientes-update','ClienteController@update')->name('api.update.cliente')->middleware('auth:api');
 Route::post('clientes/delete','ClienteController@delete')->name('api.delete.cliente')->middleware('auth:api');
 
-//Api para unidades
+/*
+    Api para unidades
+*/
+
+//Mostrar detalles de una unidad 
 Route::get('unidades/{idUnidad}','UnidadController@show')->name('api.get.unidad')->middleware('auth:api');
+//Datatable ded lista de unidades
 Route::get('unidades-list','UnidadController@listUnits')->name('api.unidades.list')->middleware('auth:api');
+//Obtener todas las unidades (no se usa)
 Route::get('get-unidades','UnidadController@getUnidades')->name('api.get.unidades')->middleware('auth:api');
+//Crear/Editar una unidad
 Route::post('unidades','UnidadController@create')->name('api.create.unidad')->middleware('auth:api');
 // Route::put('unidades/update','UnidadesController@update');
+//Eliminar una unidad
 Route::post('unidades/delete','UnidadController@delete')->name('api.delete.unidad')->middleware('auth:api');
-Route::get('unidades/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.unidad.get')->middleware('auth:api');
-//Api para direcciones
+//Obtener los conductores de una unidad
+Route::get('unidad-conductor/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.unidad.get')->middleware('auth:api');
+
+/*
+    Api para direcciones
+*/
 Route::get('direcciones/{idDireccion}','DireccionController@show')->name('api.get.direccion')->middleware('auth:api');
 // Route::get('direcciones-list','DireccionController@listClients');
 Route::get('get-direcciones/{idCliente}','DireccionController@getDirecciones')->name('api.get.direcciones')->middleware('auth:api');

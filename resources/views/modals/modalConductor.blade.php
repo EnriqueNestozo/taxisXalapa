@@ -13,12 +13,6 @@
 
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label for="turno" class="col-form-label">Turno:</label>
-                        <select class="custom-select" id="turno" name="turno" style="width: 100%">
-                            <option value="1">Mañana</option>
-                            <option value="2">Tarde</option>
-                        </select>
-                    <span id="turno-error" class="error text-danger" for="turno" style="display:none">Campo faltante</span>
                     <br>
                     <br>
                     <div class="col-12">
