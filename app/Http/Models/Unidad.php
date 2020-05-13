@@ -16,7 +16,7 @@ class Unidad extends Model
 
     public function conductores()
     {
-        return $this->belongsToMany('App\Http\Models\Conductor','conductores_unidades', 'unidad_id','conductor_id')->withTimestamps();
+        return $this->belongsToMany('App\Http\Models\Conductor','conductores_unidades', 'unidad_id','conductor_id')->withPivot('turno','id');
     }
 
     public function registrosDiarios(){

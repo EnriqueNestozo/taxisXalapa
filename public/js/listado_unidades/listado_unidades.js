@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     $('#modalDatosUnidad').on('hidden.bs.modal', function () {
       $('#datosUnidadForm').trigger("reset");
-      cargarListadoChoferes();
+      // cargarListadoChoferes();
     });
     // $('#modalRegistroConductor').on('hidden.bs.modal', function () {
     //   $('#datosConductorForm').trigger("reset");
@@ -60,21 +60,10 @@ $(document).ready(function() {
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
           },
           success: function(result){
-              let turno1 = result[0];
-              let turno2 = result[1];
               console.log(result[0].conductores);
               if(result[0].conductores.length > 0){
-                result[0].conductores.forEach(element => {
-                  if(element.turno == 1){
-                    element.turno = "Mañana";
-                  }else if(element.turno == 2){
-                    element.turno = "Tarde";
-                  }else{
-                    element.turno = "Otro";
-                  }
-                  row.child( format(element) ).show();
+                  row.child( format(result[0].conductores) ).show();
                   tr.addClass('shown');
-                });
               }else{
                 console.log("aqui");
                 row.child( format(null) ).show();

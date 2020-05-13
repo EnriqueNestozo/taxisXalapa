@@ -17,11 +17,11 @@
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
-                    <th>Detalle</th>
-                    <th>Placa</th>
-                    <th>Número</th>
-                    <th>Clave</th>
-                    <th>Acciones</th>
+                    <th style="width:5%;">Detalle</th>
+                    <th style="width:25%;">Placa</th>
+                    <th style="width:20%;">Número</th>
+                    <th style="width:20%;">Clave</th>
+                    <th style="width:30%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,6 +40,7 @@
 </div>
 @include('modals.modalUnidades')
 @include('modals.modalConductor')
+@include('modals.modalRelacionConductorUnidad')
 @endsection
 @push('js')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

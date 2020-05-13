@@ -12,18 +12,52 @@ function readURL(input,idpreview) {
     }
 }
 
-function format ( d ) {
-    // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Turno:</td>'+
-            '<td>'+d.turno+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Nombre completo:</td>'+
-            '<td>'+d.nombre+'</td>'+
-        '</tr>'+
-    '</table>';
+function format ( datosConductor ) {
+    if(datosConductor !=null){
+        var tablaConductores = '<table class="table" cellpadding="5" cellspacing="0" style="padding-left:50px;">';
+       
+        datosConductor.forEach(element => {
+            console.log(element);
+            if(element.pivot.turno == 1){
+                element.pivot.turno = "Mañana";
+                tablaConductores += '<tr>'+
+                                '<td>Turno:</td>'+
+                                '<td>'+element.pivot.turno+'</td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '</tr>';
+            }else if(element.pivot.turno == 2){
+                element.pivot.turno = "Tarde";
+                tablaConductores += '<tr>'+
+                                '<td>Turno:</td>'+
+                                '<td>'+element.pivot.turno+'</td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '</tr>';
+            }else{
+                element.pivot.turno = "Otro";
+                tablaConductores += '<tr>'+
+                                '<td>Turno:</td>'+
+                                '<td>'+element.pivot.turno+'</td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '</tr>';
+            }
+            tablaConductores += '<tr>'+
+                '<td>Nombre completo:</td>'+
+                '<td>'+element.nombre+" "+element.primer_apellido+" "+element.segundo_apellido+'</td>'+
+            '</tr>';
+        });
+        tablaConductores+='</table>';
+        return tablaConductores; 
+    }else{
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+                '<td>Actualmente no hay conductores asociados a esta unidad:</td>'+
+            '</tr>'+
+        '</table>';
+    }
+}
+
+function eliminarConductor(idConductorUnidad){
+    console.log(idConductorUnidad);
 }
 
 function cargarListado(){
@@ -35,23 +69,26 @@ function cargarListado(){
         searching: true,
         destroy: true,
         language: {
-        url: routeBase+'/DataTables/DataTable_Spanish.json'
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
         },
         ajax: {
-        url: rutaListadoUnidades,
-        type: "GET",
-        dataType: 'json',
-        headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+data,
-        }
+            url: rutaListadoUnidades,
+            type: "GET",
+            dataType: 'json',
+            headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+            }
         },
         columns: [
             {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": ''
+                "className": 'details-control',
+                "orderable": false,
+                "data": null,
+                "searchable": false,
+                "render": function ( type, row, meta ) { 
+                    return "<span class='material-icons'>add_box</span>"
+                },
             },
             {data: 'placas', name: 'placas'},
             {data: "numero", name: 'numero', "defaultContent":""},
@@ -77,7 +114,7 @@ function registrarDatosUnidad(){
             success: function(result){
                 md.showNotification('bottom','right','success','Unidad creado correctamente');
                 cargarListado();
-                limpiarCampos();
+                $('#datosUnidadForm').trigger('reset');
                 $('#modalDatosUnidad').modal('hide');
             },
             error: function(result){
@@ -94,40 +131,54 @@ function registrarDatosUnidad(){
 }
 
 function cargarListadoChoferes(){
-    $('#conductor1Select').empty();
-    $('#conductor2Select').empty();
-    console.log("aqui");
+    $('#conductorSelect').empty();
     $.get({
         url: routeBase+'/api/conductores',
         dataType: 'json',
         headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
         },
         success: function(result){
-            let turno1 = result[0];
-            let turno2 = result[1];
+            console.log(result);
             html = '';
-            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
-            turno1.forEach(element => {
+            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione un chofer...</option>'
+            result.forEach(element => {
                 html += '<option ';
                 html += ' value="'+element.id+'" ';
                 html += '>'+element.nombre+' '+element.primer_apellido+' '+element.segundo_apellido+'</option>';
             });
-            $('#conductor1Select').append(html);
-
-            html2 = '';
-            html2 = html2 + '<option value="" selected style="min-width: 300px;"> Seleccione una clave...</option>'
-            turno2.forEach(element => {
-                html2 += '<option ';
-                html2 += ' value="'+element.id+'" ';
-                html2 += '>'+element.nombre+' '+element.primer_apellido+' '+element.segundo_apellido+'</option>';
-            });
-            $('#conductor2Select').append(html2);
+            $('#conductorSelect').append(html);
         },
         error: function(result){
-        console.log(result);
-        md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
+            console.log(result);
+            md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
+        }
+    });
+}
+
+function agregarConductor(idUnidad){
+    $('#modalRelacionConductorUnidad').modal('show');
+    $('#idUnidadModalRelacion').val(idUnidad);
+}
+
+function registrarConductorAUnidad(){
+    $.post({
+        url: routeBase+'/api/unidad-conductor',
+        dataType: 'json',
+        data:$("#datosConductorUnidadForm").serialize(),
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+        },
+        success: function(result){
+            $("#datosConductorUnidadForm").trigger('reset');
+            $('#modalRelacionConductorUnidad').modal('hide');
+            md.showNotification('bottom','right','success','Se ha realizado la relación correctamente');
+        },
+        error: function(result){
+            console.log(result);
+            md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
         }
     });
 }
@@ -185,16 +236,16 @@ function eliminarUnidad(id_unidad){
         $.post({
             url: rutaEliminadoUnidad,
             data:{
-            idUnidad: id_unidad,
+                idUnidad: id_unidad,
             },   
             dataType: 'json',
             headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
             },
             success: function( result ) {
-            md.showNotification('bottom','right','success','Unidad eliminada correctamente');
-            cargarListado();
+                md.showNotification('bottom','right','success','Unidad eliminada correctamente');
+                cargarListado();
             },
             error: function(result){
             console.log(result);

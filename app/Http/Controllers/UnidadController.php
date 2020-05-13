@@ -33,18 +33,18 @@ class UnidadController extends Controller
                 $unidad = Unidad::create($request->all());
             }
             $this->borrarConductores($unidad->id);
-            if($request->conductor1Select){
-                $conductorUnidad = new ConductorUnidad();
-                $conductorUnidad->conductor_id = $request->conductor1Select;
-                $conductorUnidad->unidad_id = $unidad->id;
-                $conductorUnidad->save();
-            }
-            if($request->conductor2Select){
-                $conductorUnidad = new ConductorUnidad();
-                $conductorUnidad->conductor_id = $request->conductor2Select;
-                $conductorUnidad->unidad_id = $unidad->id;
-                $conductorUnidad->save();
-            }
+            // if($request->conductor1Select){
+            //     $conductorUnidad = new ConductorUnidad();
+            //     $conductorUnidad->conductor_id = $request->conductor1Select;
+            //     $conductorUnidad->unidad_id = $unidad->id;
+            //     $conductorUnidad->save();
+            // }
+            // if($request->conductor2Select){
+            //     $conductorUnidad = new ConductorUnidad();
+            //     $conductorUnidad->conductor_id = $request->conductor2Select;
+            //     $conductorUnidad->unidad_id = $unidad->id;
+            //     $conductorUnidad->save();
+            // }
             DB::commit();
             return response()->json($unidad,201);
         }catch (\PDOException $e) {
@@ -94,14 +94,31 @@ class UnidadController extends Controller
         return response()->json($conductorUnidad,201);
     }
 
+    public function CrearRelacionconductoresUnidad(Request $request){
+        try{
+            DB::beginTransaction();
+            $conductorUnidad = new ConductorUnidad();
+            $conductorUnidad->conductor_id = $request->conductorSelect;
+            $conductorUnidad->unidad_id = $request->idUnidad;
+            $conductorUnidad->turno = $request->turnoSelect;
+            $conductorUnidad->save();
+            DB::commit();
+            return response()->json($conductorUnidad,201);
+        }catch(\PDOException $e){
+            DB::rollBack();
+            return response()->json($e,500);
+        }
+    }
+
     public function listUnits()
     {
         $listadoUnidades = Unidad::get();
         $tabla = Datatables::of($listadoUnidades)
                     ->addColumn('action',function($fila){
                         $accion = null;
-                        $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Usuario' onClick='editarUnidad(".$fila->id.")'><i class='material-icons'>edit</i></button>";
-                        $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Usuario' onClick='eliminarUnidad(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                        $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar unidad' onClick='editarUnidad(".$fila->id.")'><i class='material-icons'>edit</i></button>";
+                        $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar unidad' onClick='eliminarUnidad(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                        $accion.= "<button class='btn btn-info btn-link btn-sm' type='button' data-original-title='Agregar chofer' onClick='agregarConductor(".$fila->id.")'><i class='material-icons'>person_add</i></button>";
                         return $accion;
                     })
                     ->rawColumns(['action'])

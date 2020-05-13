@@ -38,7 +38,7 @@
               <input type="text" class="form-control" id="numero_economico" maxlength="100" name="numero_economico" style="padding-top:20px">
               <span id="numero_economico-error" class="error text-danger" for="numero_economico" style="display:none">Campo faltante</span>
             </div>
-            <div class="form-group" id="conductor1Div">
+            <!-- <div class="form-group" id="conductor1Div">
               <label for="conductor1Select" class="col-form-label">Chofer 1er. turno:</label>
               <select class="clave" id="conductor1Select" maxlength="100" name="conductor1Select" style="padding-top:20px">
                 <option value="">Seleccione un chofer...</option>
@@ -51,7 +51,7 @@
                 <option value="">Seleccione un chofer...</option>
               </select>
               <span id="conductor2Select-error" class="error text-danger" for="conductor2Select" style="display:none">Campo faltante</span>
-            </div>
+            </div> -->
             <div class="form-group" id="tarjeta_circulacionDiv">
               <label for="tarjeta_circulacion" class="col-form-label">Tarjeta de circulación:</label>
               <input type="text" class="form-control" id="tarjeta_circulacion" maxlength="100" name="tarjeta_circulacion" style="padding-top:20px">

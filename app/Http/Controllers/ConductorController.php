@@ -62,18 +62,9 @@ class ConductorController extends Controller
 
      //Trae el listado de los 2 turnos de los choferes
      public function listadoConductores(){
-        $listadoConductores = Conductor::select('id','nombre','primer_apellido','segundo_apellido','turno')->get();
+        $listadoConductores = Conductor::select('id','nombre','primer_apellido','segundo_apellido')->get();
         // dd($listadoConductores);
-        $turno1 = array();
-        $turno2 = array();
-        foreach ($listadoConductores as $conductor) {
-            if($conductor['turno'] == 1){
-                array_push($turno1, $conductor);
-            }else{
-                array_push($turno2, $conductor);
-            }
-        }
-        return array($turno1,$turno2); 
+        return $listadoConductores; 
     }
 
     public function saveDoc(Request $request)

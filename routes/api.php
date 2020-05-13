@@ -44,8 +44,21 @@ Route::post('unidades','UnidadController@create')->name('api.create.unidad')->mi
 // Route::put('unidades/update','UnidadesController@update');
 //Eliminar una unidad
 Route::post('unidades/delete','UnidadController@delete')->name('api.delete.unidad')->middleware('auth:api');
+
+/*
+   Api para conductores
+*/
+Route::post('conductores','ConductorController@create')->name('api.create.conductor')->middleware('auth:api');
+Route::get('conductores','ConductorController@listadoConductores')->name('api.conductores.get')->middleware('auth:api');
+
+/*
+   Api para unidades-conductores
+*/
 //Obtener los conductores de una unidad
 Route::get('unidad-conductor/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.unidad.get')->middleware('auth:api');
+//Crear relación unidad-conductor
+Route::post('unidad-conductor','UnidadController@CrearRelacionconductoresUnidad')->name('api.conductores.unidad.post')->middleware('auth:api');
+
 
 /*
     Api para direcciones
@@ -72,10 +85,6 @@ Route::post('servicio-cancel','ServicioController@cancelarServicio')->name('api.
 Route::get('servicios-pendientes','ServicioController@numServiciosPendientes')->name('api.servicios.pendientes')->middleware('auth:api');
 Route::get('lista-servicios-pendientes','ServicioController@listaServiciosPendientes')->name('api.servicios.pendientes.list')->middleware('auth:api');
 Route::get('servicios-datos/{idServicio}','ServicioController@obtenerDatosServicioPendiente')->name('api.servicios.datos')->middleware('auth:api');
-
-//Api para conductores
-Route::post('conductores','ConductorController@create')->name('api.create.conductor')->middleware('auth:api');
-Route::get('conductores','ConductorController@listadoConductores')->name('api.conductores.get')->middleware('auth:api');
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
