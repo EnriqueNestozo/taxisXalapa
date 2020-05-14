@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Models\Conductor;
 use App\Http\Models\Documento;
+use App\Http\Models\ConductorUnidad;
 use App\Http\Controllers\Storage;
 use App\Http\Controllers\File;
 use DB;
 use DateTime;
+use DataTables;
 
 class ConductorController extends Controller
 {
@@ -49,9 +51,22 @@ class ConductorController extends Controller
 
     public function delete(Request $request)
     {
-        $conductor = Conductor::find($request->id);
-        $conductor->delete();
-        return response()->json(null,204);
+        DB::beginTransaction();
+        try {  
+            $conductor = Conductor::find($request->id);
+            $conductor->delete();
+            $listadoConductorUnidad = ConductorUnidad::where('conductor_id',$request->id)->get();
+            foreach ($listadoConductorUnidad as $conductorUnidad) {
+                $conductorUnidad->delete();
+            }
+            DB::commit();
+            return response()->json($conductor,201);
+        }catch (\PDOException $e) {      
+            DB::rollBack();
+            $succes = 'Fail'; 
+            $folio = 'Intente de nuevo';       
+            return response()->json($e,500);
+        }
     }
 
     public function show($idConductor)
@@ -60,11 +75,34 @@ class ConductorController extends Controller
         return response()->json($conductor,201);
     }
 
-     //Trae el listado de los 2 turnos de los choferes
+     //Trae el listado de los choferes para select
      public function listadoConductores(){
         $listadoConductores = Conductor::select('id','nombre','primer_apellido','segundo_apellido')->get();
         // dd($listadoConductores);
         return $listadoConductores; 
+    }
+
+    //Trae el listado de conductores para datatable
+    public function listConductores(){
+        $listadoConductores = Conductor::all();
+        try{
+            $tabla = Datatables::of($listadoConductores)
+            ->addColumn('action',function($fila){
+                $accion = null;
+                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Modificar conductor' onClick='modificarConductor(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'>edit</i></button>";
+                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='ELiminarConductor(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'>close</i></button>";
+                return $accion;
+            })
+            ->editColumn('nombre',function($fila){
+                $nombre = $fila->nombre.' '.$fila->primer_apellido. ' '.$fila->segundo_apellido;
+                return $nombre;
+            })
+            ->rawColumns(['action','nombre'])
+            ->make(true);
+            return $tabla;
+        }catch(Exception $e){
+            return response()->json($e,501);
+        }
     }
 
     public function saveDoc(Request $request)

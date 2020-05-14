@@ -48,16 +48,22 @@ Route::post('unidades/delete','UnidadController@delete')->name('api.delete.unida
 /*
    Api para conductores
 */
+//Crea un conductor
 Route::post('conductores','ConductorController@create')->name('api.create.conductor')->middleware('auth:api');
+//Listado para select de conductores
 Route::get('conductores','ConductorController@listadoConductores')->name('api.conductores.get')->middleware('auth:api');
-
+//Listado de conductores en datatable
+Route::get('conductores-list','ConductorController@listConductores')->name('api.conductores.get.list')->middleware('auth:api');
+Route::post('conductores/delete','ConductorController@delete')->name('api.delete.conductor')->middleware('auth:api');
 /*
    Api para unidades-conductores
 */
 //Obtener los conductores de una unidad
-Route::get('unidad-conductor/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.unidad.get')->middleware('auth:api');
+Route::get('unidad-conductor/{idUnidad}','UnidadController@conductoresPorUnidad')->name('api.conductores.conductorunidad.get')->middleware('auth:api');
 //Crear relación unidad-conductor
-Route::post('unidad-conductor','UnidadController@CrearRelacionconductoresUnidad')->name('api.conductores.unidad.post')->middleware('auth:api');
+Route::post('unidad-conductor','UnidadController@CrearRelacionconductoresUnidad')->name('api.conductores.conductorunidad.post')->middleware('auth:api');
+//Eliminar relacion unidad-conductor
+Route::post('unidad-conductor-delete','UnidadController@EliminarRelacionconductoresUnidad')->name('api.conductores.conductorunidad.delete')->middleware('auth:api');
 
 
 /*

@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('#telefono_fijo').mask('000-000-00-00');
     $('#celular').mask('000-000-00-00');
     var table  = cargarListado();
-
+    cargarListadoConductores();
 
     $('#placas').change(function(){
       if( $('#placas').val() !=''){
@@ -32,14 +32,18 @@ $(document).ready(function() {
       $('#datosUnidadForm').trigger("reset");
       // cargarListadoChoferes();
     });
-    // $('#modalRegistroConductor').on('hidden.bs.modal', function () {
-    //   $('#datosConductorForm').trigger("reset");
-    // });
+    $('#modalRegistroConductor').on('hidden.bs.modal', function () {
+      $('#datosConductorForm').trigger("reset");
+      $('#previewFotoPersona').attr('src','http://placehold.it/250');
+      $('#previewElector').attr('src', 'http://placehold.it/250');
+      $('#previewLicencia').attr('src', 'http://placehold.it/250');
+      $('#previewReversoElector').attr('src', 'http://placehold.it/250');
+      $('#previewReversoLicencia').attr('src', 'http://placehold.it/250');
+    });
 
     $('#listado tbody').on('click', 'td.details-control', function () {
       var tr = $(this).closest('tr');
       var row = table.row( tr );
-      // console.log(tr[0].lastChild.lastChild.attributes.onClick.nodeValue);
       let elemento = tr[0].lastChild.lastChild.attributes.onClick.nodeValue;
       re = /\((.*)\)/;
       let idUnidad = elemento.match(re)[1]
@@ -60,12 +64,11 @@ $(document).ready(function() {
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
           },
           success: function(result){
-              console.log(result[0].conductores);
+              // console.log(result[0].conductores);
               if(result[0].conductores.length > 0){
                   row.child( format(result[0].conductores) ).show();
                   tr.addClass('shown');
               }else{
-                console.log("aqui");
                 row.child( format(null) ).show();
                 tr.addClass('shown');
               }

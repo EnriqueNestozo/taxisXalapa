@@ -110,6 +110,19 @@ class UnidadController extends Controller
         }
     }
 
+    public function EliminarRelacionconductoresUnidad(Request $request){
+        try{
+            DB::beginTransaction();
+            $conductorUnidad = ConductorUnidad::find($request->id);
+            $conductorUnidad->delete();
+            DB::commit();
+            return response()->json($conductorUnidad,201);
+        }catch(\PDOException $e){
+            DB::rollBack();
+            return response()->json($e,500);
+        }
+    }
+
     public function listUnits()
     {
         $listadoUnidades = Unidad::get();

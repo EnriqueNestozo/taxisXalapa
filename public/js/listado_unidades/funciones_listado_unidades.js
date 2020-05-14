@@ -17,27 +17,26 @@ function format ( datosConductor ) {
         var tablaConductores = '<table class="table" cellpadding="5" cellspacing="0" style="padding-left:50px;">';
        
         datosConductor.forEach(element => {
-            console.log(element);
             if(element.pivot.turno == 1){
                 element.pivot.turno = "Mañana";
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }else if(element.pivot.turno == 2){
                 element.pivot.turno = "Tarde";
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }else{
                 element.pivot.turno = "Otro";
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Eliminar chofer" onClick="eliminarConductor('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }
             tablaConductores += '<tr>'+
@@ -56,12 +55,43 @@ function format ( datosConductor ) {
     }
 }
 
-function eliminarConductor(idConductorUnidad){
-    console.log(idConductorUnidad);
+function quitarConductorDeUnidad(idConductorUnidad){
+    swal({
+        title: '¿Esta seguro que desea quitar a este chofer de la unidad?',
+        // text: "La unidad se eliminará de manera permanente!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Quitar',
+        buttonsStyling: false
+    }).then(function(confirmation) {
+        if (confirmation['dismiss'] != 'cancel') {
+        $.post({
+            url: rutaEliminadoConductorUnidad,
+            data:{
+                id: idConductorUnidad,
+            },   
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+            },
+            success: function( result ) {
+                md.showNotification('bottom','right','success','Conductor eliminado de la unidad correctamente');
+                table = cargarListado();
+            },
+            error: function(result){
+            md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar al conductor de la unidad');
+            }
+        });
+        }
+    })
 }
 
 function cargarListado(){
-    cargarListadoChoferes();
+    cargarListadoChoferesEnSelect();
     var data = sessionStorage.getItem('token');
     return $('#listado').DataTable({
         processing: true,
@@ -113,7 +143,7 @@ function registrarDatosUnidad(){
             },
             success: function(result){
                 md.showNotification('bottom','right','success','Unidad creado correctamente');
-                cargarListado();
+                table = cargarListado();
                 $('#datosUnidadForm').trigger('reset');
                 $('#modalDatosUnidad').modal('hide');
             },
@@ -130,7 +160,7 @@ function registrarDatosUnidad(){
     }
 }
 
-function cargarListadoChoferes(){
+function cargarListadoChoferesEnSelect(){
     $('#conductorSelect').empty();
     $.get({
         url: routeBase+'/api/conductores',
@@ -175,6 +205,7 @@ function registrarConductorAUnidad(){
             $("#datosConductorUnidadForm").trigger('reset');
             $('#modalRelacionConductorUnidad').modal('hide');
             md.showNotification('bottom','right','success','Se ha realizado la relación correctamente');
+            table = cargarListado();
         },
         error: function(result){
             console.log(result);
@@ -245,7 +276,7 @@ function eliminarUnidad(id_unidad){
             },
             success: function( result ) {
                 md.showNotification('bottom','right','success','Unidad eliminada correctamente');
-                cargarListado();
+                table = cargarListado();
             },
             error: function(result){
             console.log(result);
@@ -323,20 +354,9 @@ function registrarDatosConductor(){
             $("#registroConductorbtn").html("Registrar");
             $("#registroConductorbtn").prop('disabled', false);
             $('#datosConductorForm').trigger("reset");
-            $('#datosConductorForm').modal('hide');
-            // $('#direccionSelect').empty();
-            // html = '';
-            // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
-            // $('#direccionSelect').append(html);
-            // console.log("success registro");
-            cargarListado();
-            // obtenerListadoPersonas();
-            // $('#personaSelect').prop('disabled',false);
-            // $('#municipioSelect').prop('disabled',false);
-            // $('#persona').prop('disabled',false);
-            // $('#municipio').prop('disabled',false);
-            // $('#idRegistro').val('');
-            // $('#idCliente').val('');
+            $('#modalRegistroConductor').modal('hide');
+            cargarListadoConductores();
+            cargarListadoChoferesEnSelect();
             md.showNotification('bottom','right','success','Registro creado correctamente');
         },
         error: function(result){
@@ -346,4 +366,69 @@ function registrarDatosConductor(){
             md.showNotification('bottom','right','danger','Ha ocurrido un error al crear el registro');
         }
     });
+}
+
+function cargarListadoConductores(){
+    var data = sessionStorage.getItem('token');
+    $('#listadoConductores').DataTable({
+        processing: true,
+        serverSide: true,
+        searching: true,
+        destroy: true,
+        language: {
+            url: routeBase+'/DataTables/DataTable_Spanish.json'
+        },
+        ajax: {
+            url: rutaListadoConductores,
+            type: "GET",
+            dataType: 'json',
+            headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+            }
+        },
+        columns: [
+            {data: 'nombre', name: 'nombre'},
+            {data: "celular", name: 'celular', "defaultContent":""},
+            {data: 'vencimiento', name: 'vencimiento', "defaultContent":""},
+            {data: 'action', name:'action', orderable:false}
+        ]
+    });
+}
+
+function ELiminarConductor(idConductor){
+    swal({
+        title: '¿Esta seguro que desea eliminar a este conductor?',
+        text: "El conductor se eliminará tambien de las unidades asignadas",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Eliminar',
+        buttonsStyling: false
+    }).then(function(confirmation) {
+        if (confirmation['dismiss'] != 'cancel') {
+            $.post({
+                url: rutaEliminadoConductor,
+                data: {
+                    id: idConductor
+                },
+                dataType: 'json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+                },
+                success: function( result ) {
+                    md.showNotification('bottom','right','success','Unidad eliminada correctamente');
+                    cargarListadoConductores();
+                    cargarListadoChoferesEnSelect();
+                },
+                error: function(result){
+                    console.log(result);
+                    md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar la unidad');
+                }
+            });
+        }
+    })
 }
