@@ -17,7 +17,7 @@
               <table id="listado" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
-                    <th style="width:5%;">Detalle</th>
+                    <th style="width:5%;"></th>
                     <th style="width:25%;">Placa</th>
                     <th style="width:20%;">Número</th>
                     <th style="width:20%;">Clave</th>

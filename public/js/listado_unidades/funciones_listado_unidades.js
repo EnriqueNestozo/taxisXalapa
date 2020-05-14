@@ -93,7 +93,7 @@ function cargarListado(){
             {data: 'placas', name: 'placas'},
             {data: "numero", name: 'numero', "defaultContent":""},
             {data: 'numero_economico', name: 'numero_economico', "defaultContent":""},
-            {data: 'action', name:'action'}
+            {data: 'action', name:'action', orderable:false}
         ]
     });
 }
