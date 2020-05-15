@@ -30,11 +30,11 @@ class Conductor extends Model
 
     public function unidades()
     {
-        return $this->belongsToMany('App\Http\Models\Unidad','conductores_unidades', 'unidad_id','conductor_id')->withPivot('turno','id');
+        return $this->belongsToMany('App\Http\Models\Unidad','conductores_unidades','conductor_id','unidad_id')->withPivot('turno','id');
     }
 
     public function documentos()
     {
-        return $this->hasMany('App\Http\Models\Documento','conductor_id', 'unidad_id','conductor_id');
+        return $this->hasMany('App\Http\Models\Documento','conductor_id');
     }
 }

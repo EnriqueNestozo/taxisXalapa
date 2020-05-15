@@ -51,9 +51,10 @@
               <table id="listadoConductores" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
-                    <th style="width:30%;">Nombre completo</th>
-                    <th style="width:20%;">Celular</th>
-                    <th style="width:20%;">Vencimiento de licencia</th>
+                    <th style="width:25%;">Nombre completo</th>
+                    <th style="width:10%;">Celular</th>
+                    <th style="width:15%;">Vencimiento de licencia</th>
+                    <th style="width:20%;">Unidad(es)</th>
                     <th style="width:30%;">Acciones</th>
                   </tr>
                 </thead>

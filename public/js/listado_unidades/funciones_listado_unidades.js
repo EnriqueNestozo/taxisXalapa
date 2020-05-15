@@ -80,7 +80,7 @@ function quitarConductorDeUnidad(idConductorUnidad){
             },
             success: function( result ) {
                 md.showNotification('bottom','right','success','Conductor eliminado de la unidad correctamente');
-                table = cargarListado();
+                cargarListadoConductores();
             },
             error: function(result){
             md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar al conductor de la unidad');
@@ -204,8 +204,8 @@ function registrarConductorAUnidad(){
         success: function(result){
             $("#datosConductorUnidadForm").trigger('reset');
             $('#modalRelacionConductorUnidad').modal('hide');
+            cargarListadoConductores();
             md.showNotification('bottom','right','success','Se ha realizado la relación correctamente');
-            table = cargarListado();
         },
         error: function(result){
             console.log(result);
@@ -368,6 +368,32 @@ function registrarDatosConductor(){
     });
 }
 
+function modificarConductor(idConductor){
+    $.get({
+        url: routeBase+'/api/conductores/'+idConductor,
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+        },
+        success: function(result){
+            console.log(result);
+            // $('#marca').val(result['marca']);
+            // $('#modelo').val(result['modelo']);
+            // $('#tarjeta_circulacion').val(result['tarjeta_circulacion'])
+            // $('#idUnidad').val( result['id'] );
+            // $('#placas').val( result['placas'] );
+            // $('#numero').val( result['numero'] );
+            // $('#numero_economico').val( result['numero_economico'] );
+            desplegarModalConductor();
+        },
+        error: function(result){
+        console.log(result);
+        md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
+        }
+    });
+}
+
 function cargarListadoConductores(){
     var data = sessionStorage.getItem('token');
     $('#listadoConductores').DataTable({
@@ -391,6 +417,7 @@ function cargarListadoConductores(){
             {data: 'nombre', name: 'nombre'},
             {data: "celular", name: 'celular', "defaultContent":""},
             {data: 'vencimiento', name: 'vencimiento', "defaultContent":""},
+            {data: 'unidades', name:'unidaddes','defaultContent':'Ninguno'},
             {data: 'action', name:'action', orderable:false}
         ]
     });

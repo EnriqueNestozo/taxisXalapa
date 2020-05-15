@@ -71,7 +71,7 @@ class ConductorController extends Controller
 
     public function show($idConductor)
     {
-        $conductor = Conductor::find($idConductor);
+        $conductor = Conductor::with('documentos')->find($idConductor);
         return response()->json($conductor,201);
     }
 
@@ -84,7 +84,7 @@ class ConductorController extends Controller
 
     //Trae el listado de conductores para datatable
     public function listConductores(){
-        $listadoConductores = Conductor::all();
+        $listadoConductores = Conductor::with('unidades')->get();
         try{
             $tabla = Datatables::of($listadoConductores)
             ->addColumn('action',function($fila){
@@ -93,11 +93,21 @@ class ConductorController extends Controller
                 $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='ELiminarConductor(".$fila->id.")'><i class='material-icons' style='font-size: 24px;'>close</i></button>";
                 return $accion;
             })
+            ->addColumn('unidades', function($fila){
+                $unidades = $fila->unidades;
+                $listadoUnidades = array();
+                foreach ($unidades as $unidad) {
+                    if(!in_array($unidad->numero,$listadoUnidades)){
+                        array_push($listadoUnidades,$unidad->numero);
+                    }
+                }
+                return $listadoUnidades;
+            })
             ->editColumn('nombre',function($fila){
                 $nombre = $fila->nombre.' '.$fila->primer_apellido. ' '.$fila->segundo_apellido;
                 return $nombre;
             })
-            ->rawColumns(['action','nombre'])
+            ->rawColumns(['action','nombre','unidades'])
             ->make(true);
             return $tabla;
         }catch(Exception $e){
