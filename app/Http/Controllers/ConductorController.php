@@ -26,9 +26,15 @@ class ConductorController extends Controller
             $fecha = strtotime($request->vencimiento);
             $newformat = date('Y-m-d',$fecha);
             $datos['vencimiento'] = $newformat;
-            $conductor = Conductor::create($datos);
-            $conductor->save();
-            $request->request->add(['id_registro' => $conductor->id]);
+            $conductor = null;
+            if($request->idConductor){
+                $conductor = Conductor::find($request->idConductor);
+                $conductor->update($datos);
+            }else{  
+                $conductor = Conductor::create($datos);
+                $conductor->save();
+                $request->request->add(['idConductor' => $conductor->id]);
+            }
             $this->saveDoc($request);
             DB::commit();
             return response()->json($conductor,201);
@@ -42,7 +48,7 @@ class ConductorController extends Controller
         
     }
 
-    public function update(Request $request)
+    public function update($request)
     {
         $conductor = Conductor::find($request->id);
         $conductor->update($request->all());
@@ -117,22 +123,41 @@ class ConductorController extends Controller
 
     public function saveDoc(Request $request)
     {
-        // dd($request->all());
-        $id = $request->id_registro;
-        // dd('en el SaveDoc: ', $registro);
-        
-        $this->guardar_archivo($request->file('fotoPersona'), $id, 'foto_persona');
-        $this->guardar_archivo($request->file('fotoElector'), $id, 'foto_elector');
-        $this->guardar_archivo($request->file('fotoLicencia'), $id, 'foto_licencia');
-        $this->guardar_archivo($request->file('fotoElectorReverso'), $id, 'foto_elector_reverso');
-        $this->guardar_archivo($request->file('fotoLicenciaReverso'), $id, 'foto_licencia_reverso');
+        $id = $request->idConductor;
+        $listadoArchivos = Documento::where('conductor_id',$id)->get();
+        if($request->hasFile('fotoPersona')){
+            $this->guardar_archivo($request->file('fotoPersona'), $id, 'foto_persona',$listadoArchivos);
+        }
+        if($request->hasFile('fotoElector')){
+            $this->guardar_archivo($request->file('fotoElector'), $id, 'foto_elector',$listadoArchivos);
+        }
+        if($request->hasFile('fotoLicencia')){
+            $this->guardar_archivo($request->file('fotoLicencia'), $id, 'foto_licencia',$listadoArchivos);
+        }
+        if($request->hasFile('fotoElectorReverso')){
+            $this->guardar_archivo($request->file('fotoElectorReverso'), $id, 'foto_elector_reverso',$listadoArchivos);
+        }
+        if($request->hasFile('fotoLicenciaReverso')){
+            $this->guardar_archivo($request->file('fotoLicenciaReverso'), $id, 'foto_licencia_reverso',$listadoArchivos);
+        }
     }
 
-    private function guardar_archivo($file, $id, $nombreDoc)
+    private function guardar_archivo($file, $id, $nombreDoc,$listadoArchivos=null)
     {
         $nombre = $id."_".$nombreDoc.".".$file->getClientOriginalExtension();
-        \Storage::disk('local')->put($nombre,  \File::get($file));
-        
+        $nombreSinExtension = $id."_".$nombreDoc;
+        if($listadoArchivos!=null){
+            //Si es un update borra el archivo anterior
+            foreach ($listadoArchivos as $archivo) {
+                $nombreNuevo = explode(".",$archivo->nombre_documento);
+                $nuevoSinExtencion = $nombreNuevo[0];
+                if($nuevoSinExtencion == $nombreSinExtension){
+                    \Storage::delete($archivo->nombre_documento);
+                    $archivo->delete();
+                }
+            }
+        }   
+        \Storage::disk('public')->put($nombre,  \File::get($file));
         $documento = new Documento();
         $documento->nombre_documento = $nombre;
         $documento->conductor_id = $id;

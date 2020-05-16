@@ -377,19 +377,52 @@ function modificarConductor(idConductor){
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
         },
         success: function(result){
+            $('#idConductor').val(result.id);
             console.log(result);
-            // $('#marca').val(result['marca']);
-            // $('#modelo').val(result['modelo']);
-            // $('#tarjeta_circulacion').val(result['tarjeta_circulacion'])
-            // $('#idUnidad').val( result['id'] );
-            // $('#placas').val( result['placas'] );
-            // $('#numero').val( result['numero'] );
-            // $('#numero_economico').val( result['numero_economico'] );
+            result.documentos.forEach(element => {
+                var documento = element.nombre_documento;
+                if(documento.includes( 'foto_persona' )){
+                    console.log(documento);
+                    $('#previewFotoPersona').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                }
+                
+                if(documento.includes('foto_elector_reverso' )){
+                    console.log(documento);
+                    $('#previewReversoElector').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                }
+                if(documento.includes( 'foto_licencia_reverso' )){
+                    console.log(documento);
+                    $('#previewReversoLicencia').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                }
+                if(documento.includes( 'foto_elector' )){
+                    console.log(documento);
+                    $('#previewElector').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                }
+                if(documento.includes( 'foto_licencia' )){
+                    console.log(documento);
+                    $('#previewLicencia').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                }
+            });
+            $('#nombre').val(result.nombre);
+            $('#primer_apellido').val(result.primer_apellido);
+            $('#segundo_apellido').val(result.segundo_apellido);
+            $('#calle').val(result.calle);
+            $('#colonia').val(result.colonia);
+            $('#ciudad').val(result.ciudad);
+            $('#telefono_fijo').val(result.telefono_fijo);
+            $('#celular').val(result.celular);
+            $('#licencia').val(result.licencia);
+            $('#vencimiento').val(result.vencimiento);
+            $('#tipo_sangre').val(result.tipo_sangre);
+            $('#persona_referencia').val(result.persona_referencia);
+            $('#telefono_referencia').val(result.telefono_referencia);
+            $('#emergencia_referencia').val(result.emergencia_referencia);
+            $('#telefono_emergencia_referencia').val(result.telefono_emergencia_referencia);
             desplegarModalConductor();
         },
         error: function(result){
-        console.log(result);
-        md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
+            console.log(result);
+            md.showNotification('bottom','right','danger','Ha ocurrido un error al cargar los datos de la unidad');
         }
     });
 }
