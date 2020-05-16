@@ -149,10 +149,11 @@ class ConductorController extends Controller
         if($listadoArchivos!=null){
             //Si es un update borra el archivo anterior
             foreach ($listadoArchivos as $archivo) {
-                $nombreNuevo = explode(".",$archivo->nombre_documento);
-                $nuevoSinExtencion = $nombreNuevo[0];
-                if($nuevoSinExtencion == $nombreSinExtension){
-                    \Storage::delete($archivo->nombre_documento);
+                // $nombreNuevo = explode(".",$archivo->nombre_documento);
+                // $nuevoSinExtencion = $nombreNuevo[0];
+                if($archivo->tipo_documento == $nombreDoc){ 
+                    \Storage::disk('public')->delete($archivo->nombre_documento);
+                    // \Storage::delete($archivo->nombre_documento);
                     $archivo->delete();
                 }
             }
@@ -161,6 +162,7 @@ class ConductorController extends Controller
         $documento = new Documento();
         $documento->nombre_documento = $nombre;
         $documento->conductor_id = $id;
+        $documento->tipo_documento = $nombreDoc;
         $documento->save();
     }
 }

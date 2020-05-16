@@ -1,10 +1,11 @@
+var table = null;
 $(document).ready(function() {
     $('.clave').select2();
     $('#telefono_referencia').mask('000-000-00-00');
     $('#telefono_emergencia_referencia').mask('000-000-00-00');
     $('#telefono_fijo').mask('000-000-00-00');
     $('#celular').mask('000-000-00-00');
-    var table  = cargarListado();
+    table  = cargarListado();
     cargarListadoConductores();
 
     $('#placas').change(function(){
@@ -32,6 +33,12 @@ $(document).ready(function() {
       $('#datosUnidadForm').trigger("reset");
       // cargarListadoChoferes();
     });
+
+    $('#modalRelacionConductorUnidad').on('hidden.bs.modal', function () {
+      $('#conductorSelect').val('').trigger('change');
+      $('#turnoSelect').val('').trigger('change');
+    });
+
     $('#modalRegistroConductor').on('hidden.bs.modal', function () {
       $('#datosConductorForm').trigger("reset");
       $('#previewFotoPersona').attr('src','http://placehold.it/250');

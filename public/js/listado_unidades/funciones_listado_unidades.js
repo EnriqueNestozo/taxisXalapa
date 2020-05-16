@@ -22,21 +22,21 @@ function format ( datosConductor ) {
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +',this)"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }else if(element.pivot.turno == 2){
                 element.pivot.turno = "Tarde";
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +',this)"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }else{
                 element.pivot.turno = "Otro";
                 tablaConductores += '<tr>'+
                                 '<td>Turno:</td>'+
                                 '<td>'+element.pivot.turno+'</td>'+
-                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +')"><i class="material-icons">delete</i></button></td>'+
+                                '<td><button class="btn btn-danger btn-link btn-sm" type="button" data-original-title="Quitar chofer" onClick="quitarConductorDeUnidad('+element.pivot.id +',this)"><i class="material-icons">delete</i></button></td>'+
                                 '</tr>';
             }
             tablaConductores += '<tr>'+
@@ -55,7 +55,7 @@ function format ( datosConductor ) {
     }
 }
 
-function quitarConductorDeUnidad(idConductorUnidad){
+function quitarConductorDeUnidad(idConductorUnidad, elemento){
     swal({
         title: '¿Esta seguro que desea quitar a este chofer de la unidad?',
         // text: "La unidad se eliminará de manera permanente!",
@@ -81,9 +81,10 @@ function quitarConductorDeUnidad(idConductorUnidad){
             success: function( result ) {
                 md.showNotification('bottom','right','success','Conductor eliminado de la unidad correctamente');
                 cargarListadoConductores();
+                table = cargarListado();
             },
             error: function(result){
-            md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar al conductor de la unidad');
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar al conductor de la unidad');
             }
         });
         }
@@ -205,6 +206,7 @@ function registrarConductorAUnidad(){
             $("#datosConductorUnidadForm").trigger('reset');
             $('#modalRelacionConductorUnidad').modal('hide');
             cargarListadoConductores();
+            table = cargarListado();
             md.showNotification('bottom','right','success','Se ha realizado la relación correctamente');
         },
         error: function(result){
@@ -381,24 +383,24 @@ function modificarConductor(idConductor){
             console.log(result);
             result.documentos.forEach(element => {
                 var documento = element.nombre_documento;
-                if(documento.includes( 'foto_persona' )){
-                    console.log(documento);
-                    $('#previewFotoPersona').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
+                if(element.tipo_documento == "foto_persona"){
+                    console.log(element.tipo_documento);
+                    $('#previewFotoPersona').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);
                 }
                 
-                if(documento.includes('foto_elector_reverso' )){
+                if(element.tipo_documento == "foto_elector_reverso"){
                     console.log(documento);
                     $('#previewReversoElector').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
                 }
-                if(documento.includes( 'foto_licencia_reverso' )){
+                if(element.tipo_documento == "foto_licencia_reverso"){
                     console.log(documento);
                     $('#previewReversoLicencia').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
                 }
-                if(documento.includes( 'foto_elector' )){
+                if(element.tipo_documento == "foto_elector"){
                     console.log(documento);
                     $('#previewElector').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
                 }
-                if(documento.includes( 'foto_licencia' )){
+                if(element.tipo_documento == "foto_licencia"){
                     console.log(documento);
                     $('#previewLicencia').attr('src', routeBase+'/storage/'+element.nombre_documento).width(250).height(250);;
                 }
