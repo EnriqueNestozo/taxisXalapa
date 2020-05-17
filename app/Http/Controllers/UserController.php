@@ -10,8 +10,7 @@ class UserController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('client-credential');
-
+        // $this->middleware('client-credential');
     }
     /**
      * Display a listing of the users
@@ -91,7 +90,7 @@ class UserController extends Controller
     }
 
     public function getUserData(){
-        $user = User::all();
-        return response()->json($user);
+        $users = User::all();
+        return view('users.index',['users' => $users]);
     }
 }

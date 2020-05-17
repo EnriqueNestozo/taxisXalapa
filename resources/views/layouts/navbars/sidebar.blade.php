@@ -63,6 +63,12 @@
                 <span class="sidebar-normal">{{ __('Perfil de usuario') }} </span>
               </a>
             </li>
+            <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('admin.users') }}">
+                <span class="sidebar-mini"> -</span>
+                <span class="sidebar-normal">{{ __('Administrar usuarios') }} </span>
+              </a>
+            </li>
             <li>
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <span class="sidebar-mini"> -</span>

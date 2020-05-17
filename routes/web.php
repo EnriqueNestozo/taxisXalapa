@@ -107,6 +107,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('upgrade', function () {
 		return view('pages.upgrade');
 	})->name('upgrade');
+
+	Route::get('lista-usarios', 'UserController@getUserData')->name('admin.users');
 });
 
 // Route::group(['middleware' => 'auth'], function () {

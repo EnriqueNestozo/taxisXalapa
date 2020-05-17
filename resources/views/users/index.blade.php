@@ -7,8 +7,8 @@
         <div class="col-md-12">
             <div class="card">
               <div class="card-header card-header-primary">
-                <h4 class="card-title ">{{ __('Users') }}</h4>
-                <p class="card-category"> {{ __('Here you can manage users') }}</p>
+                <h4 class="card-title ">{{ __('Usuarios') }}</h4>
+                <p class="card-category"> {{ __('Aquí puedes administrar los usuarios') }}</p>
               </div>
               <div class="card-body">
                 @if (session('status'))
@@ -25,23 +25,23 @@
                 @endif
                 <div class="row">
                   <div class="col-12 text-right">
-                    <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Add user') }}</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Agregar usuario') }}</a>
                   </div>
                 </div>
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
-                          {{ __('Name') }}
+                          {{ __('Nombre') }}
                       </th>
                       <th>
-                        {{ __('Email') }}
+                        {{ __('Correo') }}
                       </th>
                       <th>
-                        {{ __('Creation date') }}
+                        {{ __('Fecha de creación') }}
                       </th>
                       <th class="text-right">
-                        {{ __('Actions') }}
+                        {{ __('Acciones') }}
                       </th>
                     </thead>
                     <tbody>
