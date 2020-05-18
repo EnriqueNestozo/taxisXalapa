@@ -118,12 +118,13 @@ function cargarListado(){
                 "data": null,
                 "searchable": false,
                 "render": function ( type, row, meta ) { 
-                    return "<span class='material-icons'>add_box</span>"
+                    return "<span class='material-icons' style='cursor: pointer;'>add_box</span>"
                 },
             },
             {data: 'placas', name: 'placas'},
             {data: "numero", name: 'numero', "defaultContent":""},
             {data: 'numero_economico', name: 'numero_economico', "defaultContent":""},
+            {data: 'conductores_count', name:'conductores_count', 'defaultContent':""},
             {data: 'action', name:'action', orderable:false}
         ]
     });
@@ -143,7 +144,11 @@ function registrarDatosUnidad(){
                 'Authorization': 'Bearer '+sessionStorage.getItem('token')
             },
             success: function(result){
-                md.showNotification('bottom','right','success','Unidad creado correctamente');
+                if($('#idUnidad').val()!=null){
+                    md.showNotification('bottom','right','success','Unidad modificada correctamente');
+                }else{
+                    md.showNotification('bottom','right','success','Unidad creada correctamente');
+                }
                 table = cargarListado();
                 $('#datosUnidadForm').trigger('reset');
                 $('#modalDatosUnidad').modal('hide');
@@ -279,6 +284,7 @@ function eliminarUnidad(id_unidad){
             success: function( result ) {
                 md.showNotification('bottom','right','success','Unidad eliminada correctamente');
                 table = cargarListado();
+                cargarListadoConductores();
             },
             error: function(result){
             console.log(result);

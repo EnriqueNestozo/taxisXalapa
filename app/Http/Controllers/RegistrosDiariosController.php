@@ -17,7 +17,7 @@ use DB;
 class RegistrosDiariosController extends Controller
 {
     public function listRecords($tipoRegistro){  
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->where('tipo_registro',$tipoRegistro)->get();
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->where('tipo_registro',$tipoRegistro)->withTrashed()->get();
         
         $tabla = Datatables::of($listadoRegistros)
             ->editColumn('estatus',function($fila){

@@ -72,8 +72,20 @@ class UnidadController extends Controller
 
     public function delete(Request $request)
     {
-        $unidad = Unidad::find($request->idUnidad);
-        $unidad->delete();
+        try{
+            DB::beginTransaction();
+            $unidad = Unidad::find($request->idUnidad);
+            $unidad->delete();
+            $listadoConductorUnidad = ConductorUnidad::where('unidad_id',$request->idUnidad)->get();
+            foreach ($listadoConductorUnidad as $conductorUnidad) {
+                $conductorUnidad->delete();
+            }
+            DB::commit();
+            return response()->json($conductorUnidad,201);
+        }catch(\PDOException $e){
+            DB::rollBack();
+            return response()->json($e,500);
+        }
         return response()->json(null,204);
     }
 
@@ -83,6 +95,9 @@ class UnidadController extends Controller
         return response()->json($unidad,201);
     }
 
+    /*
+        No se usa
+    */
     public function getUnidades()
     {
         $listadounidades = Unidad::all();
@@ -125,17 +140,24 @@ class UnidadController extends Controller
 
     public function listUnits()
     {
-        $listadoUnidades = Unidad::get();
+        $listadoUnidades = Unidad::withCount('conductores')->get();
         $tabla = Datatables::of($listadoUnidades)
-                    ->addColumn('action',function($fila){
-                        $accion = null;
-                        $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar unidad' onClick='editarUnidad(".$fila->id.")'><i class='material-icons'>edit</i></button>";
-                        $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar unidad' onClick='eliminarUnidad(".$fila->id.")'><i class='material-icons'>close</i></button>";
-                        $accion.= "<button class='btn btn-info btn-link btn-sm' type='button' data-original-title='Agregar chofer' onClick='agregarConductor(".$fila->id.")'><i class='material-icons'>person_add</i></button>";
-                        return $accion;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+            ->editColumn('conductores_count', function($fila){
+                $numeroConductoresIcons = null;
+                for ($i=0; $i < $fila->conductores_count ; $i++) { 
+                    $numeroConductoresIcons.='<span class="material-icons">face</span>';
+                }
+                return $numeroConductoresIcons;
+            })
+            ->addColumn('action',function($fila){
+                $accion = null;
+                $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar unidad' onClick='editarUnidad(".$fila->id.")'><i class='material-icons'>edit</i></button>";
+                $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar unidad' onClick='eliminarUnidad(".$fila->id.")'><i class='material-icons'>close</i></button>";
+                $accion.= "<button class='btn btn-info btn-link btn-sm' type='button' data-original-title='Agregar chofer' onClick='agregarConductor(".$fila->id.")'><i class='material-icons'>person_add</i></button>";
+                return $accion;
+            })
+            ->rawColumns(['action','conductores_count'])
+            ->make(true);
         return $tabla;
         // return response()->json($listadoClientes,201);
     }
