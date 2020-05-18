@@ -26,7 +26,7 @@
       <li class="nav-item{{ $activePage == 'listado_registros_recurrentes' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-recurrentes') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Registros recurrentes') }}</p>
+            <p>{{ __('Registros programados') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'listado_servicios' ? ' active' : '' }}">

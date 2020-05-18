@@ -22,7 +22,7 @@
                     </li>
                     <li class="nav-item tab-r" >
                       <a class="nav-link" href="#registros-recurrentes" data-toggle="tab" id="tab-registros">
-                        <i class="material-icons" style="font-size: 24px;">list</i> Registros recurrentes
+                        <i class="material-icons" style="font-size: 24px;">list</i> Registros programados
                         <div class="ripple-container"></div>
                       </a>
                     </li>

@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function registrosDiarios(){
         return $this->hasMany('App\Http\Models\RegistroDiario','user_id');
     }
+
+    public function turno(){
+        return $this->BelongsTo('App\Http\Models\Turno','turno_id');
+    }
 }
