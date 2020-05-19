@@ -43,6 +43,28 @@
                   </div>
                 </div>
                 <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Turno') }}</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="turnoSelect" name="turno_id" style="width: 100%">
+                        <option value="1" 
+                        @if ($user->turno_id == 1)
+                          selected="selected"
+                        @endif
+                        >Turno 1 (6:00 - 14:00)</option>
+                        <option value="2"
+                        @if ($user->turno_id == 2)
+                          selected="selected"
+                        @endif
+                        >Turno 2 (14:00 - 22:00)</option>
+                        <option value="3"
+                        @if ($user->turno_id == 3)
+                          selected="selected"
+                        @endif
+                        >Turno 3 (22:00 - 6:00)</option>
+                    </select>     
+                  </div>
+                </div>
+                <div class="row">
                   <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Contraseña') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">

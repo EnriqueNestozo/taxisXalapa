@@ -84,8 +84,10 @@ class UserController extends Controller
             $request->merge(['password' => Hash::make($request->get('password'))])
                 ->except([$hasPassword ? '' : 'password']
         ));
+        $user->turno_id = $request->turno_id;
+        $user->save();
 
-        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
+        return redirect()->route('user.index')->withStatus(__('Usuario actualizado correctamente.'));
     }
 
     /**
@@ -96,9 +98,10 @@ class UserController extends Controller
      */
     public function destroy(User  $user)
     {
+        $user->removeRole($user->roles->first());
         $user->delete();
 
-        return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+        return redirect()->route('user.index')->withStatus(__('Usuario eliminado satisfactoriamente.'));
     }
 
     public function getUserData(){
