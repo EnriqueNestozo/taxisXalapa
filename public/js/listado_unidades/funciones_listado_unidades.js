@@ -287,8 +287,8 @@ function eliminarUnidad(id_unidad){
                 cargarListadoConductores();
             },
             error: function(result){
-            console.log(result);
-            md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar la unidad');
+                console.log(result);
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar la unidad');
             }
         });
         }

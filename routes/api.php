@@ -117,3 +117,5 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('user', 'Auth\AuthAPIController@user');
     });
 });
+
+Route::post('user', 'UserController@store')->name('api.user.create')->middleware('auth:api');
