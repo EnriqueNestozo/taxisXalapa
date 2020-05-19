@@ -84,8 +84,8 @@ class UserController extends Controller
             $request->merge(['password' => Hash::make($request->get('password'))])
                 ->except([$hasPassword ? '' : 'password']
         ));
-        $user->turno_id = $request->turno_id;
-        $user->save();
+        // $user->turno_id = $request->turno_id;
+        // $user->save();
 
         return redirect()->route('user.index')->withStatus(__('Usuario actualizado correctamente.'));
     }

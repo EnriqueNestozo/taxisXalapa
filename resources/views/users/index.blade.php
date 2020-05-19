@@ -38,7 +38,7 @@
                         {{ __('Correo') }}
                       </th>
                       <th>
-                        {{ __('Fecha de creación') }}
+                        {{ __('Turno') }}
                       </th>
                       <th>
                         {{ __('Rol') }}
@@ -57,7 +57,8 @@
                             {{ $user->email }}
                           </td>
                           <td>
-                            {{ $user->created_at->format('Y-m-d') }}
+                            <!-- {{ $user->created_at->format('Y-m-d') }} -->
+                            {{ $user->turno_id }}
                           </td>
                           
                           @foreach($user->roles as $rol)
@@ -141,6 +142,7 @@
         success: function(respuesta){
           $('#modalDatosUsuario').modal('hide');
           md.showNotification('bottom','right','success','Se ha registrado el usuario correctamente');
+          window.location.reload();
         },
         error: function(respuesta){
           md.showNotification('bottom','right','danger','Ha ocurrido un error al registrar el usuario');
@@ -164,7 +166,7 @@
       if($('#password').val()==''){
         $('#password-error').show();
       }else{
-        if( !email.test($'#password').val() ){
+        if( !email.test( $('#password').val() ) ){
           $('#password-error').show();
         }
       }
