@@ -11,12 +11,6 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('home') }}">
-          <i class="material-icons">description</i>
-            <p>{{ __('Reportes') }}</p>
-        </a>
-      </li>
       <li class="nav-item{{ $activePage == 'listado_registros_diarios' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-diarios') }}">
           <i class="material-icons">content_paste</i>
@@ -36,6 +30,13 @@
         </a>
       </li>
       @if(@Auth::user()->hasRole('admin'))
+      <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('home') }}">
+          <i class="material-icons">description</i>
+            <p>{{ __('Reportes') }}</p>
+        </a>
+      </li>
+      
       <li class="nav-item{{ $activePage == 'listado_clientes' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-clientes') }}">
           <i class="material-icons">content_paste</i>

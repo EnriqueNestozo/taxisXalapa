@@ -141,7 +141,7 @@
         },
         success: function(respuesta){
           $('#modalDatosUsuario').modal('hide');
-          md.showNotification('bottom','right','success','Se ha registrado el usuario correctamente');
+          // md.showNotification('bottom','right','success','Se ha registrado el usuario correctamente');
           window.location.reload();
         },
         error: function(respuesta){

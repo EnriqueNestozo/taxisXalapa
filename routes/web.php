@@ -24,10 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::group(['middleware' => ['role:admin']], function () {
 		//rutas accesibles solo para administradores
-		Route::get('/', function () {
-			return view('dashboard');
-		});
-	
+		
 		Route::get('/home', 'HomeController@index')->name('home');
 	
 		Route::get('listado-unidades', function () {
@@ -45,10 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::group(['middleware' => ['role:capturista|admin']], function () {
 		//rutas accesibles solo para capturistas
 		Route::get('/', function () {
-			return view('dashboard');
+			return view('pages.listado_registros_diarios');
 		});
-		Route::get('/home', 'HomeController@index')->name('home');
-	
+		
 		Route::get('listado-diarios', function () {
 			return view('pages.listado_registros_diarios');
 		})->name('listado-diarios');
