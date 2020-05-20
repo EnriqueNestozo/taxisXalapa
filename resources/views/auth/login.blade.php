@@ -121,7 +121,7 @@
               password: $("#password").val()
             },
             complete: function(data){
-              window.location.href = "{{route('home')}}"
+              window.location.href = "{{route('listado-diarios')}}"
             }
       });
         },

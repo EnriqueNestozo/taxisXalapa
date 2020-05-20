@@ -47,6 +47,15 @@
                 </select>   
               <span id="turno-error" class="error text-danger" for="turno" style="display:none">Campo faltante</span>
             </div>
+            <div class="form-group" id="baseDiv" style="display:none">
+                <label for="base" class="col-form-label">base:</label>
+                <select class="form-control" id="baseSelect" name="base" style="width: 100%">
+                    <option value="">Seleccione un base...</option>
+                    <option value="1">Base 1 (001 - 100)</option>
+                    <option value="2">Base 2 (101 - 200)</option>
+                </select>   
+              <span id="base-error" class="error text-danger" for="base" style="display:none">Campo faltante</span>
+            </div>
           </div>
 
         </form>

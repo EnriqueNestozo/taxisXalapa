@@ -17,11 +17,12 @@
                 <thead>
                   <tr>
                     <th style="width:5%;"></th>
-                    <th style="width:25%;">Placa</th>
-                    <th style="width:10%;">Número</th>
-                    <th style="width:10%;">Clave</th>
+                    <th style="width:20%;">Placa</th>
+                    <th style="width:15%;">Núm. radio</th>
+                    <th style="width:10%;">Base</th>
+                    <th style="width:15%;">Núm. económico</th>
                     <th style="width:15%;">Conductores asignados</th>
-                    <th style="width:30%;">Acciones</th>
+                    <th style="width:20%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,11 +53,11 @@
               <table id="listadoConductores" class="table-hover"  style="width:100%">
                 <thead>
                   <tr>
-                    <th style="width:30%;">Nombre completo</th>
+                    <th style="width:35%;">Nombre completo</th>
                     <th style="width:15%;">Celular</th>
                     <th style="width:15%;">Vencimiento de licencia</th>
                     <th style="width:15%;">Unidad(es)</th>
-                    <th style="width:25%;">Acciones</th>
+                    <th style="width:20%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>

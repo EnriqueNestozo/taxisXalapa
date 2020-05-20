@@ -41,6 +41,9 @@
                         {{ __('Turno') }}
                       </th>
                       <th>
+                        {{ __('Base') }}
+                      </th>
+                      <th>
                         {{ __('Rol') }}
                       </th>
                       <th class="text-right">
@@ -60,7 +63,9 @@
                             <!-- {{ $user->created_at->format('Y-m-d') }} -->
                             {{ $user->turno_id }}
                           </td>
-                          
+                          <td>
+                            {{ $user->base }}
+                          </td>
                           @foreach($user->roles as $rol)
                           <td>
                             {{ $rol->name }}
@@ -117,9 +122,10 @@
     $('#rolSelect').change(function(){
       if( $('#rolSelect').val() == 'capturista' ){
         $('#turnoDiv').show();
+        $('#baseDiv').show();
       }else{
         $('#turnoSelect').val('');
-        $('#turnoDiv').hide();
+        $('#baseDiv').hide();
       }
     });
 
@@ -156,7 +162,8 @@
   function validarcampos(){
     var faltanCampos = false;
     limpiarErrores();
-    if( $('#name').val() =='' || $('#email').val() =='' || $('#password').val() == '' || ($('#turnoSelect').val() == '' && $('#rolSelect').val() == 'capturista') || $('#rolSelect').val() =='' ){
+    if( $('#name').val() =='' || $('#email').val() =='' || $('#password').val() == '' || $('#rolSelect').val() =='' ){
+      console.log("aqui");
       if($('#name').val()==''){
         $('#name-error').show();
       }
@@ -165,21 +172,29 @@
       }
       if($('#password').val()==''){
         $('#password-error').show();
-      }else{
-        if( !email.test( $('#password').val() ) ){
-          $('#password-error').show();
-        }
       }
-      if($('#rolSelect').val() == '' || $('#rolSelect').val() == 'admin' ){
+      if($('#rolSelect').val() == ''){
         $('#rol-error').show();
-      }else{
-        if($('#turnoSelect').val() == ''){
-          console.log("turno");
-          $('#turno-error').show();
-        }
       }
       faltanCampos = true;
     }
+    if($('#rolSelect').val() == 'capturista'){
+      if($('#turnoSelect').val() == ''){
+          $('#turno-error').show();
+          faltanCampos = true;
+        }
+      if($('#baseSelect').val() == ''){
+        $('#base-error').show();
+        faltanCampos = true;
+      }
+    }
+    if($('#email').val() != ''){
+      if( !email.test($('#email').val()) ){
+          $('#email-error').show();
+          faltanCampos = true;
+        }
+    }
+    console.log(faltanCampos);
     return faltanCampos;
   }
 
@@ -189,6 +204,7 @@
     $('#password-error').hide();
     $('#turno-error').hide();
     $('#rol-error').hide();
+    $('#base-error').hide();
   }
 
   function limpiarCampos(){

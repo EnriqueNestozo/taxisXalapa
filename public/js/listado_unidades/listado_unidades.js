@@ -15,6 +15,20 @@ $(document).ready(function() {
       }
     });
 
+    $('#marca').change(function(){
+      if( $('#marca').val() !=''){
+        $('#marca-error').hide();
+        $('#marcaDiv').removeClass(' has-danger');
+      }
+    });
+
+    $('#modelo').change(function(){
+      if( $('#modelo').val() !=''){
+        $('#modelo-error').hide();
+        $('#modeloDiv').removeClass(' has-danger');
+      }
+    });
+
     $('#numero').change(function(){
       if( $('#numero').val() != '' ){
         $('#numero-error').hide();
@@ -29,6 +43,13 @@ $(document).ready(function() {
       }
     });
 
+    $('#baseSelect').change(function(){
+      if( $('#baseSelect').val() !='' ){
+        $('#base-error').hide();
+        $('#baseDiv').removeClass(' has-danger');
+      }
+    });
+
     $('#modalDatosUnidad').on('hidden.bs.modal', function () {
       $('#datosUnidadForm').trigger("reset");
       // cargarListadoChoferes();
@@ -37,6 +58,7 @@ $(document).ready(function() {
     $('#modalRelacionConductorUnidad').on('hidden.bs.modal', function () {
       $('#conductorSelect').val('').trigger('change');
       $('#turnoSelect').val('').trigger('change');
+      $('#baseSelect').val('').trigger('change');
     });
 
     $('#modalRegistroConductor').on('hidden.bs.modal', function () {

@@ -29,9 +29,18 @@
               <span id="placas-error" class="error text-danger" for="placas" style="display:none">Campo faltante</span>
             </div>
             <div class="form-group" id="numeroDiv">
-              <label for="numero" class="col-form-label">Clave:</label>
+              <label for="numero" class="col-form-label">Numero de radio:</label>
               <input type="text" class="form-control" id="numero" maxlength="100" name="numero" style="padding-top:20px">
               <span id="numero-error" class="error text-danger" for="numero" style="display:none">Campo faltante</span>
+            </div>
+            <div class="form-group" id="baseDiv">
+              <label for="base" class="col-form-label">Base:</label>
+              <select class="clave" id="baseSelect" maxlength="100" name="base" style="padding-top:20px">
+                <option value="">Seleccione una base...</option>
+                <option value="1">Base 1</option>
+                <option value="2">Base 2</option>
+              </select>
+              <span id="base-error" class="error text-danger" for="base" style="display:none">Campo faltante</span>
             </div>
             <div class="form-group" id="numero_economicoDiv">
               <label for="numero_economico" class="col-form-label">Número económico:</label>

@@ -27,6 +27,7 @@ class UnidadController extends Controller
                 $unidad->numero = ($request->numero)? $request->numero : '';
                 $unidad->tarjeta_circulacion = ($request->tarjeta_circulacion)? $request->tarjeta_circulacion : '';
                 $unidad->numero_economico = $request->numero_economico;
+                $unidad->base = $request->base;
                 $unidad->save();
             }else{
                 // dd($request->all());

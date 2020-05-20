@@ -65,6 +65,23 @@
                   </div>
                 </div>
                 <div class="row">
+                  <label class="col-sm-2 col-form-label">{{ __('Base') }}</label>
+                  <div class="col-sm-7">
+                    <select class="form-control" id="baseSelect" name="base" style="width: 100%">
+                        <option value="1" 
+                        @if ($user->base == 1)
+                          selected="selected"
+                        @endif
+                        >Base 1 (001 - 100)</option>
+                        <option value="2"
+                        @if ($user->base == 2)
+                          selected="selected"
+                        @endif
+                        >Base 2 (101 - 200)</option>
+                    </select>     
+                  </div>
+                </div>
+                <div class="row">
                   <label class="col-sm-2 col-form-label" for="input-password">{{ __(' Contraseña') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">

@@ -123,6 +123,7 @@ function cargarListado(){
             },
             {data: 'placas', name: 'placas'},
             {data: "numero", name: 'numero', "defaultContent":""},
+            {data: "base", name: 'base', "defaultContent":""},
             {data: 'numero_economico', name: 'numero_economico', "defaultContent":""},
             {data: 'conductores_count', name:'conductores_count', 'defaultContent':""},
             {data: 'action', name:'action', orderable:false}
@@ -236,6 +237,7 @@ function editarUnidad(id_unidad){
             $('#idUnidad').val( result['id'] );
             $('#placas').val( result['placas'] );
             $('#numero').val( result['numero'] );
+            $('#baseSelect').val( result['base'] ).trigger('change');
             $('#numero_economico').val( result['numero_economico'] );
             if(result.conductores){
                 result.conductores.forEach(element => {
@@ -305,13 +307,21 @@ function desplegarModalConductor(){
 
 function validarCampos(){
     let correctos = false;
-    if($('#placas').val() !='' && $('#numero').val() !='' && $('#numero_economico').val() !=''){
+    if($('#placas').val() !='' && $('#numero').val() !='' && $('#numero_economico').val() !='' && $('#marca').val() !='' && $('#modelo').val() !='' && $('#baseSelect').val() !=''){
         correctos = true;
     }
     return correctos;
 }
 
 function marcarCamposIncorrectos(){
+    if($('#marca').val() ==''){
+        $('#marca-error').show();
+        $('#marcaDiv').addClass(' has-danger');
+    }
+    if($('#modelo').val() ==''){
+        $('#modelo-error').show();
+        $('#modeloDiv').addClass(' has-danger');
+    }
     if($('#placas').val() ==''){
         $('#placas-error').show();
         $('#placasDiv').addClass(' has-danger');
@@ -320,6 +330,10 @@ function marcarCamposIncorrectos(){
         $('#numero-error').show();
         $('#numeroDiv').addClass(' has-danger');
     }
+    if($('#baseSelect').val() ==''){
+        $('#base-error').show();
+        $('#baseDiv').addClass(' has-danger');
+    }
     if($('#numero_economico').val() ==''){
         $('#numero_economico-error').show();
         $('#numero_economicoDiv').addClass(' has-danger');
@@ -327,10 +341,16 @@ function marcarCamposIncorrectos(){
 }
 
 function limpiarErrores(){
+    $('#marca-error').hide();
+    $('#marcaDiv').removeClass(' has-danger');
+    $('#modelo-error').hide();
+    $('#modeloDiv').removeClass(' has-danger');
     $('#placas-error').hide();
     $('#placasDiv').removeClass(' has-danger');
     $('#numero-error').hide();
     $('#numeroDiv').removeClass(' has-danger');
+    $('#base-error').hide();
+    $('#baseDiv').removeClass(' has-danger');
     $('#numero_economico-error').hide();
     $('#numero_economicoDiv').removeClass(' has-danger');
 }
