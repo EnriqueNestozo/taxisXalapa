@@ -17,7 +17,7 @@ function verificarExistenciasDeServicios() {
         }
     });
     // md.showNotification('bottom','right','info','Hay un servicio pendiente sin asignar en 1 hora.');
-    setTimeout(verificarExistenciasDeServicios, 60000);
+    setTimeout(verificarExistenciasDeServicios, 600000);
 }
 
 function cargarSelectsMunicipio(){
@@ -26,6 +26,8 @@ function cargarSelectsMunicipio(){
         .done(function ( v1) {
         $('#municipioSelect').select2({data:v1});
         $('#municipioSelect').val(87).trigger('change');
+        $('#municipioDestinoSelect').select2({data:v1});
+        $('#municipioDestinoSelect').val(87).trigger('change');
     });
 }
 
@@ -40,6 +42,7 @@ function obtenerListadoPersonas(){
         },
         success: function( result ) {
             $('#personaSelect').empty();
+            $('#personaDestinoSelect').empty();
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
             for (let index = 0; index < result.length; index++) {
@@ -48,6 +51,7 @@ function obtenerListadoPersonas(){
             html += '>'+result[index].nombre+'</option>';
             }
             $('#personaSelect').append(html);
+            $('#personaDestinoSelect').append(html);
         },
         error: function(result){
             console.log(result);
@@ -77,6 +81,7 @@ function obtenerListadoClavesTaxis(){
         },
         error: function(result){
             console.log(result);
+            //babyjinx
         }
     });
 }

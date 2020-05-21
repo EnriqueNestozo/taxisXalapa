@@ -31,6 +31,31 @@ $(document).ready(function() {
     $('#municipioSelect').prop('disabled',false);
     $('#localidadSelect').prop('disabled',false);
     $('#coloniaSelect').prop('disabled',false);
+    $('#clave').val('').trigger('change');
+  });
+
+  $('#modalDestino').on('hidden.bs.modal', function () {
+    $('#destinoForm').trigger("reset");
+    limpiarErroresDestino();
+    // obtenerListadoPersonas();
+    cargarSelectsMunicipio();
+    $('#direccionDestinoSelect').empty();
+    html = '';
+    html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+    $('#direccionDestinoSelect').append(html);
+    $('#direccionDestinoSelect').trigger('change');
+    $('#personaDestino').prop('disabled',false);
+    $('#municipioDestino').prop('disabled',false);
+    $('#localidadDestino').prop('disabled',false);
+    $('#coloniaDestino').prop('disabled',false);
+    $('#referenciaDestino').prop('disabled',false);
+   
+    $('#personaDestinoSelect').prop('disabled',false);
+    $('#municipioDestinoSelect').prop('disabled',false);
+    $('#localidadDestinoSelect').prop('disabled',false);
+    $('#coloniaDestinoSelect').prop('disabled',false);
+    $('#eliminarDestinoBtn').hide();
+    $('#registroDestinoBtn').show();
   });
 
   // $('#isRecurrente').change(function(){
@@ -111,6 +136,44 @@ $(document).ready(function() {
     }
   });
 
+
+  $('#personaDestinoSelect').change(function(){
+    if( $('#personaDestino').val() !='' || $('#personaDestinoSelect').val() != '' ){
+      $('#personaDestinoDiv').removeClass('has-danger');
+      $('#personaDestinoSelect-error').hide();
+      if( $('#personaDestinoSelect').val() !='' ){
+        obtenerListadoDireccionesDestino();
+        $.get({
+          url: routeBase+ '/api/clientes/'+$('#personaDestinoSelect').val(),
+          dataType: 'json',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+          },
+          success: function( result ) {
+            console.log(result);
+          },
+          error: function(result){
+            console.log(result);
+          }
+        });
+        $('#persona').prop('disabled',true);
+      }
+    }else{
+      $('#direccionDestinoSelect').empty();
+      html = '';
+      html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+      $('#direccionDestinoSelect').append(html);
+      $('#personaDestinoSelect').prop('disabled',false);
+      $('#personaDestino').prop('disabled',false);
+      
+      // html = '';
+      // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
+      // $('#municipioSelect').append(html);
+      
+    }
+  });
+
   $('#direccionSelect').change(function(){
     if( $('#direccionSelect').val() !='' ){
       $('#municipioSelect').val('').trigger('change');
@@ -159,6 +222,54 @@ $(document).ready(function() {
     }
   });
 
+  $('#direccionDestinoSelect').change(function(){
+    if( $('#direccionDestinoSelect').val() !='' ){
+      $('#municipioDestinoSelect').val('').trigger('change');
+      $('#municipioDestinoSelect').prop('disabled',true).trigger('change');
+      $('#municipioDestino').prop('disabled',true);
+      $('#localidadDestinoSelect').val('').trigger('change');
+      $('#localidadDestinoSelect').prop('disabled',true).trigger('change');
+      $('#localidadDestino').prop('disabled',true);
+      $('#coloniaDestinoSelect').val('').trigger('change');
+      $('#coloniaDestinoSelect').prop('disabled',true).trigger('change');
+      $('#coloniaDestino').prop('disabled',true);
+      $('#calleDestino').prop('disabled',true);
+      $('#entre_callesDestino').prop('disabled',true);
+      $('#referenciaDestino').prop('disabled',true);
+      $.get({
+        url: routeBase+ '/api/direcciones/'+$('#direccionDestinoSelect').val(),
+        dataType: 'json',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+        },
+        success: function( result ) {
+          $('#referenciaDestino').val(result['referencia']);
+          $('#entre_callesDestino').val(result['entre_calles']);
+          $('#calleDestino').val(result['calle']);
+          // console.log(result);
+          // $('#localidadSelect').select2({data:result}).trigger('change');
+        },
+        error: function(result){
+          console.log(result);
+        }
+      });
+    }else{
+      $('#referenciaDestino').val('');
+      $('#entre_callesDestino').val('');
+      $('#calleDestino').val('');
+      $('#municipioDestinoSelect').prop('disabled',false);
+      $('#municipioDestino').prop('disabled',false);
+      $('#localidadDestinoSelect').prop('disabled',false);
+      $('#localidadDestino').prop('disabled',false);
+      $('#coloniaDestinoSelect').prop('disabled',false);
+      $('#coloniaDestino').prop('disabled',false);
+      $('#calleDestino').prop('disabled',false);
+      $('#entre_callesDestino').prop('disabled',false);
+      $('#referenciaDestino').prop('disabled',false);
+    }
+  });
+
   $('#municipio').change(function(){
     if( $('#municipio').val() !='' || $('#municipioSelect').val() !=-''){
       $('#municipioDiv').removeClass(' has-danger');
@@ -168,6 +279,18 @@ $(document).ready(function() {
     }
     }else{
       $('#municipioSelect').prop('disabled',false);
+    }
+  });
+
+  $('#municipioDestino').change(function(){
+    if( $('#municipioDestino').val() !='' || $('#municipioDestinoSelect').val() !=-''){
+      $('#municipioDestinoDiv').removeClass(' has-danger');
+      $('#municipioDestino-error').hide();
+      if( $('#municipioDestino').val() !=''){
+        $('#municipioDestinoSelect').prop('disabled',true);
+    }
+    }else{
+      $('#municipioDestinoSelect').prop('disabled',false);
     }
   });
 
@@ -195,28 +318,41 @@ $(document).ready(function() {
             $('#localidadSelect').val(1).trigger('change');
             $('#coloniaSelect').val('').trigger('change');
         });
-        // $.get({
-        //   url: routeBase+ '/api/localidades/'+$('#municipioSelect').val(),
-        //   dataType: 'json',
-        //   headers: {
-        //     'Accept': 'application/json',
-        //     'Authorization': 'Bearer '+data,
-        //   },
-        //   success: function( result ) {
-        //     // $('#referencia').val(result['referencia']);
-        //     // $('#entre_calles').val(result['entre_calles']);
-        //     console.log(result);
-        //     $('#localidadSelect').select2({data:result}).trigger('change');
-        //     $('#referencia').prop('disabled',true);
-        //   },
-        //   error: function(result){
-        //     console.log(result);
-        //   }
-        // });
         $('#municipio').prop('disabled',true);
     }
     }else{
       $('#municipio').prop('disabled',false);
+    }
+  });
+  
+  $('#municipioDestinoSelect').change(function(){
+    var data = sessionStorage.getItem('token');
+    if( $('#municipioDestino').val() !='' || $('#municipioDestinoSelect').val() !=-''){
+      $('#municipioDestinoDiv').removeClass(' has-danger');
+      $('#municipioDestino-error').hide();
+      if($('#municipioDestinoSelect').val() !=null ){
+        $.when( 
+          $.ajax( routeBase+ '/api/localidades/'+$('#municipioDestinoSelect').val() ),
+          $.ajax( routeBase+ '/api/colonias/'+$('#municipioDestinoSelect').val() )
+        )
+          .done(function ( v1,v2) {
+            $('#localidadDestinoSelect').empty();
+            $('#coloniaDestinoSelect').empty();
+            // console.log(v1[0],v2[0]);
+            // console.log("coloniaDestinos:  " +v2);
+            $('#localidadDestinoSelect').select2({data:v1[0]}).trigger('change');
+            $('#coloniaDestinoSelect').select2({data:v2[0]}).trigger('change');
+            // $('.special_select').select2({
+            //   tags: true,
+            //   dropdownParent: $('#modalRegistroDiario')
+            // });
+            $('#localidadDestinoSelect').val(1).trigger('change');
+            $('#coloniaDestinoSelect').val('').trigger('change');
+        });
+        $('#municipioDestino').prop('disabled',true);
+    }
+    }else{
+      $('#municipioDestino').prop('disabled',false);
     }
   });
 
@@ -229,6 +365,18 @@ $(document).ready(function() {
       }
     }else{
       $('#localidad').prop('disabled',false);
+    }
+  });
+  
+  $('#localidadDestinoSelect').change(function(){
+    if( $('#localidadDestinoSelect').val() !='' || $('#localidadDestino').val() !='' ){
+      $('#localidadDestinoDiv').removeClass(' has-danger');
+      $('#localidadDestino-error').hide();
+      if( $('#localidadDestinoSelect').val() !='' ){
+        $('#localidadDestino').prop('disabled',true);
+      }
+    }else{
+      $('#localidadDestino').prop('disabled',false);
     }
   });
 
@@ -246,6 +394,20 @@ $(document).ready(function() {
     }
   });
 
+  $('#localidadDestino').change(function(){
+    if( $('#localidadDestino').val() !='' || $('#localidadDestinoSelect').val() !=-''){
+      $('#localidadDestinoDiv').removeClass(' has-danger');
+      $('#localidadDestino-error').hide();
+      if( $('#localidadDestino').val() !=''){
+        // $('#localidadSelect').prop('disabled',true);
+        $('#coloniaDestinoSelect').prop('disabled',true).trigger('change');
+      }
+    }else{
+      // $('#localidadSelect').prop('disabled',false);
+      $('#coloniaDestinoSelect').prop('disabled',false).trigger('change');
+    }
+  });
+
   $('#coloniaSelect').change(function(){
     if( $('#coloniaSelect').val() !='' ){
       $('#coloniaDiv').removeClass(' has-danger');
@@ -253,6 +415,16 @@ $(document).ready(function() {
       $('#colonia').prop('disabled',true);
     }else{  
       $('#colonia').prop('disabled',false);
+    }
+  });
+
+  $('#coloniaDestinoSelect').change(function(){
+    if( $('#coloniaDestinoSelect').val() !='' ){
+      $('#coloniaDestinoDiv').removeClass(' has-danger');
+      $('#coloniaDestino-error').hide();
+      $('#coloniaDestino').prop('disabled',true);
+    }else{  
+      $('#coloniaDestino').prop('disabled',false);
     }
   });
 
@@ -268,10 +440,29 @@ $(document).ready(function() {
     }
   });
 
+  $('#coloniaDestino').change(function(){
+    if( $('#coloniaDestino').val() !='' || $('#coloniaDestinoSelect').val() !=-''){
+      $('#coloniaDestinoDiv').removeClass(' has-danger');
+      $('#coloniaDestino-error').hide();
+      if( $('#coloniaDestino').val() !=''){
+        $('#coloniaDestinoSelect').prop('disabled',true);
+      }
+    }else{
+      $('#coloniaDestinoSelect').prop('disabled',false);
+    }
+  });
+
   $('#calle').change(function(){
     if( $('#calle').val() !='' ){
       $('#calleDiv').removeClass(' has-danger');
       $('#calle-error').hide();
+    }
+  });
+
+  $('#calleDestino').change(function(){
+    if( $('#calleDestino').val() !='' ){
+      $('#calleDestinoDiv').removeClass(' has-danger');
+      $('#calleDestino-error').hide();
     }
   });
 
@@ -303,4 +494,3 @@ $(document).ready(function() {
 
 });
 
-  

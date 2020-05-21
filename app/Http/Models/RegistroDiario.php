@@ -10,7 +10,7 @@ class RegistroDiario extends Model
     protected $table = 'registros';
 
     protected $fillable = [
-        'hora', 'cliente_id', 'direccion_id'
+        'hora', 'cliente_id', 'direccion_id','direccion_destino_id'
     ];
 
     public function cliente(){
@@ -19,6 +19,10 @@ class RegistroDiario extends Model
 
     public function direccion(){
         return $this->belongsTo('App\Http\Models\Direccion','direccion_id');
+    }
+    
+    public function direccionDestino(){
+        return $this->belongsTo('App\Http\Models\Direccion','direccion_destino_id');
     }
 
     public function unidad(){

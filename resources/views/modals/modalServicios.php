@@ -292,7 +292,7 @@
               <div class="col-12">
 
                 <div class="form-group" id="claveDiv">
-                  <label for="clave" class="col-form-label">Clave:</label>
+                  <label for="clave" class="col-form-label">Número radio:</label>
                   <select class="special_select" id="clave" name="clave"  style="width: 100%">
                   </select>
                 </div>

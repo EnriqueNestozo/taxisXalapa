@@ -18,11 +18,11 @@
                   <th style="width:5%;">N. Registro</th>
                   <th style="width:5%;">Hora</th>
                   <th style="width:15%;">Persona</th>
-                  <th style="width:25%;">Dirección</th>
+                  <th style="width:15%;">Dirección</th>
                   <th style="width:10%;">Clave</th>
                   <th style="width:10%;">Estatus</th>
                   <th style="width:10%;">Quien lo registró</th>
-                  <th style="width:20%;">Acciones</th>
+                  <th style="width:30%;">Acciones</th>
                 </thead>
                 <tbody>
                   
@@ -36,6 +36,7 @@
   </div>
 </div>
 @include('modals.modalRegistroDiario')
+@include('modals.modalDestino')
 @endsection
 <style>
 
@@ -110,7 +111,9 @@
   var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
   var rutaListadoClientes= "{{route('api.get.clientes')}}";
   var rutaBorradoRegistros= "{{route('api.delete.registro')}}";
+  var rutaBorradoDestino= "{{route('api.destino.delete')}}";
   var rutaCrearRegistroDiario= "{{route('api.registros.diarios.create')}}";
+  var rutaCrearRegistroDestino= "{{route('api.registros.destino.create')}}";
   var rutaListadoMunicipios= "{{route('api.get.municipios')}}";
 </script>
 <script src="{{ asset('js') }}/listado_registro/listado_registro.js"></script>

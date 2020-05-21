@@ -18,6 +18,8 @@ Route::get('registros-list','ReportesController@listRecords')->name('api.registr
 
 //Api para registros diarios
 Route::post('registrosDiarios','RegistrosDiariosController@create')->name('api.registros.diarios.create')->middleware('auth:api');
+Route::post('registrosDestinos','RegistrosDiariosController@createDestino')->name('api.registros.destino.create')->middleware('auth:api');
+Route::post('registrosDestinosEliminar','RegistrosDiariosController@deleteDestino')->name('api.destino.delete')->middleware('auth:api');
 Route::get('registros-diarios-list/{tipoRegistro}','RegistrosDiariosController@listRecords')->name('api.registros.diarios.list')->middleware('auth:api');
 Route::get('registros-diarios/{idRegistro}','RegistrosDiariosController@show')->name('api.get.registro')->middleware('auth:api');
 Route::post('registros-diarios-delete','RegistrosDiariosController@delete')->name('api.delete.registro')->middleware('auth:api');
@@ -75,6 +77,7 @@ Route::post('unidad-conductor-delete','UnidadController@EliminarRelacionconducto
 Route::get('direcciones/{idDireccion}','DireccionController@show')->name('api.get.direccion')->middleware('auth:api');
 // Route::get('direcciones-list','DireccionController@listClients');
 Route::get('get-direcciones/{idCliente}','DireccionController@getDirecciones')->name('api.get.direcciones')->middleware('auth:api');
+Route::get('get-direcciones-destino/{idCliente}','DireccionController@getDireccionesDestino')->name('api.get.destino')->middleware('auth:api');
 // Route::post('direcciones','DireccionController@create');
 // Route::put('direcciones/update','DireccionController@update');
 // Route::delete('direcciones/delete','DireccionController@delete');
