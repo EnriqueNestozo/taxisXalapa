@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Models\RegistroDiario;
 use App\Http\Models\Cliente;
+use Illuminate\Support\Facades\Input;
 use App\Http\Models\Unidad;
 use App\Http\Models\Direccion;
 use App\Http\Models\Cat_municipio;
@@ -16,8 +17,27 @@ use DB;
 
 class ReportesController extends Controller
 {
-    public function listRecords(){
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->get();
+    public function listRecords(Request $request){
+        $fechaInicio = $request->fecha_i." 00:00:00";
+        $fechaFin = $request->fecha_f." 23:59:59"; 
+        $query = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->whereBetween('created_at',[$fechaInicio,$fechaFin]);
+        $listadoRegistros = $query;
+        // dd($request->tipo_servicio);
+        if($request->tipo_servicio =="diario"){
+            $listadoRegistros = $query->where('tipo_registro',0);
+        }else if($request->tipo_servicio =="programado"){
+            $listadoRegistros = $query->where('tipo_registro',1);
+        }
+        if($request->base == 1){
+            $listadoRegistros = $query->whereHas('unidad',function($q){
+                $q->where('base',1);
+            });
+        }else if($request->base == 2){
+            $listadoRegistros = $query->whereHas('unidad',function($q){
+                $q->where('base',2);
+            });
+        }
+        $listadoRegistros->get();
         
         $tabla = Datatables::of($listadoRegistros)
             ->editColumn('estatus',function($fila){

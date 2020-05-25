@@ -126,19 +126,38 @@
             <div class="card-body">
               <div class="row">
               
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <span>Fecha</span>
+              <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom:20px;">
+                <!-- <span>Fecha</span> -->
                 <div class="row">
-                  <div class="col-lg-8 col-md-8 col-sm-8" id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%;">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="reportrange">Fecha</label>
+                  <div class="col-lg-10 col-md-10 col-sm-10" id="reportrange" style="background: #fff; cursor: pointer; padding-top: 5px; padding-bottom: 5px; border: 1px solid #ccc; width: 100%; height:50%">
                       <i class="fa fa-calendar"></i>&nbsp;
                       <span></span> <i class="fa fa-caret-down"></i>
                   </div>
-                  <div class="col-log-2 col-md-2 col-sm-2">
+                
+                </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                    <label for="tipo_servicio">Tipo de servicio</label>
+                    <select name="tipo_servicio" id="tipo_servicio" class="form-control">
+                      <option value="todos" selected>Todos</option>
+                      <option value="diario">Diario</option>
+                      <option value="programado">Programado</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 col-md-2 co-sm-2">
+                    <label for="base">Base</label>
+                    <select name="base" id="base" class="form-control">
+                      <option value="todos" selected>Todas</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2" style="padding-top:10px;">
                       <button class="btn btn-info" onclick="buscarDatos()">Consultar</button>
                   </div> 
                 </div>
               </div>
-              
               <div class="table-responsive">
                 <table id="myTable1" class="display table-hover" style="width:100%">
                   <thead>
@@ -173,129 +192,6 @@
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap- 
 datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      moment.locale('es');   
-      md.initFormExtendedDatetimepickers();
-      // $('#tablaReporteMensual').hide();
-      $('#tablaReportePorTaxi').hide();
-      
-      var start = moment().subtract(29, 'days');
-    var end = moment();
+<script src="{{ asset('js') }}/reportes/reportes.js"></script>
 
-    function cb(start, end) {
-        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        $('#reportrange span').html(start.format('D/MM/YYYY') + ' - ' + end.format('D/MM/YYYY'));
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        locale:{
-          "applyLabel": "Aplicar",
-          "cancelLabel": "Cancelar",
-          "fromLabel": "Desde",
-          "toLabel": "Hasta",
-          "customRangeLabel": "Personalizado",
-          "daysOfWeek": [
-            "Dom",
-            "Lu",
-            "Mar",
-            "Mie",
-            "Jue",
-            "Vie",
-            "Sa"
-          ],
-          "monthNames": [
-            "Enero",
-            "Febrero",
-            "Marzo",
-            "Abril",
-            "Mayo",
-            "Junio",
-            "Julio",
-            "Agosto",
-            "Septiembre",
-            "Octobre",
-            "Noviembre",
-            "Diciembre"
-          ],
-          "firstDay": 2
-        },
-        ranges: {
-           'Hoy': [moment(), moment()],
-           'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
-           'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
-           'Este mes': [moment().startOf('month'), moment().endOf('month')],
-           'El mes pasado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    },cb );
-
-//     function(start, end, label) {
-//   console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-// }
-    cb(start, end);
-
-      // md.initDashboardPageCharts();
-    });
-
-    function desplegarReporteMensualServicios(){
-      $('#cardsReportes').hide();
-      $('#regresarAcardsReportes').show();
-      console.log("desplegado");
-      $('#tablaReporteMensual').show();
-    }
-
-    function desplegarReportePorTaxi(){
-      $('#tablaReportePorTaxi').show();
-    }
-
-    function desplegarReporteDeCorte(){
-
-    }
-
-    function mostrarCardsReportes(){
-      $('#cardsReportes').show();
-      $('#regresarAcardsReportes').hide();
-      $('#tablaReporteMensual').hide();
-      $('#tablaReportePorTaxi').hide();
-    }
-
-    function buscarDatos(){
-      $('#tablaReporteMensual').show();
-      $('#myTable1').DataTable( {
-        processing: true,
-        serverSide: true,
-        searching: true,
-        destroy: true,
-        language: {
-            url: routeBase+'/DataTables/DataTable_Spanish.json'
-        },
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'excel', 'pdf',
-        ],
-        ajax: {
-            url: routeBase+'/api/registros-list',
-            type: "GET",
-            dataType: 'json',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
-            }
-        },
-        columns: [
-            {data: 'id', name: 'id'},
-            {data: 'hora', name: 'hora'},
-            {data: "cliente.nombre", name: 'cliente.nombre'},
-            {data: "direccionCompleta", name: 'direccionCompleta'},
-            {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
-            {data: 'estatus'},
-            {data: 'user.name'},
-            {data: 'tipo_registro'}
-        ]
-      } );
-    }
-  </script>
 @endpush
