@@ -37,6 +37,11 @@ class ReportesController extends Controller
                 $q->where('base',2);
             });
         }
+        if($request->unidad != 'todas'){
+            $listadoRegistros = $query->whereHas('unidad',function($q) use($request){
+                $q->where('id',$request->unidad);
+            });
+        }
         $listadoRegistros->get();
         
         $tabla = Datatables::of($listadoRegistros)
@@ -69,5 +74,13 @@ class ReportesController extends Controller
             ->rawColumns(['estatus','direccionCompleta','tipo_registro'])
             ->make(true);
         return $tabla;
+    }
+
+    public function reportePorCorteTaxi(Request $request){
+        dd($request->all());
+    }
+
+    public function reportePorCliente(Request $request){
+
     }
 }

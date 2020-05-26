@@ -75,7 +75,7 @@ function obtenerListadoClavesTaxis(){
             for (let index = 0; index < result.length; index++) {
                 html += '<option ';
                 html += ' value="'+result[index].id+'" ';
-                html += '>'+result[index].numero_economico+'</option>';
+                html += '>'+result[index].numero+'</option>';
             }
             $('#clave').append(html);
         },

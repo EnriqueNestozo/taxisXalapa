@@ -13,7 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 //Api para reportes
-Route::get('registros-list','ReportesController@listRecords')->name('api.registros.list')->middleware('auth:api');
+Route::get('reporte-registros','ReportesController@listRecords')->name('api.registros.list')->middleware('auth:api');
+Route::get('reporte-corte-taxi','ReportesController@reportePorCorteTaxi')->name('api.reporte.taxi')->middleware('auth:api');
+Route::get('reporte-cliente','ReportesController@reportePorCliente')->name('api.reporte.cliente')->middleware('auth:api');
 
 
 //Api para registros diarios

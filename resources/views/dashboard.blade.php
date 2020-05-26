@@ -4,7 +4,7 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row" id="cardsReportes">
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <!-- <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats" onclick="desplegarReporteMensualServicios()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
@@ -17,13 +17,13 @@
   
               <div class="card-footer">
                 <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
+                  <i class="material-icons text-danger">warning</i>
+                  <a href="#pablo">Get More Space...</a>
                 </div>
               </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats" onclick="desplegarReportePorTaxi()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
@@ -35,13 +35,13 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
+                  <i class="material-icons text-danger">warning</i>
+                  <a href="#pablo">Get More Space...</a>
                 </div>
               </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats" onclick="desplegarReporteGeneral()" style="cursor: pointer;">
               <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
@@ -55,12 +55,12 @@
   
               <div class="card-footer">
                 <div class="stats">
-                  <!-- <i class="material-icons text-danger">warning</i>
-                  <a href="#pablo">Get More Space...</a> -->
+                  <i class="material-icons text-danger">warning</i>
+                  <a href="#pablo">Get More Space...</a>
                 </div>
               </div>
             </div>
-        </div>
+        </div> -->
         <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
@@ -110,17 +110,17 @@
           </div>
         </div> -->
       </div>
-      <div class="row" id="regresarAcardsReportes" style="display:none; padding-bottom:2em;" onclick="mostrarCardsReportes()">
+      <!-- <div class="row" id="regresarAcardsReportes" style="display:none; padding-bottom:2em;">
         <div class="col-lg-4 col-md-6 col-sm-6">
-          <span class="material-icons"><button class="btn" style="background-color:#cf1d66"><span class="material-icons">keyboard_return</span> Regresar</button></span>
+          <span class="material-icons"><button class="btn" style="background-color:#cf1d66" onclick="mostrarCardsReportes()"><span class="material-icons">keyboard_return</span> Regresar</button></span>
         </div>
-      </div>
+      </div> -->
 
       <div class="row">
-        <div class="col-lg-12 col-md-12" id="tablaReporteMensual" style="display:none">
+        <div class="col-lg-12 col-md-12" id="tablaReporteMensual">
           <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
-              <h3>Reporte mensual de servicios</h3>
+              <h4>Reporte mensual de servicios</h4>
             </div>
 
             <div class="card-body">
@@ -146,6 +146,12 @@
                     </select>
                   </div>
                   <div class="col-lg-2 col-md-2 co-sm-2">
+                    <label for="clave">Unidad</label>
+                    <select name="clave" id="clave" class="form-control">
+                      <option value="todas" selected>Todas</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 col-md-2 co-sm-2">
                     <label for="base">Base</label>
                     <select name="base" id="base" class="form-control">
                       <option value="todos" selected>Todas</option>
@@ -157,12 +163,40 @@
                       <button class="btn btn-info" onclick="buscarDatos()">Consultar</button>
                   </div> 
                 </div>
+                <span style="cursor: pointer; color:#e6357e;" id="opcionesAvanzadasTexto"><span class="material-icons" id="opcionesFlecha">
+                keyboard_arrow_down
+                </span>Opciones avanzadas</span>
               </div>
+
+              <div id="Fader" class="slideup col-12 col-md-12 col-sm-12" style="margin-bottom:2em;">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 co-sm-4">
+                    <label for="cliente">Cliente</label>
+                    <select name="cliente" id="cliente" class="form-control">
+                      <option value="todos" selected>Todos</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 col-md-2 co-sm-2">
+                    <label for="turno">Turno</label>
+                    <select name="turno" id="turno" class="form-control">
+                      <option value="todos" selected>Todos</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-4 col-md-4 co-sm-4">
+                    <label for="destino">Destino (colonia)</label>
+                    <select name="destino" id="destino" class="form-control">
+                      <option value="todos" selected>Todos</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
               <div class="table-responsive">
                 <table id="myTable1" class="display table-hover" style="width:100%">
                   <thead>
                     <tr>
-                        <th>N. Registro</th>
+                        <th>Registro</th>
+                        <th>Base</th>
                         <th>Hora</th>
                         <th>Cliente</th>
                         <th>Dirección</th>
@@ -187,8 +221,23 @@
     </div>
   </div>
 @endsection
-
+<style>
+  .slideup, .slidedown {
+            max-height: 0;            
+            overflow-y: hidden;
+            -webkit-transition: max-height 0.3s ease-in-out;
+            -moz-transition: max-height 0.3s ease-in-out;
+            -o-transition: max-height 0.3s ease-in-out;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .slidedown {            
+            max-height: 90px ;                    
+        }    
+</style>
 @push('js')
+<script>
+  var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
+</script>
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap- 
 datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
