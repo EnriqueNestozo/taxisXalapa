@@ -67,17 +67,42 @@ $(document).ready(function() {
 
 
     obtenerListadoTaxis();
+    obtenerListadoPersonas();
+    cargarSelectsMunicipio();
+    // obtenerListadoColonias();
 
     $("#opcionesAvanzadasTexto").click(function () {
         if($("#Fader").hasClass("slideup")){
             $("#Fader").removeClass("slideup").addClass("slidedown");
             $('#opcionesFlecha').text("keyboard_arrow_up");
         }else{
+            $('#personaSelect').val('todos');
+            $('#hora').val('todas');
+            $('#municipioSelect').val('todos').trigger('change');
+            $('#coloniaSelect').val('').trigger('change');
             $("#Fader").removeClass("slidedown").addClass("slideup");
             $('#opcionesFlecha').text("keyboard_arrow_down");
         }
     });
 
+    $('#municipioSelect').change(function(){
+        var data = sessionStorage.getItem('token');
+        $.when( 
+            $.ajax( routeBase+ '/api/colonias/'+$('#municipioSelect').val() )
+        )
+            .done(function (v2) {
+            $('#coloniaSelect').empty();
+            // console.log(v1[0],v2[0]);
+            // console.log("colonias:  " +v2);
+            $('#coloniaSelect').select2({data:v2}).trigger('change');
+            // $('.special_select').select2({
+            //   tags: true,
+            //   dropdownParent: $('#modalRegistroDiario')
+            // });
+            $('#coloniaSelect').val('').trigger('change');
+        });
+        
+      });
     // md.initDashboardPageCharts();
 });
 
@@ -134,6 +159,34 @@ function mostrarCardsReportes(){
     $('#tablaReportePorTaxi').hide();
 }
 
+function obtenerListadoPersonas(){
+    var data = sessionStorage.getItem('token');
+    $.get({
+        url: rutaListadoClientes,
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+        },
+        success: function( result ) {
+            $('#personaSelect').empty();
+            // $('#personaDestinoSelect').empty();
+            html = '';
+            html = html + '<option value="todos" selected style="min-width: 300px;">Todos</option>'
+            for (let index = 0; index < result.length; index++) {
+            html += '<option ';
+            html += ' value="'+result[index].id+'" ';
+            html += '>'+result[index].nombre+'</option>';
+            }
+            $('#personaSelect').append(html);
+            // $('#personaDestinoSelect').append(html);
+        },
+        error: function(result){
+            console.log(result);
+        }
+    });
+}
+
 function buscarDatos(){
     // $('#tablaReporteMensual').show();
     $('#myTable1').DataTable( {
@@ -157,7 +210,11 @@ function buscarDatos(){
                 fecha_f: fecha_fin,
                 tipo_servicio: $('#tipo_servicio').val(),
                 base: $('#base').val(),
-                unidad: $('#clave').val()
+                unidad: $('#clave').val(),
+                cliente: $('#personaSelect').val(),
+                hora: $('#hora').val(),
+                municipio: $('#municipioSelect').val(),
+                colonia: $('#coloniaSelect').val()
             },
             headers: {
                 'Accept': 'application/json',
@@ -239,4 +296,13 @@ function buscarDatosTaxis(){
     //         {data: 'tipo_registro'}
     //     ]
     // } );
+}
+
+function cargarSelectsMunicipio(){
+    $.when( 
+        $.ajax( rutaListadoMunicipios ))
+        .done(function ( v1) {
+        $('#municipioSelect').select2({data:v1});
+        $('#municipioSelect').val(87).trigger('change');
+    });
 }

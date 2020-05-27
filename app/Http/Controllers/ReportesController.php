@@ -18,16 +18,18 @@ use DB;
 class ReportesController extends Controller
 {
     public function listRecords(Request $request){
+        // dd($request->all());
         $fechaInicio = $request->fecha_i." 00:00:00";
         $fechaFin = $request->fecha_f." 23:59:59"; 
         $query = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->whereBetween('created_at',[$fechaInicio,$fechaFin]);
         $listadoRegistros = $query;
-        // dd($request->tipo_servicio);
+
         if($request->tipo_servicio =="diario"){
             $listadoRegistros = $query->where('tipo_registro',0);
         }else if($request->tipo_servicio =="programado"){
             $listadoRegistros = $query->where('tipo_registro',1);
         }
+
         if($request->base == 1){
             $listadoRegistros = $query->whereHas('unidad',function($q){
                 $q->where('base',1);
@@ -37,11 +39,44 @@ class ReportesController extends Controller
                 $q->where('base',2);
             });
         }
+
         if($request->unidad != 'todas'){
             $listadoRegistros = $query->whereHas('unidad',function($q) use($request){
                 $q->where('id',$request->unidad);
             });
         }
+
+        if($request->cliente!='todos'){
+            $listadoRegistros = $query->whereHas('cliente',function($q) use($request){
+                $q->where('id',$request->cliente);
+            });
+        }
+
+        if($request->hora!='todas'){
+            if($request->hora == 1){
+                $listadoRegistros = $query->whereBetween('hora', ['06:00:00', '13:59:59']);
+            }
+            if($request->hora == 2){
+                $listadoRegistros = $query->whereBetween('hora', ['14:00:00', '21:59:59']);
+            }
+            if($request->hora == 3){
+                $listadoRegistros = $query->whereBetween('hora', ['22:00:00', '23:59:59'])->orwhereBetween('hora', ['00:00:00', '05:59:59']);
+            }
+        }
+
+        if($request->municipio!='todos'){
+            $listadoRegistros = $query->whereHas('direccion.municipio',function($q) use($request){
+                $q->where('cve_mun',$request->municipio);
+            });
+        }
+        if($request->colonia!=''){
+            $listadoRegistros = $query->whereHas('direccion.colonia',function($q) use($request){
+                $q->where('id',$request->colonia);
+            });
+        }
+
+        
+
         $listadoRegistros->get();
         
         $tabla = Datatables::of($listadoRegistros)

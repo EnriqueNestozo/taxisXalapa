@@ -41,7 +41,7 @@ Route::post('clientes/delete','ClienteController@delete')->name('api.delete.clie
 Route::get('unidades/{idUnidad}','UnidadController@show')->name('api.get.unidad')->middleware('auth:api');
 //Datatable ded lista de unidades
 Route::get('unidades-list','UnidadController@listUnits')->name('api.unidades.list')->middleware('auth:api');
-//Obtener todas las unidades (no se usa)
+//Obtener todas las unidades
 Route::get('get-unidades','UnidadController@getUnidades')->name('api.get.unidades')->middleware('auth:api');
 //Crear/Editar una unidad
 Route::post('unidades','UnidadController@create')->name('api.create.unidad')->middleware('auth:api');

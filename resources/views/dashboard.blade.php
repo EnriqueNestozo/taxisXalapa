@@ -171,20 +171,29 @@
               <div id="Fader" class="slideup col-12 col-md-12 col-sm-12" style="margin-bottom:2em;">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 co-sm-4">
-                    <label for="cliente">Cliente</label>
-                    <select name="cliente" id="cliente" class="form-control">
+                    <label for="personaSelect">Cliente</label>
+                    <select name="personaSelect" id="personaSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
                   <div class="col-lg-2 col-md-2 co-sm-2">
-                    <label for="turno">Turno</label>
-                    <select name="turno" id="turno" class="form-control">
+                    <label for="hora">Hora</label>
+                    <select name="hora" id="hora" class="form-control">
+                      <option value="todas" selected>Todas</option>
+                      <option value="1">6:00-13:59</option>
+                      <option value="2">14:00-21:59</option>
+                      <option value="3">22:00-5:59</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 col-md-3 co-sm-3">
+                    <label for="municipioSelect">Destino (municipio)</label>
+                    <select name="municipioSelect" id="municipioSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
-                  <div class="col-lg-4 col-md-4 co-sm-4">
-                    <label for="destino">Destino (colonia)</label>
-                    <select name="destino" id="destino" class="form-control">
+                  <div class="col-lg-3 col-md-3 co-sm-3">
+                    <label for="coloniaSelect">Destino (colonia)</label>
+                    <select name="coloniaSelect" id="coloniaSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
@@ -236,7 +245,9 @@
 </style>
 @push('js')
 <script>
+  var rutaListadoClientes= "{{route('api.get.clientes')}}";
   var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
+  var rutaListadoMunicipios= "{{route('api.get.municipios')}}";
 </script>
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap- 
 datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
