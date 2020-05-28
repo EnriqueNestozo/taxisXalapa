@@ -22,7 +22,8 @@ function cargarListado(){
             {data: 'hora', name: 'hora'},
             {data: "cliente.nombre", name: 'cliente.nombre'},
             {data: "direccionCompleta", name: 'direccionCompleta'},
-            {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
+            {data: "direccionDestino", name: 'direccionDestino', defaultContent: ''},
+            {data: "unidad.numero", name:"unidad.numero", defaultContent:''},
             {data: 'estatus', defaultContent:' '},
             {data: 'user.name'},
             {data: 'action', name:'action'}

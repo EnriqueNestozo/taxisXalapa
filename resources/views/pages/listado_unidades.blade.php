@@ -17,12 +17,12 @@
                 <thead>
                   <tr>
                     <th style="width:5%;"></th>
-                    <th style="width:20%;">Placa</th>
-                    <th style="width:15%;">Núm. radio</th>
+                    <th style="width:15%;">Placa</th>
+                    <th style="width:15%;">N. radio</th>
                     <th style="width:10%;">Base</th>
-                    <th style="width:15%;">Núm. económico</th>
+                    <th style="width:15%;">N. económico</th>
                     <th style="width:15%;">Conductores asignados</th>
-                    <th style="width:20%;">Acciones</th>
+                    <th style="width:25%;">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -95,6 +95,20 @@
     minYear: 2015,
     maxYear: parseInt(moment().format('YYYY'),10),
     locale:{
+      "applyLabel": "Aplicar",
+      "cancelLabel": "Cancelar",
+      "fromLabel": "Desde",
+      "toLabel": "Hasta",
+      "customRangeLabel": "Personalizado",
+      "daysOfWeek": [
+        "Dom",
+        "Lu",
+        "Mar",
+        "Mie",
+        "Jue",
+        "Vie",
+        "Sa"
+      ],
       "monthNames": [
             "Enero",
             "Febrero",

@@ -19,7 +19,8 @@ use Carbon\Carbon;
 class RegistrosDiariosController extends Controller
 {
     public function listRecords($tipoRegistro){  
-        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad', 'direccionDestino')->where('tipo_registro',$tipoRegistro)->whereDate('created_at',Carbon::today())->withTrashed()->get();
+        $listadoRegistros = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad', 'direccionDestino.colonia', 'direccionDestino.localidad')->where('tipo_registro',$tipoRegistro)->whereDate('created_at',Carbon::today())->withTrashed()->get();
+        // dd($listadoRegistros->toArray());
         $tabla = Datatables::of($listadoRegistros)
             ->editColumn('estatus',function($fila){
                 $estatus = null;
@@ -31,9 +32,6 @@ class RegistrosDiariosController extends Controller
                 }
                 if($fila['estatus']==Config::get("constantes.ESTATUS.CANCELADO")){
                     $estatus= '<span class="badge" style="background-color:red; color:white">Cancelado</span>';
-                }
-                if($fila['direccion_destino_id']==null){
-                    $estatus.= '<span class="badge" style="background-color:purple; color:white">Sin destino</span>';
                 }
                 return $estatus;
             })
@@ -56,7 +54,16 @@ class RegistrosDiariosController extends Controller
                 $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
-            ->rawColumns(['estatus','action','direccionCompleta'])
+            ->editColumn('direccionDestino',function($fila){
+                $direccionCompletaDestino = null;
+                if($fila['direccionDestino']){
+                    $direccionCompletaDestino = $fila['direccionDestino']->calle.' Col. '.$fila['direccionDestino']['colonia']->asentamiento.', '.$fila['direccionDestino']['localidad']->nombre;
+                }else{
+                    $direccionCompletaDestino = '<span class="badge" style="background-color:purple; color:white">Sin destino</span>';
+                }
+                return $direccionCompletaDestino;
+            })
+            ->rawColumns(['estatus','action','direccionCompleta','direccionDestino'])
             ->make(true);
         return $tabla;
     }

@@ -370,22 +370,33 @@ class ServicioController extends Controller
                 $subquery->whereBetween('hora', [$actualHour,$toHour]);
             });
         })->where(function ($query) use($weekday,$actualHour,$toHour, $actualDate){
+            //yA TIENE REGISTROS EL DÍA DE HOY?
             //DONDE TENGA REGISTROS CREADOS EN DÍAS PASADOS O DÍA ACTUAL PERO A DIFERENTE HORA O DE PLANO NO TENGA REGISTROS
-            $query->whereHas('registros',function($subquery) use ($actualDate,$actualHour,$toHour){
-                $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
-                    //FALTA SECCIONAR EL CREATED AT PARA QUE SOLO CUENTE LA FECHA Y NO LA HORA
-                    $subsubquery->where('created_at', '<', date('Y-m-d').' 00:00:00');
-                });
-                $subquery->orWhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
-                    $subsubquery->where('created_at',$actualDate);
-                    $subsubquery->whereNotBetween('hora', [$actualHour,$toHour]);
-                });
+            $query->whereDoesntHave('registros',function($subquery) use ($actualDate,$actualHour,$toHour){
+                // $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+                //     //FALTA SECCIONAR EL CREATED AT PARA QUE SOLO CUENTE LA FECHA Y NO LA HORA
+                // });
+                $subquery->where('created_at','>=',date('Y-m-d').' 00:00:00');
+                $subquery->whereBetween('hora', [$actualHour,$toHour]);
+                // $subquery->orwhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+                //     $subsubquery->where('created_at','>',date('Y-m-d').' 00:00:00');
+                // });
             })->orWhereDoesntHave('registros');
         })->get(); 
         return $listadoServicios;
     }
 
-    public function obtenerDatosServicioPendiente($idServicio){
-
-    }
+    // $subquery->where(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+    //     //FALTA SECCIONAR EL CREATED AT PARA QUE SOLO CUENTE LA FECHA Y NO LA HORA
+    //     $subsubquery->where('created_at','<',date('Y-m-d').' 00:00:00');
+    //     $subsubquery->orwhere(function ($subsubsubquery) use($actualHour,$toHour, $actualDate){
+    //         $subsubsubquery->where('created_at','>',date('Y-m-d').' 00:00:00');
+    //         $subsubsubquery->whereNotBetween('hora', [$actualHour,$toHour]);
+    //     });
+    // });
+    // $subquery->orwhere(function ($subsubquery) use($actualHour,$toHour, $actualDate){
+    //     $subsubquery->where('created_at','<',date('Y-m-d').' 00:00:00');
+    //     $subsubquery->where('created_at','>',date('Y-m-d').' 00:00:00');
+    //     $subsubquery->whereNotBetween('hora', [$actualHour,$toHour]);
+    // });
 }

@@ -110,6 +110,7 @@
   </div>
 </div>
 @include('modals.modalRegistroDiario')
+@include('modals.modalDestino')
 @endsection
 @push('js')
 <script>

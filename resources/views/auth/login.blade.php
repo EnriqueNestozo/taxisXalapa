@@ -78,11 +78,11 @@
                 </a>
             @endif -->
         </div>
-        <div class="col-6 text-right">
+        <!-- <div class="col-6 text-right">
             <a href="{{ route('register') }}" class="text-light">
                 <small>{{ __('Crea una nueva cuenta') }}</small>
             </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
