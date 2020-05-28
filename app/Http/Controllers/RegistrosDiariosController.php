@@ -267,6 +267,7 @@ class RegistrosDiariosController extends Controller
         $registroDiario = RegistroDiario::find($request->idRegistro);
         $registroDiario->direccion_destino_id = null;
         $registroDiario->save();
+        return response()->json($registroDiario,201);
     }
 
     public function show($idRegistro)

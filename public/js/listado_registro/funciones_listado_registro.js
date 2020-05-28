@@ -320,13 +320,15 @@ function validarDatosDestino(){
     $("#registroDestinoBtn").html("Cargando...");
     $("#registroDestinoBtn").prop('disabled', true);
     limpiarErroresDestino();
-    if(
-        ($('#personaDestinoSelect').val() == null  ) || 
-        ( $('#municipioDestino').val() =='' && $('#municipioDestinoSelect').val() == '' ) || 
-        ( $('#localidadDestino').val() =='' && $('#localidadDestinoSelect').val() == '' ) || 
-        ( $('#coloniaDestino').val() =='' && $('#coloniaDestinoSelect').val() == '' ) ){
-        marcarErroresDestino();
-        datosErroneos = 1;
+    if( $('#direccionDestinoSelect').val() =='' ){
+        if(
+            ($('#personaDestinoSelect').val() == null  ) || 
+            ( $('#municipioDestino').val() =='' && $('#municipioDestinoSelect').val() == '' ) || 
+            ( $('#localidadDestino').val() =='' && $('#localidadDestinoSelect').val() == '' ) || 
+            ( $('#coloniaDestino').val() =='' && $('#coloniaDestinoSelect').val() == '' ) ){
+            marcarErroresDestino();
+            datosErroneos = 1;
+        }
     }
     
     return datosErroneos;

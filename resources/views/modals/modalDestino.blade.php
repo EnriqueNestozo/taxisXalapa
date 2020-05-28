@@ -101,7 +101,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onClick="registrarDestino()" id="registroDestinoBtn">Registrar</button>
-        <button type="button" class="btn btn-danger" onClick="eliminarDestino()" id="eliminarDestinoBtn" style="dispaly:none">Eliminar</button>
+        <button type="button" class="btn btn-danger" onClick="eliminarDestino()" id="eliminarDestinoBtn" style="display:none">Eliminar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
