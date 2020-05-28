@@ -176,6 +176,9 @@ function eliminarRegistro(id_registro){
 }
 
 function desplegarModalRegistro(){
+    var fecha = new Date();
+    var horaActual = fecha.getHours() + ":" + fecha.getMinutes();
+    $('#hora').val(horaActual);
     $('#personaSelect').val('').trigger('change');
     $('#modalRegistroDiario').modal("show");
 }

@@ -257,17 +257,23 @@ class RegistrosDiariosController extends Controller
             DB::commit();
             return response()->json($request,201);
         }catch (\PDOException $e) {
-            dd($e);
+            // dd($e);
             DB::rollBack();
             return response()->json($e,500);
         }
     }
 
     public function deleteDestino(Request $request){
-        $registroDiario = RegistroDiario::find($request->idRegistro);
-        $registroDiario->direccion_destino_id = null;
-        $registroDiario->save();
-        return response()->json($registroDiario,201);
+        try{
+            DB::beginTransaction();
+            $registroDiario = RegistroDiario::find($request->idRegistro);
+            $registroDiario->direccion_destino_id = null;
+            $registroDiario->save();
+            return response()->json($registroDiario,201);
+        }catch (\PDOException $e) {
+            DB::rollBack();
+            return response()->json($e,500);
+        }
     }
 
     public function show($idRegistro)

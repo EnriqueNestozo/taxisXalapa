@@ -35,15 +35,16 @@
                   <span id="persona-error" class="error text-danger" for="persona" style="display:none">Campo faltante</span>
                 </div>
                 
-                <div class="form-group" id="telefonoDiv">
-                  <label for="telefono" class="col-form-label">Teléfono:</label>
-                  <input type="text" class="form-control" id="telefono" maxlength="100" name="telefono">
-                  <span id="telefono-error" class="error text-danger" for="telefono" style="display:none">Campo faltante</span>
-                </div>
                 <div class="form-group" id="celularDiv">
                   <label for="celular" class="col-form-label">Celular:</label>
                   <input type="text" class="form-control" id="celular" maxlength="100" name="celular">
                   <span id="celular-error" class="error text-danger" for="celular" style="display:none">Campo faltante</span>
+                </div>
+                
+                <div class="form-group" id="telefonoDiv">
+                  <label for="telefono" class="col-form-label">Teléfono:</label>
+                  <input type="text" class="form-control" id="telefono" maxlength="100" name="telefono">
+                  <span id="telefono-error" class="error text-danger" for="telefono" style="display:none">Campo faltante</span>
                 </div>
               </div>
               

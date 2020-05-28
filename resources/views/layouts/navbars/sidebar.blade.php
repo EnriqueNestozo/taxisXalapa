@@ -37,12 +37,12 @@
         </a>
       </li>
       
-      <li class="nav-item{{ $activePage == 'listado_clientes' ? ' active' : '' }}">
+      <!-- <li class="nav-item{{ $activePage == 'listado_clientes' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-clientes') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Clientes') }}</p>
         </a>
-      </li>
+      </li> -->
       
       <li class="nav-item{{ $activePage == 'listado_unidades' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-unidades') }}">
