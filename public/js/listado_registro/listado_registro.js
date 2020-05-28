@@ -26,6 +26,7 @@ $(document).ready(function() {
     $('#colonia').prop('disabled',false);
     $('#referencia').prop('disabled',false);
     $('#telefono').prop('disabled',false);
+    $('#calle').prop('disabled',false);
     $('#celular').prop('disabled',false);
     $('#personaSelect').prop('disabled',false);
     $('#municipioSelect').prop('disabled',false);

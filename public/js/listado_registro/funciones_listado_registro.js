@@ -215,26 +215,30 @@ function registrarViaje(){
             $('#persona').prop('disabled',false);
             $('#municipio').prop('disabled',false);
             $('#idRegistro').val('');
+            
+            if($('#idRegistro').val() != ''){
+                swal({
+                    title: 'Registro realizado correctamente',
+                    text: "¿Quiere añadir el destino?",
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Si',
+                    buttonsStyling: false
+                    }).then(function(confirmation) {
+                    // console.log(confirmation);
+                    if (confirmation['dismiss'] != 'cancel') {
+                        agregarDestino(result['id'],result['cliente_id']);
+                        $('#registroDestinoBtn').show();
+                        $('#eliminarDestinoBtn').hide();
+                    }
+                });
+            }else{
+                md.showNotification('bottom','right','success','Registro modificado correctamente');
+            }
             $('#idCliente').val('');
-            swal({
-                title: 'Registro realizado correctamente',
-                text: "¿Quiere añadir el destino?",
-                type: 'success',
-                showCancelButton: true,
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                cancelButtonText: 'No',
-                confirmButtonText: 'Si',
-                buttonsStyling: false
-                }).then(function(confirmation) {
-                // console.log(confirmation);
-                if (confirmation['dismiss'] != 'cancel') {
-                    agregarDestino(result['id'],result['cliente_id']);
-                    $('#registroDestinoBtn').show();
-                    $('#eliminarDestinoBtn').hide();
-                }
-            });
-            // md.showNotification('bottom','right','success','Registro creado correctamente');
         },
         error: function(result){
             console.log(result);
