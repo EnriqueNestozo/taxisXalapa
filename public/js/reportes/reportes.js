@@ -16,7 +16,7 @@ $(document).ready(function() {
         fecha_fin = end.format('YYYY-MM-D');
     }
 
-    $('.reportrange').daterangepicker({
+    $('#reportrange').daterangepicker({
         startDate: start,
         endDate: end,
         locale:{
@@ -58,12 +58,15 @@ $(document).ready(function() {
             'Este mes': [moment().startOf('month'), moment().endOf('month')],
             'El mes pasado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         }
-    },cb );
+    },cb);
 
     //     function(start, end, label) {
     //   console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
     // }
     cb(start, end);
+
+
+    
 
 
     obtenerListadoTaxis();

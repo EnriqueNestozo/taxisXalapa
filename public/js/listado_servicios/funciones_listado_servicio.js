@@ -213,6 +213,7 @@ function registrarServicio(){
             // console.log("success registro");
             cargarListado();
             obtenerListadoPersonas();
+            verificarExistenciasDeServicios();
             $('#personaSelect').prop('disabled',false);
             $('#municipioSelect').prop('disabled',false);
             $('#persona').prop('disabled',false);
@@ -253,7 +254,7 @@ function editarServicio(id_registro){
         $('#personaSelect').val(registro['cliente_id']).trigger('change');
         $('#personaSelect').prop('disabled',true);
         $('#persona').prop('disabled',true);
-        // console.log(registro['horarios']);
+        console.log(registro['horarios']);
         registro['horarios'].forEach(element => {
             if(element['dia']=="Lunes"){
                 $('#lunesCheck').prop('checked',true).trigger('change');
@@ -275,7 +276,7 @@ function editarServicio(id_registro){
                 $('#viernesCheck').prop('checked',true).trigger('change');
                 $('#viernes').val(element['hora']);
             }
-            if(element['dia']=="Sabado"){
+            if(element['dia']=="Sábado"){
                 $('#sabadoCheck').prop('checked',true).trigger('change');
                 $('#sabado').val(element['hora']);
             }
@@ -294,11 +295,10 @@ function editarServicio(id_registro){
             $('#entre_calles').val(objeto[0]['entre_calles']);
             
         }, 1000);
-        
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
         $('#celular').val(clientes['celular']).trigger('change');
         if(registro['unidad_id']!=null){
-            $('#unidad').val(registro['unidad_id']).trigger('change');
+            $('#clave').val(registro['unidad_id']).trigger('change');
         }
         $('#idRegistro').val(registro['id']);
         $('#idCliente').val(registro['cliente_id']);

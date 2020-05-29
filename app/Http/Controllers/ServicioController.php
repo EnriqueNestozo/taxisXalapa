@@ -185,7 +185,7 @@ class ServicioController extends Controller
             $horario = new Horario();
             $horario->dia = 'Domingo';
             $horario->hora = $request->domingo;
-            $horario->registro_id = $idServicio;
+            $horario->servicio_id = $idServicio;
             $horario->save();
         }
         
