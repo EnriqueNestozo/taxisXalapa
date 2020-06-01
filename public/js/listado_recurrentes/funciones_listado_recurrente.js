@@ -221,3 +221,192 @@ function registrarViaje(){
         }
     });
 }
+
+//Funciones para destino
+
+function validarDatosDestino(){
+    let datosErroneos = 0;
+    $("#registroDestinoBtn").html("Cargando...");
+    $("#registroDestinoBtn").prop('disabled', true);
+    limpiarErroresDestino();
+    if( $('#direccionDestinoSelect').val() =='' ){
+        if(
+            ($('#personaDestinoSelect').val() == null  ) || 
+            ( $('#municipioDestino').val() =='' && $('#municipioDestinoSelect').val() == '' ) || 
+            ( $('#localidadDestino').val() =='' && $('#localidadDestinoSelect').val() == '' ) || 
+            ( $('#coloniaDestino').val() =='' && $('#coloniaDestinoSelect').val() == '' ) ){
+            marcarErroresDestino();
+            datosErroneos = 1;
+        }
+    }
+    
+    return datosErroneos;
+}
+
+function limpiarErroresDestino(){
+    $('#personaDestinoDiv').removeClass('has-danger');
+    $('#personaDestino-error').hide();
+    $('#municipioDestinoDiv').removeClass('has-danger');
+    $('#municipioDestino-error').hide();
+    $('#calleDestinoDiv').removeClass('has-danger');
+    $('#calleDestino-error').hide();
+    // $('#referenciaDiv').removeClass('has-danger');
+    // $('#referencia-error').hide();
+    
+}
+
+function marcarErroresDestino(){
+    if( $('#municipioDestino').val() =='' && $('#municipioDestinoSelect').val() == ''  ){
+        $('#municipioDestinoDiv').addClass('has-danger');
+        $('#municipioDestino-error').show();
+    }
+    if( $('#localidadDestino').val() =='' && $('#localidadDestinoSelect').val() == ''  ){
+        $('#localidadDestinoDiv').addClass('has-danger');
+        $('#localidadDestino-error').show();
+    }
+    if( $('#coloniaDestino').val() =='' && $('#coloniaDestinoSelect').val() == ''  ){
+        $('#coloniaDestinoDiv').addClass('has-danger');
+        $('#coloniaDestino-error').show();
+    }
+    // if( $('#calleDestino').val()=='' ){
+    //   $('#calleDestinoDiv').addClass('has-danger');
+    //   $('#calleDestino-error').show();
+    // }
+}
+
+function agregarDestino(idRegistro,idCliente){
+    $('#idRegistroDestino').val(idRegistro);
+    $('#modalDestino').modal('show');
+    $('#personaDestinoSelect').val(idCliente).trigger('change');
+    $('#personaDestinoSelect').prop('disabled',true);
+}
+
+function registrarDestino(){
+    if(validarDatosDestino() == 0 ){
+        // console.log("registra");
+        var data = sessionStorage.getItem('token');
+        var arrayDeDatos = $("#destinoForm").serializeArray();
+        arrayDeDatos.push({name:'idUser', value:sessionStorage.getItem('user')});
+
+        $.post({
+            url: rutaCrearRegistroDestino,
+            data: arrayDeDatos,
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+data,
+            },
+            success: function( result ) {
+                $("#registroDestinoBtn").html("Registrar");
+                $("#registroDestinoBtn").prop('disabled', false);
+                $('#destinoForm').trigger("reset");
+                $('#modalDestino').modal('hide');
+
+                cargarListadoRegistros();
+                obtenerListadoPersonas();
+                $('#personaDestinoSelect').prop('disabled',false);
+                $('#municipioDestinoSelect').prop('disabled',false);
+                $('#municipioDestino').prop('disabled',false);
+                $('#idRegistro').val('');
+                $('#idCliente').val('');
+                md.showNotification('bottom','right','success','Destino creado correctamente');
+            },
+            error: function(result){
+                console.log(result);
+                $("#registroDestinoBtn").html("Registrar");
+                $("#registroDestinoBtn").prop('disabled', false);
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al crear el destino');
+            }
+        });
+    }else{
+        $("#registroDestinoBtn").html("Registrar");
+        $("#registroDestinoBtn").prop('disabled', false);
+    }
+}
+
+function mostrarDestino(idDireccionDestino){
+    $('#modalDestino').modal('show');
+    $('#idRegistroDestino').val(idDireccionDestino['id']);
+    $('#idDireccionDestino').val(idDireccionDestino['direccion_destino_id']).trigger('change');
+    $('#personaDestinoSelect').val(idDireccionDestino['direccion_destino']['cliente_id']).trigger('change');
+    $('#personaDestinoSelect').prop('disabled',true);
+    setTimeout(function(){
+        $('#direccionDestinoSelect').val(idDireccionDestino['direccion_destino']['id']).trigger('change');
+    },1000);
+    $('#coloniaDestinoSelect').val(idDireccionDestino['direccion_destino']['colonia_id']).trigger('change');
+    $('#calleDestino').val(idDireccionDestino['direccion_destino']['calle']);
+    $('#entre_callesDestino').val(idDireccionDestino['direccion_destino']['entre_calles']);
+    $('#referenciaDestino').val(idDireccionDestino['direccion_destino']['referencia']);
+    $('#eliminarDestinoBtn').show();
+    $('#registroDestinoBtn').hide();
+}
+
+function eliminarDestino(){
+    swal({
+        title: '¿Esta seguro que desea eliminar el destino?',
+        text: "El destino se eliminará de manera permanente!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'Cancelar!',
+        confirmButtonText: 'Continuar!',
+        buttonsStyling: false
+        }).then(function(confirmation) {
+        // console.log(confirmation);
+        if (confirmation['dismiss'] != 'cancel') {
+            $.post({
+                url: rutaBorradoDestino,
+                data:{
+                    idRegistro: $('#idRegistroDestino').val(),
+                },   
+                dataType: 'json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+                },
+                success: function( result ) {
+                    md.showNotification('bottom','right','success','Destino eliminado correctamente');
+                    cargarListadoRegistros();
+                    $('#modalDestino').modal('hide');
+                },
+                error: function(result){
+                    console.log(result);
+                    md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar el destino');
+                }
+            });
+        }
+    });
+}
+
+function obtenerListadoDireccionesDestino(){
+    var data = sessionStorage.getItem('token');
+    var personaid = $('#personaDestinoSelect').val();
+    $('#direccionDestinoSelect').empty();
+    $.get({
+        url: routeBase+"/api/get-direcciones-destino/"+personaid,
+        dataType: 'json',   
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+        },
+        success: function( result ) {
+            html = '';
+            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+            for (let index = 0; index < result.length; index++) {
+                html += '<option ';
+                html += ' value="'+result[index].id+'" ';
+                if(result[index].calle !=null){
+                    calle = result[index].calle+ ', ';
+                }else{
+                    calle = '';
+                }
+                html += '>'+calle+'col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
+            }
+            $('#direccionDestinoSelect').append(html);
+        },
+        error: function(result){
+            console.log(result);
+        }
+    });
+}

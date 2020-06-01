@@ -276,6 +276,7 @@ class RegistrosDiariosController extends Controller
             $registroDiario = RegistroDiario::find($request->idRegistro);
             $registroDiario->direccion_destino_id = null;
             $registroDiario->save();
+            DB::commit();
             return response()->json($registroDiario,201);
         }catch (\PDOException $e) {
             DB::rollBack();
