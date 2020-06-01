@@ -222,6 +222,92 @@ function registrarViaje(){
     });
 }
 
+function editarRegistro(id_registro){
+    var data = sessionStorage.getItem('token');
+    $.get({
+        url: routeBase+"/api/registros-diarios/"+id_registro,
+        dataType: 'json',   
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+        },
+        success: function( result ) {
+        let registro = result[0];
+        let clientes = result[1];
+        let direcciones = result[2];
+        let unidades = result[3];
+        $('#hora').val(registro['hora']);
+        $('#personaSelect').val(registro['cliente_id']).trigger('change');
+        $('#personaSelect').prop('disabled',true);
+        $('#persona').prop('disabled',true);
+        setTimeout(function(){
+            $('#direccionSelect').val(registro['direccion_id']).trigger('change');
+            var objeto = direcciones.filter(obj => {
+                return obj['id'] == $('#direccionSelect').val()
+            });
+            console.log(objeto[0]['calle']);
+            $('#referencia').val(objeto[0]['referencia']);
+            $('#entre_calles').val(objeto[0]['entre_calles']);
+            
+        }, 1000);
+        
+        $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+        $('#celular').val(clientes['celular']).trigger('change');
+        if(registro['unidad_id']!=null){
+            console.log("unidad "+registro['unidad_id']);
+            $('#clave').val(registro['unidad_id']).trigger('change');
+        }else{
+            $('#clave').val('').trigger('change');
+        }
+        $('#idRegistro').val(registro['id']);
+        $('#idCliente').val(registro['cliente_id']);
+        },
+        error: function(result){
+            console.log(result);
+        }
+    });
+    $('#modalRegistroDiario').modal('show');
+}
+
+function eliminarRegistro(id_registro){
+    var data = sessionStorage.getItem('token');
+    swal({
+        title: '¿Esta seguro que desea cancelar el registro?',
+        text: "El registro se cancelará de manera permanente!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        cancelButtonText: 'Cancelar!',
+        confirmButtonText: 'Continuar!',
+        buttonsStyling: false
+        }).then(function(confirmation) {
+        // console.log(confirmation);
+        if (confirmation['dismiss'] != 'cancel') {
+            $.post({
+            url: rutaBorradoRegistros,
+            data:{
+                idRegistro: id_registro,
+            },   
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+data,
+            },
+            success: function( result ) {
+                md.showNotification('bottom','right','success','Registro cancelado correctamente');
+                cargarListadoRegistros();
+            },
+            error: function(result){
+                console.log(result);
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al eliminar el registro');
+            }
+            });
+        }
+    });
+
+}
+
 //Funciones para destino
 
 function validarDatosDestino(){
