@@ -215,9 +215,8 @@ function registrarViaje(){
             $('#municipioSelect').prop('disabled',false);
             $('#persona').prop('disabled',false);
             $('#municipio').prop('disabled',false);
-            $('#idRegistro').val('');
             
-            if($('#idRegistro').val() != ''){
+            if($('#idRegistro').val() == ''){
                 swal({
                     title: 'Registro realizado correctamente',
                     text: "¿Quiere añadir el destino?",
@@ -239,6 +238,7 @@ function registrarViaje(){
             }else{
                 md.showNotification('bottom','right','success','Registro modificado correctamente');
             }
+            $('#idRegistro').val('');
             $('#idCliente').val('');
         },
         error: function(result){
