@@ -56,14 +56,15 @@
                   <div class="table-responsive">
                     <table id="listadoRegistrosRecurrentes" class="table-hover"  style="width:100%">
                       <thead>
-                      <th style="width:5%;">N. Registro</th>
-                      <th style="width:5%;">Hora</th>
-                      <th style="width:15%;">Persona</th>
-                      <th style="width:25%;">Dirección</th>
+                      <th style="width:3%;"># Registro</th>
+                      <th style="width:3%;">Hora</th>
+                      <th style="width:19%;">Persona</th>
+                      <th style="width:10%;">Dirección</th>
+                      <th style="width:10%;">Dirección destino</th>
                       <th style="width:10%;">Clave</th>
                       <th style="width:10%;">Estatus</th>
                       <th style="width:10%;">Quien lo registró</th>
-                      <th style="width:20%;">Acciones</th>
+                      <th style="width:25%;">Acciones</th>
                       </thead>
                       <tbody>
                       </tbody>
