@@ -129,14 +129,14 @@
               <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom:20px;">
                 <!-- <span>Fecha</span> -->
                 <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                  <label for="reportrange">Fecha</label>
-                  <div class="col-lg-10 col-md-10 col-sm-10" id="reportrange" style="background: #fff; cursor: pointer; padding-top: 5px; padding-bottom: 5px; border: 1px solid #ccc; width: 100%; height:50%">
-                      <i class="fa fa-calendar"></i>&nbsp;
-                      <span></span> <i class="fa fa-caret-down"></i>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label for="reportrange">Fecha</label>
+                    <div class="col-lg-10 col-md-10 col-sm-10" id="reportrange" style="background: #fff; cursor: pointer; padding-top: 5px; padding-bottom: 5px; border: 1px solid #ccc; width: 100%; height:50%">
+                        <i class="fa fa-calendar"></i>&nbsp;
+                        <span></span> <i class="fa fa-caret-down"></i>
+                    </div>
+                  
                   </div>
-                
-                </div>
                   <div class="col-lg-2 col-md-2 col-sm-2">
                     <label for="tipo_servicio">Tipo de servicio</label>
                     <select name="tipo_servicio" id="tipo_servicio" class="form-control">
@@ -145,13 +145,13 @@
                       <option value="programado">Programado</option>
                     </select>
                   </div>
-                  <div class="col-lg-2 col-md-2 co-sm-2">
+                  <div class="col-lg-2 col-md-2 col-sm-2">
                     <label for="clave">Unidad</label>
                     <select name="clave" id="clave" class="form-control">
                       <option value="todas" selected>Todas</option>
                     </select>
                   </div>
-                  <div class="col-lg-2 col-md-2 co-sm-2">
+                  <div class="col-lg-2 col-md-2 col-sm-2">
                     <label for="base">Base</label>
                     <select name="base" id="base" class="form-control">
                       <option value="todos" selected>Todas</option>
@@ -170,13 +170,13 @@
 
               <div id="Fader" class="slideup col-12 col-md-12 col-sm-12" style="margin-bottom:2em;">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 co-sm-4">
+                  <div class="col-lg-4 col-md-4 col-sm-4">
                     <label for="personaSelect">Cliente</label>
                     <select name="personaSelect" id="personaSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
-                  <div class="col-lg-2 col-md-2 co-sm-2">
+                  <div class="col-lg-2 col-md-2 col-sm-2">
                     <label for="hora">Hora</label>
                     <select name="hora" id="hora" class="form-control">
                       <option value="todas" selected>Todas</option>
@@ -185,13 +185,13 @@
                       <option value="3">22:00-5:59</option>
                     </select>
                   </div>
-                  <div class="col-lg-3 col-md-3 co-sm-3">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
                     <label for="municipioSelect">Destino (municipio)</label>
                     <select name="municipioSelect" id="municipioSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
-                  <div class="col-lg-3 col-md-3 co-sm-3">
+                  <div class="col-lg-3 col-md-3 col-sm-3">
                     <label for="coloniaSelect">Destino (colonia)</label>
                     <select name="coloniaSelect" id="coloniaSelect" class="form-control">
                       <option value="todos" selected>Todos</option>

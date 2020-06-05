@@ -344,7 +344,7 @@ class ServicioController extends Controller
         ];
         $weekday = $daysSpanish[$fecha['wday']];
         $actualHour = date_format($date,"H:i:s");
-        $dateAfter = $date->addHour();
+        $dateAfter = $date->addMinutes(20);
         $toHour = date_format($dateAfter,"H:i:s");
         $actualDate = date_format($date2,"Y-m-d H:i:s");
         // $listadoServicios = Servicio::whereHas('horarios',function($query) use ($weekday){

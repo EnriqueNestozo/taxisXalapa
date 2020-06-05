@@ -202,8 +202,7 @@ function registrarViaje(){
         success: function( result ) {
             $("#registroDiarioBtn").html("Registrar");
             $("#registroDiarioBtn").prop('disabled', false);
-            $('#registroDiarioForm').trigger("reset");
-            $('#modalRegistroDiario').modal('hide');
+            
             $('#direccionSelect').empty();
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -215,6 +214,7 @@ function registrarViaje(){
             $('#municipioSelect').prop('disabled',false);
             $('#persona').prop('disabled',false);
             $('#municipio').prop('disabled',false);
+            console.log($('#idRegistro').val());
             
             if($('#idRegistro').val() == ''){
                 swal({
@@ -238,6 +238,8 @@ function registrarViaje(){
             }else{
                 md.showNotification('bottom','right','success','Registro modificado correctamente');
             }
+            $('#registroDiarioForm').trigger("reset");
+            $('#modalRegistroDiario').modal('hide');
             $('#idRegistro').val('');
             $('#idCliente').val('');
         },
