@@ -195,8 +195,6 @@ function registrarViaje(){
         success: function( result ) {
             $("#registroDiarioBtn").html("Registrar");
             $("#registroDiarioBtn").prop('disabled', false);
-            $('#registroDiarioForm').trigger("reset");
-            $('#modalRegistroDiario').modal('hide');
             $('#direccionSelect').empty();
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -205,13 +203,36 @@ function registrarViaje(){
             cargarListado();
             cargarListadoRegistros();
             obtenerListadoPersonas();
+            if($('#idRegistro').val() == ''){
+                swal({
+                    title: 'Registro realizado correctamente',
+                    text: "¿Quiere añadir el destino?",
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Si',
+                    buttonsStyling: false
+                }).then(function(confirmation) {
+                    // console.log(confirmation);
+                    if (confirmation['dismiss'] != 'cancel') {
+                        agregarDestino(result['id'],result['cliente_id']);
+                        $('#registroDestinoBtn').show();
+                        $('#eliminarDestinoBtn').hide();
+                    }
+                });
+            }else{
+                md.showNotification('bottom','right','success','Registro modificado correctamente');
+            }
+            $('#registroDiarioForm').trigger("reset");
+            $('#modalRegistroDiario').modal('hide');
             // $('#personaSelect').prop('disabled',false);
             // $('#municipioSelect').prop('disabled',false);
             // $('#persona').prop('disabled',false);
             // $('#municipio').prop('disabled',false);
             $('#idRegistro').val('');
             $('#idCliente').val('');
-            md.showNotification('bottom','right','success','Registro creado correctamente');
         },
         error: function(result){
             console.log(result);
