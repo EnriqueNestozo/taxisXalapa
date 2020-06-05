@@ -83,6 +83,18 @@
             </li>
           </ul>
         </div>
+        <li>
+          <a class="nav-link" href="https://web.whatsapp.com/" target="_blank">
+            <!-- <i data-image="{{ asset('material') }}/img/whatsapp-icon.svg" ></i> -->
+              <p>
+              <svg width="25" height="25" style="margin-right:15px;">
+                <image href="{{ asset('material') }}/img/whatsapp-icon.svg" height="25" width="25"/>
+              </svg>
+                <!-- <img  alt="whatsapp logo" style="width: 25px; height: 25px; margin-right:15px; fill: #DA4567;"> -->
+                {{ __('Web WhatsApp') }}
+              </p>
+          </a>
+        </li>
       </li>
     </ul>
   </div>
