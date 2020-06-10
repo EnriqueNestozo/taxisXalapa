@@ -24,9 +24,16 @@ function cargarSelectsMunicipio(){
     $.when( 
         $.ajax( rutaListadoMunicipios ))
         .done(function ( v1) {
-        $('#municipioSelect').select2({data:v1});
+        html = '';
+        // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
+        for (let index = 0; index < v1.length; index++) {
+            html += '<option ';
+            html += ' value="'+v1[index].id+'" ';
+            html += '>'+v1[index].text+'</option>';
+        }
+        $('#municipioSelect').append(html);
         $('#municipioSelect').val(87).trigger('change');
-        $('#municipioDestinoSelect').select2({data:v1});
+        $('#municipioDestinoSelect').append(html);
         $('#municipioDestinoSelect').val(87).trigger('change');
     });
 }

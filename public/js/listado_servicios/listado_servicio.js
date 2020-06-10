@@ -140,30 +140,32 @@ $(document).ready(function() {
             $('#entre_calles').prop('disabled',true);
             $('#referencia').prop('disabled',true);
             $.get({
-            url: routeBase+ '/api/direcciones/'+$('#direccionSelect').val(),
-            dataType: 'json',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
-            },
-            success: function( result ) {
-                $('#referencia').val(result['referencia']);
-                $('#entre_calles').val(result['entre_calles']);
-                $('#calle').val(result['calle']);
-                // console.log(result);
-                // $('#localidadSelect').select2({data:result}).trigger('change');
-            },
-            error: function(result){
-                console.log(result);
-            }
+                url: routeBase+ '/api/direcciones/'+$('#direccionSelect').val(),
+                dataType: 'json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+                },
+                success: function( result ) {
+                    $('#referencia').val(result['referencia']);
+                    $('#entre_calles').val(result['entre_calles']);
+                    $('#calle').val(result['calle']);
+                    // console.log(result);
+                    // $('#localidadSelect').select2({data:result}).trigger('change');
+                },
+                error: function(result){
+                    console.log(result);
+                }
             });
         }else{
             $('#referencia').val('');
             $('#entre_calles').val('');
             $('#calle').val('');
             $('#municipioSelect').prop('disabled',false);
+            $('#municipioSelect').val(87).trigger('change');
             $('#municipio').prop('disabled',false);
             $('#localidadSelect').prop('disabled',false);
+            $('#localidadSelect').val('').trigger('change');
             $('#localidad').prop('disabled',false);
             $('#coloniaSelect').prop('disabled',false);
             $('#colonia').prop('disabled',false);

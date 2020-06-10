@@ -35,7 +35,7 @@
             </div>
             <div class="form-group" id="baseDiv">
               <label for="baseSelect" class="col-form-label">Base:</label>
-              <select class="clave" id="baseSelect" maxlength="100" name="base" style="padding-top:20px; width:200px">
+              <select class="special_select" id="baseSelect" maxlength="100" name="base" style="padding-top:20px; width:200px">
                 <option value="">Seleccione una base...</option>
                 <option value="1">Base 1</option>
                 <option value="2">Base 2</option>

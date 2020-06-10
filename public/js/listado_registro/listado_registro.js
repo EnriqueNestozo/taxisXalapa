@@ -2,9 +2,49 @@ $(document).ready(function() {
   cargarListado();
   obtenerListadoClavesTaxis();
   obtenerListadoPersonas();
-  $('.special_select').select2({
-    tags: true,
-    // dropdownParent: $('#modalRegistroDiario')
+  $('#direccionSelect').select2({
+    // tags: true,
+    dropdownParent: $('#direccionDiv')
+  });
+  $('#personaSelect').select2({
+    // tags: true,
+    dropdownParent: $('#personaDiv')
+  });
+  $('#municipioSelect').select2({
+    // tags: true,
+    dropdownParent: $('#municipioDiv')
+  });
+  $('#localidadSelect').select2({
+    // tags: true,
+    dropdownParent: $('#localidadDiv')
+  });
+  $('#coloniaSelect').select2({
+    // tags: true,
+    dropdownParent: $('#coloniaDiv')
+  });
+  $('#clave').select2({
+    // tags: true,
+    dropdownParent: $('#claveDiv')
+  });
+  $('#direccionDestinoSelect').select2({
+    // tags: true,
+    dropdownParent: $('#direccionDestinoDiv')
+  });
+  $('#personaDestinoSelect').select2({
+    // tags: true,
+    dropdownParent: $('#personaDestinoDiv')
+  });
+  $('#municipioDestinoSelect').select2({
+    // tags: true,
+    dropdownParent: $('#municipioDestinoDiv')
+  });
+  $('#localidadDestinoSelect').select2({
+    // tags: true,
+    dropdownParent: $('#localidadDestinoDiv')
+  });
+  $('#coloniaDestinoSelect').select2({
+    // tags: true,
+    dropdownParent: $('#coloniaDestinoDiv')
   });
   $('#telefono').mask('000-000-00-00');
   $('#celular').mask('000-000-00-00');
@@ -212,8 +252,10 @@ $(document).ready(function() {
       $('#entre_calles').val('');
       $('#calle').val('');
       $('#municipioSelect').prop('disabled',false);
+      $('#municipioSelect').val(87).trigger('change');
       $('#municipio').prop('disabled',false);
       $('#localidadSelect').prop('disabled',false);
+      $('#localidadSelect').val('').trigger('change');
       $('#localidad').prop('disabled',false);
       $('#coloniaSelect').prop('disabled',false);
       $('#colonia').prop('disabled',false);
@@ -306,12 +348,25 @@ $(document).ready(function() {
           $.ajax( routeBase+ '/api/colonias/'+$('#municipioSelect').val() )
         )
           .done(function ( v1,v2) {
+            // console.log("v1 y v2",v1);
             $('#localidadSelect').empty();
             $('#coloniaSelect').empty();
             // console.log(v1[0],v2[0]);
             // console.log("colonias:  " +v2);
-            $('#localidadSelect').select2({data:v1[0]}).trigger('change');
-            $('#coloniaSelect').select2({data:v2[0]}).trigger('change');
+            html = '';
+            for (let index = 0; index < v1[0].length; index++) {
+              html += '<option ';
+              html += ' value="'+v1[0][index].id+'" ';
+              html += '>'+v1[0][index].text+'</option>';
+            }
+            $('#localidadSelect').append(html).trigger('change');
+              html = '';
+            for (let index = 0; index < v2[0].length; index++) {
+              html += '<option ';
+              html += ' value="'+v2[0][index].id+'" ';
+              html += '>'+v2[0][index].text+'</option>';
+            }
+            $('#coloniaSelect').append(html).trigger('change');
             // $('.special_select').select2({
             //   tags: true,
             //   dropdownParent: $('#modalRegistroDiario')
@@ -341,8 +396,20 @@ $(document).ready(function() {
             $('#coloniaDestinoSelect').empty();
             // console.log(v1[0],v2[0]);
             // console.log("coloniaDestinos:  " +v2);
-            $('#localidadDestinoSelect').select2({data:v1[0]}).trigger('change');
-            $('#coloniaDestinoSelect').select2({data:v2[0]}).trigger('change');
+            html = '';
+            for (let index = 0; index < v1[0].length; index++) {
+              html += '<option ';
+              html += ' value="'+v1[0][index].id+'" ';
+              html += '>'+v1[0][index].text+'</option>';
+            }
+            $('#localidadDestinoSelect').append(html).trigger('change');
+            html = '';
+            for (let index = 0; index < v2[0].length; index++) {
+              html += '<option ';
+              html += ' value="'+v2[0][index].id+'" ';
+              html += '>'+v2[0][index].text+'</option>';
+            }
+            $('#coloniaDestinoSelect').append(html).trigger('change');
             // $('.special_select').select2({
             //   tags: true,
             //   dropdownParent: $('#modalRegistroDiario')

@@ -1,6 +1,9 @@
 var table = null;
 $(document).ready(function() {
-    $('.clave').select2();
+    $('.special_select').select2({
+      // tags: true,
+      dropdownParent: $('#modalDatosUnidad')
+    });
     $('#telefono_referencia').mask('000-000-00-00');
     $('#telefono_emergencia_referencia').mask('000-000-00-00');
     $('#telefono_fijo').mask('000-000-00-00');
