@@ -97,7 +97,6 @@
 
     $("form").on('submit', function(e){
       e.preventDefault();
-      console.log($('#csrf').val());
       $.ajax({
         url: "{{route('api.login')}}",
         type: 'POST',
@@ -126,7 +125,6 @@
       });
         },
         error: function(data){
-          console.log(data);
           alert('Usuario y/o correo incorrectos');
         }
       });

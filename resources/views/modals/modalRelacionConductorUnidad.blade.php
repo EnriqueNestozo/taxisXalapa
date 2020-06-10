@@ -15,14 +15,14 @@
             <input type="text" style="display:none" id="idUnidadModalRelacion" name="idUnidad">
             <div class="form-group" id="conductorDiv">
               <label for="conductorSelect" class="col-form-label">Chofer:</label>
-              <select class="clave" id="conductorSelect" name="conductorSelect" style="width:60%;">
+              <select class="special_select" id="conductorSelect" name="conductorSelect" style="width:60%;">
                 <option value="">Seleccione un chofer...</option>
               </select>
               <span id="conductorSelect-error" class="error text-danger" for="conductorSelect" style="display:none">Campo faltante</span>
             </div>
             
               <label for="turnoSelect" class="col-form-label" style="padding-right:8px">Turno:</label>
-              <select class="clave" id="turnoSelect"name="turnoSelect" style="width:60%;">
+              <select class="special_select" id="turnoSelect"name="turnoSelect" style="width:60%;">
                 <option value="">Seleccione un turno...</option>
                 <option value="1">Mañana</option>
                 <option value="2">Tarde</option>

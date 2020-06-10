@@ -4,6 +4,14 @@ $(document).ready(function() {
       // tags: true,
       dropdownParent: $('#modalDatosUnidad')
     });
+    $('#conductorSelect').select2({
+      // tags: true,
+      dropdownParent: $('#modalRelacionConductorUnidad')
+    });
+    $('#turnoSelect').select2({
+      // tags: true,
+      dropdownParent: $('#modalRelacionConductorUnidad')
+    });
     $('#telefono_referencia').mask('000-000-00-00');
     $('#telefono_emergencia_referencia').mask('000-000-00-00');
     $('#telefono_fijo').mask('000-000-00-00');
@@ -61,7 +69,7 @@ $(document).ready(function() {
     $('#modalRelacionConductorUnidad').on('hidden.bs.modal', function () {
       $('#conductorSelect').val('').trigger('change');
       $('#turnoSelect').val('').trigger('change');
-      $('#baseSelect').val('').trigger('change');
+      // $('#baseSelect').val('').trigger('change');
     });
 
     $('#modalRegistroConductor').on('hidden.bs.modal', function () {
