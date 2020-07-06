@@ -21,6 +21,7 @@ function verificarExistenciasDeServicios() {
 }
 
 function cargarSelectsMunicipio(){
+    $('#municipioSelect').empty();
     $.when( 
         $.ajax( rutaListadoMunicipios ))
         .done(function ( v1) {
