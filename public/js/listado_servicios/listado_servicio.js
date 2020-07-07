@@ -139,6 +139,7 @@ $(document).ready(function() {
             $('#calle').prop('disabled',true);
             $('#entre_calles').prop('disabled',true);
             $('#referencia').prop('disabled',true);
+            limpiarErrores();
             $.get({
                 url: routeBase+ '/api/direcciones/'+$('#direccionSelect').val(),
                 dataType: 'json',

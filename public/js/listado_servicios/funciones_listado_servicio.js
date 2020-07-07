@@ -64,42 +64,43 @@ function validarDatos(){
     $("#registroDiarioBtn").html("Cargando...");
     $("#registroDiarioBtn").prop('disabled', true);
     limpiarErrores();
-    if( $('#isRecurrente').is(':checked') ){
-        if( $('#lunesCheck').is(':checked') ){
-            if ($('#lunes').val() =='' ){
-                datosErroneos = 1;
-            }
+    
+    if( $('#lunesCheck').is(':checked') ){
+        if ($('#lunes').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#martesCheck').is(':checked') ){
-            if ($('#martes').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#martesCheck').is(':checked') ){
+        if ($('#martes').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#miercolesCheck').is(':checked') ){
-            if ($('#miercoles').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#miercolesCheck').is(':checked') ){
+        if ($('#miercoles').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#juevesCheck').is(':checked') ){
-            if ($('#jueves').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#juevesCheck').is(':checked') ){
+        if ($('#jueves').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#viernesCheck').is(':checked') ){
-            if ($('#viernes').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#viernesCheck').is(':checked') ){
+        if ($('#viernes').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#sabadoCheck').is(':checked') ){
-            if ($('#sabado').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#sabadoCheck').is(':checked') ){
+        if ($('#sabado').val() =='' ){
+            datosErroneos = 1;
         }
-        if( $('#domingoCheck').is(':checked') ){
-            if ($('#domingo').val() =='' ){
-                datosErroneos = 1;
-            }
+    }
+    if( $('#domingoCheck').is(':checked') ){
+        if ($('#domingo').val() =='' ){
+            datosErroneos = 1;
         }
+    }
+    if( $('#direccionSelect').val() ==null  ){
         if(
             ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
@@ -108,24 +109,17 @@ function validarDatos(){
             $('#calle').val() == '' || 
             ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
             marcarErrores();
-            console.log("faltan datos");
             datosErroneos = 1;
         }
     }else{
         if(
-            $('#hora').val() =='' || 
             ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || 
-            ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
-            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
             $('#calle').val() == '' || 
             ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
             marcarErrores();
-            console.log("faltan datos");
             datosErroneos = 1;
         }
     }
-    
     return datosErroneos;
 }
 
@@ -136,6 +130,8 @@ function limpiarErrores(){
     $('#persona-error').hide();
     $('#municipioDiv').removeClass('has-danger');
     $('#municipio-error').hide();
+    $('#coloniaDiv').removeClass('has-danger');
+    $('#colonia-error').hide();
     $('#calleDiv').removeClass('has-danger');
     $('#calle-error').hide();
     // $('#referenciaDiv').removeClass('has-danger');
