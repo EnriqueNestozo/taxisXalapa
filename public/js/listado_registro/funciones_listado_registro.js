@@ -179,12 +179,18 @@ function eliminarRegistro(id_registro){
 function desplegarModalRegistro(){
     var fecha = new Date();
     var minutos = "00";
+    var horas = "00";
     if(fecha.getMinutes() < 10){
         minutos = "0"+ fecha.getMinutes();
     }else{
         minutos = fecha.getMinutes();
     }
-    var horaActual = fecha.getHours() + ":" + minutos;
+    if(fecha.getHours() < 10){
+        horas = "0"+ fecha.getHours();
+    }else{
+        horas = fecha.getHours();
+    }
+    var horaActual = horas + ":" + minutos;
     $('#hora').val(horaActual);
     console.log($('#hora').val(),"aqui",horaActual);
     $('#personaSelect').val('').trigger('change');
