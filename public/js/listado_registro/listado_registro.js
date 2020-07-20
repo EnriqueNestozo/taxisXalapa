@@ -6,10 +6,14 @@ $(document).ready(function() {
     // tags: true,
     dropdownParent: $('#direccionDiv')
   });
-  $('#personaSelect').select2({
+  $('#busquedaSelect').select2({
     // tags: true,
-    dropdownParent: $('#personaDiv')
+    dropdownParent: $('#busquedaDiv')
   });
+  // $('#personaSelect').select2({
+  //   // tags: true,
+  //   dropdownParent: $('#personaDiv')
+  // });
   $('#municipioSelect').select2({
     // tags: true,
     dropdownParent: $('#municipioDiv')
@@ -30,9 +34,9 @@ $(document).ready(function() {
     // tags: true,
     dropdownParent: $('#direccionDestinoDiv')
   });
-  $('#personaDestinoSelect').select2({
+  $('#busquedaDestinoSelect').select2({
     // tags: true,
-    dropdownParent: $('#personaDestinoDiv')
+    dropdownParent: $('#busquedaDestinoDiv')
   });
   $('#municipioDestinoSelect').select2({
     // tags: true,
@@ -47,7 +51,7 @@ $(document).ready(function() {
     dropdownParent: $('#coloniaDestinoDiv')
   });
   $('#telefono').mask('000-000-00-00');
-  $('#celular').mask('000-000-00-00');
+  // $('#celular').mask('000-000-00-00');
   
   cargarSelectsMunicipio();
 
@@ -67,8 +71,9 @@ $(document).ready(function() {
     $('#referencia').prop('disabled',false);
     $('#telefono').prop('disabled',false);
     $('#calle').prop('disabled',false);
-    $('#celular').prop('disabled',false);
-    $('#personaSelect').prop('disabled',false);
+    $('#entre_calles').prop('disabled',false);
+    // $('#celular').prop('disabled',false);
+    $('#busquedaSelect').prop('disabled',false);
     $('#municipioSelect').prop('disabled',false);
     $('#localidadSelect').prop('disabled',false);
     $('#coloniaSelect').prop('disabled',false);
@@ -85,13 +90,13 @@ $(document).ready(function() {
     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
     $('#direccionDestinoSelect').append(html);
     $('#direccionDestinoSelect').trigger('change');
-    $('#personaDestino').prop('disabled',false);
+    $('#busquedaDestino').prop('disabled',false);
     $('#municipioDestino').prop('disabled',false);
     $('#localidadDestino').prop('disabled',false);
     $('#coloniaDestino').prop('disabled',false);
     $('#referenciaDestino').prop('disabled',false);
    
-    $('#personaDestinoSelect').prop('disabled',false);
+    $('#busquedaDestinoSelect').prop('disabled',false);
     $('#municipioDestinoSelect').prop('disabled',false);
     $('#localidadDestinoSelect').prop('disabled',false);
     $('#coloniaDestinoSelect').prop('disabled',false);
@@ -117,31 +122,42 @@ $(document).ready(function() {
     }
   });
 
-  $('#persona').change(function(){
-    if( $('#persona').val() !='' || $('#personaSelect').val() != '' ){
+  $('#persona, #telefono').keyup(function(){
+    if( $('#persona').val() !='' || $('#telefono').val() !='' ){
+      console.log("entra");
       $('#personaDiv').removeClass('has-danger');
       $('#persona-error').hide();
-      if($('#persona').val() !=''){
+      $('#telefonoDiv').removeClass('has-danger');
+      $('#telefono-error').hide();
+      $('#busquedaDiv').removeClass('has-danger');
+      $('#busqueda-error').hide();
+
+      if( $('busquedaSelect').val() == null){
+        console.log("entra2");
+        $('#busquedaSelect').prop('disabled',true);
         $('#direccionSelect').empty();
-        $('#personaSelect').prop('disabled',true);
         html = '';
         html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
         $('#direccionSelect').append(html);
       }
     }else{
-      $('#personaSelect').prop('disabled',false);
-      $('#persona').prop('disabled',false);
+      console.log("else");
+        $('#busquedaSelect').prop('disabled',false);
     }
   });
 
-  $('#personaSelect').change(function(){
-    if( $('#persona').val() !='' || $('#personaSelect').val() != '' ){
+  $('#busquedaSelect').change(function(){
+    if( $('#busquedaSelect').val() != '' ){
+      $('#busquedaDiv').removeClass('has-danger');
+      $('#busqueda-error').hide();
       $('#personaDiv').removeClass('has-danger');
       $('#persona-error').hide();
-      if( $('#personaSelect').val() !='' ){
+      $('#telefonoDiv').removeClass('has-danger');
+      $('#telefono-error').hide();
+      if( $('#busquedaSelect').val() !='' ){
         obtenerListadoDirecciones();
         $.get({
-          url: routeBase+ '/api/clientes/'+$('#personaSelect').val(),
+          url: routeBase+ '/api/clientes/'+$('#busquedaSelect').val(),
           dataType: 'json',
           headers: {
             'Accept': 'application/json',
@@ -149,9 +165,11 @@ $(document).ready(function() {
           },
           success: function( result ) {
             $('#telefono').val(result['telefono_fijo']);
-            $('#celular').val(result['celular']);
+            $('#persona').val(result['nombre']);
+            // $('#celular').val(result['celular']);
             $('#telefono').prop('disabled',true);
-            $('#celular').prop('disabled',true);
+            $('#persona').prop('disabled',true);
+            // $('#celular').prop('disabled',true);
           },
           error: function(result){
             console.log(result);
@@ -164,28 +182,28 @@ $(document).ready(function() {
       html = '';
       html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
       $('#direccionSelect').append(html);
-      $('#personaSelect').prop('disabled',false);
+      $('#busquedaSelect').prop('disabled',false);
       $('#persona').prop('disabled',false);
-      
+      $('#persona').val('');
       // html = '';
       // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
       // $('#municipioSelect').append(html);
       $('#telefono').val('');
-      $('#celular').val('');
+      // $('#celular').val('');
       $('#telefono').prop('disabled',false);
-      $('#celular').prop('disabled',false);
+      // $('#celular').prop('disabled',false);
     }
   });
 
 
-  $('#personaDestinoSelect').change(function(){
-    if( $('#personaDestino').val() !='' || $('#personaDestinoSelect').val() != '' ){
-      $('#personaDestinoDiv').removeClass('has-danger');
-      $('#personaDestinoSelect-error').hide();
-      if( $('#personaDestinoSelect').val() !='' ){
+  $('#busquedaDestinoSelect').change(function(){
+    if( $('#busquedaDestino').val() !='' || $('#busquedaDestinoSelect').val() != '' ){
+      $('#busquedaDestinoDiv').removeClass('has-danger');
+      $('#busquedaDestinoSelect-error').hide();
+      if( $('#busquedaDestinoSelect').val() !='' ){
         obtenerListadoDireccionesDestino();
         $.get({
-          url: routeBase+ '/api/clientes/'+$('#personaDestinoSelect').val(),
+          url: routeBase+ '/api/clientes/'+$('#busquedaDestinoSelect').val(),
           dataType: 'json',
           headers: {
             'Accept': 'application/json',
@@ -205,8 +223,8 @@ $(document).ready(function() {
       html = '';
       html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
       $('#direccionDestinoSelect').append(html);
-      $('#personaDestinoSelect').prop('disabled',false);
-      $('#personaDestino').prop('disabled',false);
+      $('#busquedaDestinoSelect').prop('disabled',false);
+      $('#busquedaDestino').prop('disabled',false);
       
       // html = '';
       // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
@@ -216,7 +234,8 @@ $(document).ready(function() {
   });
 
   $('#direccionSelect').change(function(){
-    if( $('#direccionSelect').val() !='' ){
+    var optionSelected = $(this);
+    if( optionSelected !='' ){
       $('#municipioSelect').val('').trigger('change');
       $('#municipioSelect').prop('disabled',true).trigger('change');
       $('#municipio').prop('disabled',true);
@@ -248,6 +267,7 @@ $(document).ready(function() {
         }
       });
     }else{
+      console.log("else");
       $('#referencia').val('');
       $('#entre_calles').val('');
       $('#calle').val('');
@@ -313,7 +333,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#municipio').change(function(){
+  $('#municipio').keyup(function(){
     if( $('#municipio').val() !='' || $('#municipioSelect').val() !=-''){
       $('#municipioDiv').removeClass(' has-danger');
       $('#municipio-error').hide();
@@ -477,6 +497,7 @@ $(document).ready(function() {
   });
 
   $('#coloniaSelect').change(function(){
+    console.log("cambia select");
     if( $('#coloniaSelect').val() !='' ){
       $('#coloniaDiv').removeClass(' has-danger');
       $('#colonia-error').hide();
@@ -496,7 +517,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#colonia').change(function(){
+  $('#colonia').keyup(function(){
     if( $('#colonia').val() !='' || $('#coloniaSelect').val() !=-''){
       $('#coloniaDiv').removeClass(' has-danger');
       $('#colonia-error').hide();
@@ -542,23 +563,28 @@ $(document).ready(function() {
   // });
 
 
-  $('#telefono').change(function(){
-    if( $('#telefono').val() != '' || $('#celular').val() != '' ){
-      $('#telefonoDiv').removeClass(' has-danger');
-      $('#telefono-error').hide();
-      $('#celularDiv').removeClass(' has-danger');
-      $('#celular-error').hide();
-    }
-  });
+  // $('#telefono').change(function(){
+  //   if( $('#telefono').val() != '' ){
+  //   // if( $('#telefono').val() != '' || $('#celular').val() != '' ){
+  //     $('#telefonoDiv').removeClass(' has-danger');
+  //     $('#telefono-error').hide();
+  //     if($('#busquedaSelect').val() ==null){
+  //       $('#busquedaSelect').prop('disabled',true);
+  //     }
+      
+  //     // $('#celularDiv').removeClass(' has-danger');
+  //     // $('#celular-error').hide();
+  //   }
+  // });
 
-  $('#celular').change(function(){
-    if( $('#celular').val() != '' || $('#telefono').val() != '' ){
-      $('#celularDiv').removeClass(' has-danger');
-      $('#celular-error').hide();
-      $('#telefonoDiv').removeClass(' has-danger');
-      $('#telefono-error').hide();
-    }
-  });
+  // $('#celular').change(function(){
+  //   if( $('#celular').val() != '' || $('#telefono').val() != '' ){
+  //     $('#celularDiv').removeClass(' has-danger');
+  //     $('#celular-error').hide();
+  //     $('#telefonoDiv').removeClass(' has-danger');
+  //     $('#telefono-error').hide();
+  //   }
+  // });
 
 });
 

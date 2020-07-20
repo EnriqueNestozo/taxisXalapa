@@ -70,6 +70,7 @@
                       <td>
                         <input type="time" class="form-control is-invalid" id="miercoles" name="miercoles" disabled>
                       </td>
+                      <span id="miercoles-error" class="error text-danger" for="miercoles" style="display:none">Campo faltante</span>
                     </tr>
 
                     <tr>
@@ -203,12 +204,18 @@
 
 
 
+                <div class="form-group" id="busquedaDiv">
+                  <label for="busqueda" class="col-form-label">Búsqueda:</label>
+                  <br>
+                  <select class="special_select" id="busquedaSelect" name="busquedaSelect" style="width: 100%">
+                  </select>
+                  <input type="text" class="form-control" id="busqueda" maxlength="100" placeholder="Sino existe escriba el nombre" name="busqueda">
+                  <span id="busqueda-error" class="error text-danger" for="busqueda" style="display:none">Campo faltante</span>
+                </div>
+
                 <div class="form-group" id="personaDiv">
                   <label for="persona" class="col-form-label">Persona:</label>
-                  <br>
-                  <select class="special_select" id="personaSelect" name="personaSelect" style="width: 100%">
-                  </select>
-                  <input type="text" class="form-control" id="persona" maxlength="100" placeholder="Sino existe escriba el nombre" name="persona">
+                  <input type="text" class="form-control" id="persona" maxlength="100" name="persona">
                   <span id="persona-error" class="error text-danger" for="persona" style="display:none">Campo faltante</span>
                 </div>
                 
@@ -217,11 +224,11 @@
                   <input type="text" class="form-control" id="telefono" maxlength="100" name="telefono">
                   <span id="telefono-error" class="error text-danger" for="telefono" style="display:none">Campo faltante</span>
                 </div>
-                <div class="form-group" id="celularDiv">
+                <!-- <div class="form-group" id="celularDiv">
                   <label for="celular" class="col-form-label">Celular:</label>
                   <input type="text" class="form-control" id="celular" maxlength="100" name="celular">
                   <span id="celular-error" class="error text-danger" for="celular" style="display:none">Campo faltante</span>
-                </div>
+                </div> -->
               </div>
               
             </div>

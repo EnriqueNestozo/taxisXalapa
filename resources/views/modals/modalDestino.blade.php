@@ -17,12 +17,12 @@
                 <input type="text" style="display:none" id="idRegistroDestino" name="idRegistro">
                 <input type="text" style="display:none" id="idDireccionDestino" name="idDireccionDestino">
 
-                <div class="form-group" id="personaDiv">
-                  <label for="personaDestinoSelect" class="col-form-label">Persona:</label>
+                <div class="form-group" id="busquedaDiv">
+                  <label for="busquedaDestinoSelect" class="col-form-label">busqueda:</label>
                   <br>
-                  <select class="special_select" id="personaDestinoSelect" name="cliente_id" style="width: 100%">
+                  <select class="special_select" id="busquedaDestinoSelect" name="cliente_id" style="width: 100%">
                   </select>
-                  <span id="personaDestinoSelect-error" class="error text-danger" for="personaDestinoSelect" style="display:none">Campo faltante</span>
+                  <span id="busquedaDestinoSelect-error" class="error text-danger" for="busquedaDestinoSelect" style="display:none">Campo faltante</span>
                 </div>
                 
               </div>

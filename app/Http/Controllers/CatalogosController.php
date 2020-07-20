@@ -16,6 +16,11 @@ class CatalogosController extends Controller
     public function getMunicipios()
     {
         $municipios = Cat_municipio::select('cve_mun AS id','nombre AS text')->orderBy('nombre')->get()->toArray();
+        $arreglo = [
+            'id' =>'',
+            'text'=>'Seleccione un municipio...',
+        ];
+        $municipios[0]=$arreglo;
         return response()->json($municipios);
     }
 

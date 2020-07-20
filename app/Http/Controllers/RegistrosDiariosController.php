@@ -81,14 +81,14 @@ class RegistrosDiariosController extends Controller
             $registroDiario->tipo_registro=($request->tipoRegistro)? ($request->tipoRegistro) : '0';
             $registroDiario->hora = $request->hora;
             $registroDiario->servicio_id= ($request->idServicio)? $request->idServicio : null;
-            if($request->personaSelect !=null || $request->idCliente !=null ){
-                $cliente = ($request->personaSelect)? Cliente::find($request->personaSelect) : Cliente::find($request->idCliente);
-                $registroDiario->cliente_id = ($request->personaSelect)? $request->personaSelect : $request->idCliente;
+            if($request->busquedaSelect !=null || $request->idCliente !=null ){
+                $cliente = ($request->busquedaSelect)? Cliente::find($request->busquedaSelect) : Cliente::find($request->idCliente);
+                $registroDiario->cliente_id = ($request->busquedaSelect)? $request->busquedaSelect : $request->idCliente;
             }else{
                 $cliente = new Cliente();
                 $cliente->nombre = $request->persona;
                 $cliente->telefono_fijo = ($request->telefono)? $request->telefono : '';
-                $cliente->celular = ($request->celular)? $request->celular : '';
+                // $cliente->celular = ($request->celular)? $request->celular : '';
                 $cliente->save();
                 $registroDiario->cliente_id = $cliente->id;
             }

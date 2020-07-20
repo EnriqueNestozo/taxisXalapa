@@ -28,13 +28,13 @@ function cargarListado(){
 }
 
 function desplegarModalServicio(){
-    $('#personaSelect').val('').trigger('change');
+    $('#busquedaSelect').val('').trigger('change');
     $('#modalRegistroServicio').modal("show");
 }
 
 function obtenerListadoDirecciones(){
     var data = sessionStorage.getItem('token');
-    var personaid = $('#personaSelect').val();
+    var personaid = $('#busquedaSelect').val();
     $('#direccionSelect').empty();
     $.get({
         url: routeBase+"/api/get-direcciones/"+personaid,
@@ -102,20 +102,11 @@ function validarDatos(){
     }
     if( $('#direccionSelect').val() ==null  ){
         if(
-            ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || 
+            ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
             ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
             ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-            $('#calle').val() == '' || 
-            ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
-            marcarErrores();
-            datosErroneos = 1;
-        }
-    }else{
-        if(
-            ( $('#persona').val() =='' && $('#personaSelect').val() == null  ) || 
-            $('#calle').val() == '' || 
-            ( $('#telefono').val() == '' && $('#celular').val()=='')  ){
+            $('#calle').val() == '' ){
             marcarErrores();
             datosErroneos = 1;
         }
@@ -128,6 +119,8 @@ function limpiarErrores(){
     $('#hora-error').hide();
     $('#personaDiv').removeClass('has-danger');
     $('#persona-error').hide();
+    $('#busquedaDiv').removeClass('has-danger');
+    $('#busqueda-error').hide();
     $('#municipioDiv').removeClass('has-danger');
     $('#municipio-error').hide();
     $('#coloniaDiv').removeClass('has-danger');
@@ -138,8 +131,8 @@ function limpiarErrores(){
     // $('#referencia-error').hide();
     $('#telefonoDiv').removeClass('has-danger');
     $('#telefono-error').hide();
-    $('#celularDiv').removeClass('has-danger');
-    $('#celular-error').hide();
+    // $('#celularDiv').removeClass('has-danger');
+    // $('#celular-error').hide();
 }
 
 function marcarErrores(){
@@ -147,9 +140,13 @@ function marcarErrores(){
         $('#horaDiv').addClass(' has-danger');
         $('#hora-error').show();
     }
-    if( $('#persona').val() =='' && $('#personaSelect').val() == '' ){
+    if( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '' ){
         $('#personaDiv').addClass('has-danger');
         $('#persona-error').show();
+        $('#busquedaDiv').addClass('has-danger');
+        $('#busqueda-error').show();
+        $('#telefonoDiv').addClass('has-danger');
+        $('#telefono-error').show();
     }
     if( $('#municipio').val() =='' && $('#municipioSelect').val() == ''  ){
         $('#municipioDiv').addClass('has-danger');
@@ -171,11 +168,11 @@ function marcarErrores(){
     //   $('#referenciaDiv').addClass('has-danger');
     //   $('#referencia-error').show();
     // }
-    if( $('#telefono').val() == '' && $('#celular').val() == '' ){
+    if( $('#telefono').val() == ''  ){
         $('#telefonoDiv').addClass('has-danger');
         $('#telefono-error').show();
-        $('#celularDiv').addClass('has-danger');
-        $('#celular-error').show();
+        // $('#celularDiv').addClass('has-danger');
+        // $('#celular-error').show();
     }
     // if( $('#celular').val() == '' ){
     //   $('#celularDiv').addClass('has-danger');
@@ -210,7 +207,7 @@ function registrarServicio(){
             cargarListado();
             obtenerListadoPersonas();
             verificarExistenciasDeServicios();
-            $('#personaSelect').prop('disabled',false);
+            $('#busquedaSelect').prop('disabled',false);
             $('#municipioSelect').prop('disabled',false);
             $('#persona').prop('disabled',false);
             $('#municipio').prop('disabled',false);
@@ -247,8 +244,8 @@ function editarServicio(id_registro){
         let direcciones = result[2];
         let unidades = result[3];
         // $('#hora').val(registro['hora']);
-        $('#personaSelect').val(registro['cliente_id']).trigger('change');
-        $('#personaSelect').prop('disabled',true);
+        $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+        $('#busquedaSelect').prop('disabled',true);
         $('#persona').prop('disabled',true);
         console.log(registro['horarios']);
         registro['horarios'].forEach(element => {
@@ -292,7 +289,7 @@ function editarServicio(id_registro){
             
         }, 1000);
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
-        $('#celular').val(clientes['celular']).trigger('change');
+        // $('#celular').val(clientes['celular']).trigger('change');
         if(registro['unidad_id']!=null){
             $('#clave').val(registro['unidad_id']).trigger('change');
         }

@@ -117,7 +117,7 @@ function cargarDatos(idServicio){
             let datosPersona = result[1];
             $('#idServicio').val(datosGenerales.id);
             let direcciones = result[2][0];
-            $('#personaSelect').val(datosGenerales.cliente_id).trigger('change');
+            $('#busquedaSelect').val(datosGenerales.cliente_id).trigger('change');
             // $('#personaSelect').prop('disabled',true);
             $('#hora').val(datosGenerales.horarios[0].hora).trigger('change');
             if(datosGenerales.unidad_id !=null){
@@ -138,7 +138,7 @@ function cargarDatos(idServicio){
 function obtenerListadoDirecciones(){
     console.log("esta en eso");
     var data = sessionStorage.getItem('token');
-    var personaid = $('#personaSelect').val();
+    var personaid = $('#busquedaSelect').val();
     $('#direccionSelect').empty();
     $.get({
         url: routeBase+"/api/get-direcciones/"+personaid,
@@ -176,71 +176,189 @@ function limpiarErrores(){
     // $('#referencia-error').hide();
     $('#telefonoDiv').removeClass('has-danger');
     $('#telefono-error').hide();
-    $('#celularDiv').removeClass('has-danger');
-    $('#celular-error').hide();
+    // $('#celularDiv').removeClass('has-danger');
+    // $('#celular-error').hide();
 }
 
 function registrarViaje(){
-    var arrayDeDatos = $("#registroDiarioForm").serializeArray();
-    arrayDeDatos.push({name:'idUser', value:sessionStorage.getItem('user')});
-    arrayDeDatos.push({name:'tipoRegistro', value:1});
-    $.post({
-        url: rutaCrearRegistroDiario,
-        data: arrayDeDatos,
-        dataType: 'json',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer '+sessionStorage.getItem('token'),
-        },
-        success: function( result ) {
-            $("#registroDiarioBtn").html("Registrar");
-            $("#registroDiarioBtn").prop('disabled', false);
-            $('#direccionSelect').empty();
-            html = '';
-            html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
-            $('#direccionSelect').append(html);
-            // console.log("success registro");
-            cargarListado();
-            cargarListadoRegistros();
-            obtenerListadoPersonas();
-            if($('#idRegistro').val() == ''){
-                swal({
-                    title: 'Registro realizado correctamente',
-                    text: "¿Quiere añadir el destino?",
-                    type: 'success',
-                    showCancelButton: true,
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger',
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Si',
-                    buttonsStyling: false
-                }).then(function(confirmation) {
-                    // console.log(confirmation);
-                    if (confirmation['dismiss'] != 'cancel') {
-                        agregarDestino(result['id'],result['cliente_id']);
-                        $('#registroDestinoBtn').show();
-                        $('#eliminarDestinoBtn').hide();
-                    }
-                });
-            }else{
-                md.showNotification('bottom','right','success','Registro modificado correctamente');
+    if(validarDatos() == 0 ){
+        var arrayDeDatos = $("#registroDiarioForm").serializeArray();
+        arrayDeDatos.push({name:'idUser', value:sessionStorage.getItem('user')});
+        arrayDeDatos.push({name:'tipoRegistro', value:1});
+        $.post({
+            url: rutaCrearRegistroDiario,
+            data: arrayDeDatos,
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+            },
+            success: function( result ) {
+                $("#registroDiarioBtn").html("Registrar");
+                $("#registroDiarioBtn").prop('disabled', false);
+                $('#direccionSelect').empty();
+                html = '';
+                html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
+                $('#direccionSelect').append(html);
+                // console.log("success registro");
+                cargarListado();
+                cargarListadoRegistros();
+                obtenerListadoPersonas();
+                if($('#idRegistro').val() == ''){
+                    swal({
+                        title: 'Registro realizado correctamente',
+                        text: "¿Quiere añadir el destino?",
+                        type: 'success',
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn btn-success',
+                        cancelButtonClass: 'btn btn-danger',
+                        cancelButtonText: 'No',
+                        confirmButtonText: 'Si',
+                        buttonsStyling: false
+                    }).then(function(confirmation) {
+                        // console.log(confirmation);
+                        if (confirmation['dismiss'] != 'cancel') {
+                            agregarDestino(result['id'],result['cliente_id']);
+                            $('#registroDestinoBtn').show();
+                            $('#eliminarDestinoBtn').hide();
+                        }
+                    });
+                }else{
+                    md.showNotification('bottom','right','success','Registro modificado correctamente');
+                }
+                $('#registroDiarioForm').trigger("reset");
+                $('#modalRegistroDiario').modal('hide');
+                // $('#personaSelect').prop('disabled',false);
+                // $('#municipioSelect').prop('disabled',false);
+                // $('#persona').prop('disabled',false);
+                // $('#municipio').prop('disabled',false);
+                $('#idRegistro').val('');
+                $('#idCliente').val('');
+            },
+            error: function(result){
+                console.log(result);
+                $("#registroDiarioBtn").html("Registrar");
+                $("#registroDiarioBtn").prop('disabled', false);
+                md.showNotification('bottom','right','danger','Ha ocurrido un error al crear el registro');
             }
-            $('#registroDiarioForm').trigger("reset");
-            $('#modalRegistroDiario').modal('hide');
-            // $('#personaSelect').prop('disabled',false);
-            // $('#municipioSelect').prop('disabled',false);
-            // $('#persona').prop('disabled',false);
-            // $('#municipio').prop('disabled',false);
-            $('#idRegistro').val('');
-            $('#idCliente').val('');
-        },
-        error: function(result){
-            console.log(result);
-            $("#registroDiarioBtn").html("Registrar");
-            $("#registroDiarioBtn").prop('disabled', false);
-            md.showNotification('bottom','right','danger','Ha ocurrido un error al crear el registro');
+        });
+    }else{
+        $("#registroDiarioBtn").html("Registrar");
+        $("#registroDiarioBtn").prop('disabled', false);
+    }
+}
+
+function validarDatos(){
+    let datosErroneos = 0;
+    $("#registroDiarioBtn").html("Cargando...");
+    $("#registroDiarioBtn").prop('disabled', true);
+    limpiarErrores();
+    if( $('#isRecurrente').is(':checked') ){
+        if( $('#lunesCheck').is(':checked') ){
+            if ($('#lunes').val() =='' ){
+                datosErroneos = 1;
+            }
         }
-    });
+        if( $('#martesCheck').is(':checked') ){
+            if ($('#martes').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if( $('#miercolesCheck').is(':checked') ){
+            if ($('#miercoles').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if( $('#juevesCheck').is(':checked') ){
+            if ($('#jueves').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if( $('#viernesCheck').is(':checked') ){
+            if ($('#viernes').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if( $('#sabadoCheck').is(':checked') ){
+            if ($('#sabado').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if( $('#domingoCheck').is(':checked') ){
+            if ($('#domingo').val() =='' ){
+                datosErroneos = 1;
+            }
+        }
+        if(
+            ( $('#persona').val() =='' && $('#busquedaSelect').val() == null && $('#telefono').val() == '') || 
+            ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
+            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
+            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
+            $('#calle').val() == ''  ){
+            marcarErrores();
+            console.log("faltan datos");
+            datosErroneos = 1;
+        }
+    }else{
+        if(
+            $('#hora').val() =='' || 
+            ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
+            ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
+            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
+            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
+            $('#calle').val() == '' ){
+            marcarErrores();
+            console.log("faltan datos");
+            datosErroneos = 1;
+        }
+    }
+    
+    return datosErroneos;
+}
+
+function marcarErrores(){
+    if($('#hora').val() ==''){
+        $('#horaDiv').addClass(' has-danger');
+        $('#hora-error').show();
+    }
+    if( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '' ){
+        $('#personaDiv').addClass('has-danger');
+        $('#persona-error').show();
+        $('#busquedaDiv').addClass('has-danger');
+        $('#busqueda-error').show();
+        $('#telefonoDiv').addClass('has-danger');
+        $('#telefono-error').show();
+    }
+    if( $('#municipio').val() =='' && $('#municipioSelect').val() == ''  ){
+        $('#municipioDiv').addClass('has-danger');
+        $('#municipio-error').show();
+    }
+    if( $('#localidad').val() =='' && $('#localidadSelect').val() == ''  ){
+        $('#localidadDiv').addClass('has-danger');
+        $('#localidad-error').show();
+    }
+    if( $('#colonia').val() =='' && $('#coloniaSelect').val() == ''  ){
+        $('#coloniaDiv').addClass('has-danger');
+        $('#colonia-error').show();
+    }
+    if( $('#calle').val()=='' ){
+      $('#calleDiv').addClass('has-danger');
+      $('#calle-error').show();
+    }
+    // if( $('#referencia').val() =='' ){
+    //   $('#referenciaDiv').addClass('has-danger');
+    //   $('#referencia-error').show();
+    // }
+    // if( $('#telefono').val() == '' && $('#celular').val() == '' ){
+    //     $('#telefonoDiv').addClass('has-danger');
+    //     $('#telefono-error').show();
+    //     $('#celularDiv').addClass('has-danger');
+    //     $('#celular-error').show();
+    // }
+    // if( $('#celular').val() == '' ){
+    //   $('#celularDiv').addClass('has-danger');
+    //   $('#celular-error').show();
+    // }
 }
 
 function editarRegistro(id_registro){
@@ -258,8 +376,8 @@ function editarRegistro(id_registro){
         let direcciones = result[2];
         let unidades = result[3];
         $('#hora').val(registro['hora']);
-        $('#personaSelect').val(registro['cliente_id']).trigger('change');
-        $('#personaSelect').prop('disabled',true);
+        $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+        $('#busquedaSelect').prop('disabled',true);
         $('#persona').prop('disabled',true);
         setTimeout(function(){
             $('#direccionSelect').val(registro['direccion_id']).trigger('change');
@@ -273,7 +391,7 @@ function editarRegistro(id_registro){
         }, 1000);
         
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
-        $('#celular').val(clientes['celular']).trigger('change');
+        // $('#celular').val(clientes['celular']).trigger('change');
         if(registro['unidad_id']!=null){
             console.log("unidad "+registro['unidad_id']);
             $('#clave').val(registro['unidad_id']).trigger('change');
@@ -338,7 +456,7 @@ function validarDatosDestino(){
     limpiarErroresDestino();
     if( $('#direccionDestinoSelect').val() =='' ){
         if(
-            ($('#personaDestinoSelect').val() == null  ) || 
+            ($('#busquedaDestinoSelect').val() == null  ) || 
             ( $('#municipioDestino').val() =='' && $('#municipioDestinoSelect').val() == '' ) || 
             ( $('#localidadDestino').val() =='' && $('#localidadDestinoSelect').val() == '' ) || 
             ( $('#coloniaDestino').val() =='' && $('#coloniaDestinoSelect').val() == '' ) ){
@@ -351,8 +469,8 @@ function validarDatosDestino(){
 }
 
 function limpiarErroresDestino(){
-    $('#personaDestinoDiv').removeClass('has-danger');
-    $('#personaDestino-error').hide();
+    $('#busquedaDestinoDiv').removeClass('has-danger');
+    $('#busquedaDestino-error').hide();
     $('#municipioDestinoDiv').removeClass('has-danger');
     $('#municipioDestino-error').hide();
     $('#calleDestinoDiv').removeClass('has-danger');
@@ -384,8 +502,8 @@ function marcarErroresDestino(){
 function agregarDestino(idRegistro,idCliente){
     $('#idRegistroDestino').val(idRegistro);
     $('#modalDestino').modal('show');
-    $('#personaDestinoSelect').val(idCliente).trigger('change');
-    $('#personaDestinoSelect').prop('disabled',true);
+    $('#busquedaDestinoSelect').val(idCliente).trigger('change');
+    $('#busquedaDestinoSelect').prop('disabled',true);
 }
 
 function registrarDestino(){
@@ -411,7 +529,7 @@ function registrarDestino(){
 
                 cargarListadoRegistros();
                 obtenerListadoPersonas();
-                $('#personaDestinoSelect').prop('disabled',false);
+                $('#busquedaDestinoSelect').prop('disabled',false);
                 $('#municipioDestinoSelect').prop('disabled',false);
                 $('#municipioDestino').prop('disabled',false);
                 $('#idRegistro').val('');
@@ -435,8 +553,8 @@ function mostrarDestino(idDireccionDestino){
     $('#modalDestino').modal('show');
     $('#idRegistroDestino').val(idDireccionDestino['id']);
     $('#idDireccionDestino').val(idDireccionDestino['direccion_destino_id']).trigger('change');
-    $('#personaDestinoSelect').val(idDireccionDestino['direccion_destino']['cliente_id']).trigger('change');
-    $('#personaDestinoSelect').prop('disabled',true);
+    $('#busquedaDestinoSelect').val(idDireccionDestino['direccion_destino']['cliente_id']).trigger('change');
+    $('#busquedaDestinoSelect').prop('disabled',true);
     setTimeout(function(){
         $('#direccionDestinoSelect').val(idDireccionDestino['direccion_destino']['id']).trigger('change');
     },1000);
@@ -488,7 +606,7 @@ function eliminarDestino(){
 
 function obtenerListadoDireccionesDestino(){
     var data = sessionStorage.getItem('token');
-    var personaid = $('#personaDestinoSelect').val();
+    var personaid = $('#busquedaDestinoSelect').val();
     $('#direccionDestinoSelect').empty();
     $.get({
         url: routeBase+"/api/get-direcciones-destino/"+personaid,

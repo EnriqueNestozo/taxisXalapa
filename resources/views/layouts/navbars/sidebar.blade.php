@@ -20,13 +20,13 @@
       <li class="nav-item{{ $activePage == 'listado_registros_recurrentes' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-recurrentes') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Registros programados') }}</p>
+            <p>{{ __('Próximos programados') }}</p>
         </a>
       </li>
       <li class="nav-item{{ $activePage == 'listado_servicios' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('listado-servicios') }}">
           <i class="material-icons">content_paste</i>
-            <p>{{ __('Servicios') }}</p>
+            <p>{{ __('Nuevo programado') }}</p>
         </a>
       </li>
       @if(@Auth::user()->hasRole('admin'))

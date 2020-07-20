@@ -177,9 +177,16 @@ function obtenerListadoPersonas(){
             html = '';
             html = html + '<option value="todos" selected style="min-width: 300px;">Todos</option>'
             for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].nombre+'</option>';
+                if(result[index].nombre != null){
+                    html += '<option ';
+                    html += ' value="'+result[index].id+'" ';
+                    html += '>'+result[index].nombre+'</option>';
+                }
+                if(result[index].telefono_fijo !=''){
+                    html += '<option ';
+                    html += ' value="'+result[index].id+'" ';
+                    html += '>'+result[index].telefono_fijo+'</option>';
+                }
             }
             $('#personaSelect').append(html);
             // $('#personaDestinoSelect').append(html);
@@ -228,7 +235,15 @@ function buscarDatos(){
             {data: 'id', name: 'id'},
             {data: 'unidad.base', name: 'unidad.base', defaultContent:''},
             {data: 'hora', name: 'hora'},
-            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "cliente", 
+                render: function (data){
+                    if(data.nombre){
+                        return data.nombre
+                    }else{
+                        return data.telefono_fijo
+                    }
+                }
+            },
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
             {data: 'estatus'},

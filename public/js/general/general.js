@@ -49,17 +49,25 @@ function obtenerListadoPersonas(){
             'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-            $('#personaSelect').empty();
-            $('#personaDestinoSelect').empty();
+            $('#busquedaSelect').empty();
+            $('#busquedaDestinoSelect').empty();
             html = '';
             html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una persona...</option>'
             for (let index = 0; index < result.length; index++) {
-            html += '<option ';
-            html += ' value="'+result[index].id+'" ';
-            html += '>'+result[index].nombre+'</option>';
+                if(result[index].nombre !=null){
+                    html += '<option ';
+                    html += ' value="'+result[index].id+'" ';
+                    html += '>'+result[index].nombre+'</option>';
+                }
+                if(result[index].telefono_fijo !=null){
+                    html += '<option ';
+                    html += ' value="'+result[index].id+'" ';
+                    html += '>'+result[index].telefono_fijo+'</option>';
+                }
+               
             }
-            $('#personaSelect').append(html);
-            $('#personaDestinoSelect').append(html);
+            $('#busquedaSelect').append(html);
+            $('#busquedaDestinoSelect').append(html);
         },
         error: function(result){
             console.log(result);
