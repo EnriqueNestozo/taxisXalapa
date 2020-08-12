@@ -94,7 +94,8 @@ class ReportesController extends Controller
                 return $estatus;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->editColumn('tipo_registro', function($fila){

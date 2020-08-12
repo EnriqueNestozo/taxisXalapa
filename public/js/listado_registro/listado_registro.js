@@ -541,19 +541,19 @@ $(document).ready(function() {
     }
   });
 
-  $('#calle').change(function(){
-    if( $('#calle').val() !='' ){
-      $('#calleDiv').removeClass(' has-danger');
-      $('#calle-error').hide();
-    }
-  });
+  // $('#calle').change(function(){
+  //   if( $('#calle').val() !='' ){
+  //     $('#calleDiv').removeClass(' has-danger');
+  //     $('#calle-error').hide();
+  //   }
+  // });
 
-  $('#calleDestino').change(function(){
-    if( $('#calleDestino').val() !='' ){
-      $('#calleDestinoDiv').removeClass(' has-danger');
-      $('#calleDestino-error').hide();
-    }
-  });
+  // $('#calleDestino').change(function(){
+  //   if( $('#calleDestino').val() !='' ){
+  //     $('#calleDestinoDiv').removeClass(' has-danger');
+  //     $('#calleDestino-error').hide();
+  //   }
+  // });
 
   // $('#referencia').change(function(){
   //   if( $('#referencia').val() !='' ){

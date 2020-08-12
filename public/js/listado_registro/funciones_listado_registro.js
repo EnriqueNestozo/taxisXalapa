@@ -322,8 +322,7 @@ function validarDatos(){
             ( $('#persona').val() =='' && $('#busquedaSelect').val() == null && $('#telefono').val() == '') || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
             ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-            $('#calle').val() == ''  ){
+            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null )  ){
             marcarErrores();
             console.log("faltan datos");
             datosErroneos = 1;
@@ -334,8 +333,7 @@ function validarDatos(){
             ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
             ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-            $('#calle').val() == '' ){
+            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ){
             marcarErrores();
             console.log("faltan datos");
             datosErroneos = 1;
@@ -372,8 +370,8 @@ function limpiarErrores(){
     $('#busqueda-error').hide();
     $('#municipioDiv').removeClass('has-danger');
     $('#municipio-error').hide();
-    $('#calleDiv').removeClass('has-danger');
-    $('#calle-error').hide();
+    // $('#calleDiv').removeClass('has-danger');
+    // $('#calle-error').hide();
     // $('#referenciaDiv').removeClass('has-danger');
     // $('#referencia-error').hide();
     $('#telefonoDiv').removeClass('has-danger');
@@ -387,8 +385,8 @@ function limpiarErroresDestino(){
     $('#busquedaDestino-error').hide();
     $('#municipioDestinoDiv').removeClass('has-danger');
     $('#municipioDestino-error').hide();
-    $('#calleDestinoDiv').removeClass('has-danger');
-    $('#calleDestino-error').hide();
+    // $('#calleDestinoDiv').removeClass('has-danger');
+    // $('#calleDestino-error').hide();
     // $('#referenciaDiv').removeClass('has-danger');
     // $('#referencia-error').hide();
     
@@ -419,10 +417,10 @@ function marcarErrores(){
         $('#coloniaDiv').addClass('has-danger');
         $('#colonia-error').show();
     }
-    if( $('#calle').val()=='' ){
-      $('#calleDiv').addClass('has-danger');
-      $('#calle-error').show();
-    }
+    // if( $('#calle').val()=='' ){
+    //   $('#calleDiv').addClass('has-danger');
+    //   $('#calle-error').show();
+    // }
     // if( $('#referencia').val() =='' ){
     //   $('#referenciaDiv').addClass('has-danger');
     //   $('#referencia-error').show();

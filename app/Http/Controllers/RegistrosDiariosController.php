@@ -51,13 +51,15 @@ class RegistrosDiariosController extends Controller
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->editColumn('direccionDestino',function($fila){
                 $direccionCompletaDestino = null;
                 if($fila['direccionDestino']){
-                    $direccionCompletaDestino = $fila['direccionDestino']->calle.' Col. '.$fila['direccionDestino']['colonia']->asentamiento.', '.$fila['direccionDestino']['localidad']->nombre;
+                    $direccionCompletaDestino = ($fila['direccionDestino']->calle)? $fila['direccionDestino']->calle.', ' : '';
+                    $direccionCompletaDestino .= 'Col. '.$fila['direccionDestino']['colonia']->asentamiento.', '.$fila['direccionDestino']['localidad']->nombre;
                 }else{
                     $direccionCompletaDestino = '<span class="badge" style="background-color:purple; color:white">Sin destino</span>';
                 }
