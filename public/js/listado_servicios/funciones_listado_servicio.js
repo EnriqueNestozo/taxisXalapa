@@ -9,17 +9,25 @@ function cargarListado(){
             url: routeBase+'/DataTables/DataTable_Spanish.json'
         },
         ajax: {
-        url: rutaListadoServicios,
-        type: "GET",
-        dataType: 'json',
-        headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer '+data,
-        }
+            url: rutaListadoServicios,
+            type: "GET",
+            dataType: 'json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer '+data,
+                }
         },
         columns: [
             {data: 'id', name: 'id'},
-            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "cliente", 
+                render: function (data){
+                    if(data.nombre){
+                        return data.nombre
+                    }else{
+                        return data.telefono_fijo
+                    }
+                }
+            },
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: 'user.name'},
             {data: 'action', name:'action'}

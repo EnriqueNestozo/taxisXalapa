@@ -20,7 +20,15 @@ function cargarListado(){
         columns: [
             {data: 'id', name: 'id'},
             {data: 'horarios[0].hora', name: 'horarios[0].hora'},
-            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "cliente", 
+                render: function (data){
+                    if(data.nombre){
+                        return data.nombre
+                    }else{
+                        return data.telefono_fijo
+                    }
+                }
+            },
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: 'action', name:'action'}
         ]
@@ -49,7 +57,15 @@ function cargarListadoRegistros(){
         columns: [
             {data: 'id', name: 'id'},
             {data: 'hora', name: 'hora'},
-            {data: "cliente.nombre", name: 'cliente.nombre'},
+            {data: "cliente", 
+                render: function (data){
+                    if(data.nombre){
+                        return data.nombre
+                    }else{
+                        return data.telefono_fijo
+                    }
+                }
+            },
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: "direccionDestino", name: 'direccionDestino', defaultContent: ''},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:''},
