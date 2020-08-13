@@ -209,7 +209,7 @@
                   <br>
                   <select class="special_select" id="busquedaSelect" name="busquedaSelect" style="width: 100%">
                   </select>
-                  <input type="text" class="form-control" id="busqueda" maxlength="100" placeholder="Sino existe escriba el nombre" name="busqueda">
+                  <!-- <input type="text" class="form-control" id="busqueda" maxlength="100" placeholder="Sino existe escriba el nombre" name="busqueda"> -->
                   <span id="busqueda-error" class="error text-danger" for="busqueda" style="display:none">Campo faltante</span>
                 </div>
 

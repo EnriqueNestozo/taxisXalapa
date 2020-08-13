@@ -29,7 +29,8 @@ class ServicioController extends Controller
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->rawColumns(['action','direccionCompleta'])
@@ -48,9 +49,9 @@ class ServicioController extends Controller
         try{
             DB::beginTransaction();
             
-            if($request->personaSelect !=null || $request->idCliente !=null ){
-                $cliente = ($request->personaSelect)? Cliente::find($request->personaSelect) : Cliente::find($request->idCliente);
-                $servicio->cliente_id = ($request->personaSelect)? $request->personaSelect : $request->idCliente;
+            if($request->busquedaSelect !=null || $request->idCliente !=null ){
+                $cliente = ($request->busquedaSelect)? Cliente::find($request->busquedaSelect) : Cliente::find($request->idCliente);
+                $servicio->cliente_id = ($request->busquedaSelect)? $request->busquedaSelect : $request->idCliente;
             }else{
                 $cliente = new Cliente();
                 $cliente->nombre = $request->persona;
@@ -316,7 +317,8 @@ class ServicioController extends Controller
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = $fila['direccion']->calle.', Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->rawColumns(['action','direccionCompleta'])
