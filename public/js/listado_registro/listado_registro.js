@@ -164,6 +164,16 @@ $(document).ready(function() {
             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
           },
           success: function( result ) {
+            $('#municipioSelect').prop('disabled',false);
+            $('#municipio').prop('disabled',false);
+            $('#localidadSelect').prop('disabled',false);
+            $('#localidad').prop('disabled',false);
+            $('#municipioSelect').val(87).trigger('change');
+            $('#coloniaSelect').prop('disabled',false);
+            $('#colonia').prop('disabled',false);
+            $('#calle').prop('disabled',false);
+            $('#entre_calles').prop('disabled',false);
+            $('#referencia').prop('disabled',false);
             $('#telefono').val(result['telefono_fijo']);
             $('#persona').val(result['nombre']);
             // $('#celular').val(result['celular']);
@@ -234,8 +244,7 @@ $(document).ready(function() {
   });
 
   $('#direccionSelect').change(function(){
-    var optionSelected = $(this);
-    if( optionSelected !='' ){
+    if( $('#direccionSelect').val() !='' ){
       $('#municipioSelect').val('').trigger('change');
       $('#municipioSelect').prop('disabled',true).trigger('change');
       $('#municipio').prop('disabled',true);
@@ -267,7 +276,6 @@ $(document).ready(function() {
         }
       });
     }else{
-      console.log("else");
       $('#referencia').val('');
       $('#entre_calles').val('');
       $('#calle').val('');
@@ -478,7 +486,7 @@ $(document).ready(function() {
       }
     }else{
       // $('#localidadSelect').prop('disabled',false);
-      $('#coloniaSelect').prop('disabled',false).trigger('change');
+      // $('#coloniaSelect').prop('disabled',false).trigger('change');
     }
   });
 
@@ -497,13 +505,14 @@ $(document).ready(function() {
   });
 
   $('#coloniaSelect').change(function(){
-    console.log("cambia select");
-    if( $('#coloniaSelect').val() !='' ){
+    if( $('#coloniaSelect').val() !='' || $('#colonia').val() !='' ){
       $('#coloniaDiv').removeClass(' has-danger');
       $('#colonia-error').hide();
-      $('#colonia').prop('disabled',true);
-    }else{  
-      $('#colonia').prop('disabled',false);
+      if( $('#coloniaSelect').val() !='' ){
+        $('#colonia').prop('disabled',true);
+      }
+    }else{ 
+        $('#colonia').prop('disabled',false);
     }
   });
 

@@ -58,7 +58,8 @@ function obtenerListadoDirecciones(){
             for (let index = 0; index < result.length; index++) {
                 html += '<option ';
                 html += ' value="'+result[index].id+'" ';
-                html += '>'+result[index].calle+', col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
+                html += (result[index].calle)? '>'+result[index].calle+', ' : '>';
+                html += 'col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
             }
             $('#direccionSelect').append(html);
         },

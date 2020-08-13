@@ -112,6 +112,16 @@ $(document).ready(function() {
                 'Authorization': 'Bearer '+sessionStorage.getItem('token'),
                 },
                 success: function( result ) {
+                    $('#municipioSelect').prop('disabled',false);
+                    $('#municipio').prop('disabled',false);
+                    $('#localidadSelect').prop('disabled',false);
+                    $('#localidad').prop('disabled',false);
+                    $('#municipioSelect').val(87).trigger('change');
+                    $('#coloniaSelect').prop('disabled',false);
+                    $('#colonia').prop('disabled',false);
+                    $('#calle').prop('disabled',false);
+                    $('#entre_calles').prop('disabled',false);
+                    $('#referencia').prop('disabled',false);
                 $('#telefono').val(result['telefono_fijo']);
                 $('#persona').val(result['nombre']);
                 // $('#celular').val(result['celular']);
