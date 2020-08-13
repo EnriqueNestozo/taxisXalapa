@@ -89,7 +89,7 @@ class RegistrosDiariosController extends Controller
             }else{
                 $cliente = new Cliente();
                 $cliente->nombre = $request->persona;
-                $cliente->telefono_fijo = ($request->telefono)? $request->telefono : '';
+                $cliente->telefono_fijo = ($request->telefono)? str_replace('-', '', $request->telefono) : '';
                 // $cliente->celular = ($request->celular)? $request->celular : '';
                 $cliente->save();
                 $registroDiario->cliente_id = $cliente->id;
