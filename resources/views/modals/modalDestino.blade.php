@@ -107,3 +107,8 @@
     </div>
   </div>
 </div>
+<style>
+  iframe {
+    max-width: 100%;
+  } 
+</style>
