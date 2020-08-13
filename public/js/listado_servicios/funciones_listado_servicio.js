@@ -31,7 +31,8 @@ function cargarListado(){
             {data: "direccionCompleta", name: 'direccionCompleta'},
             {data: 'user.name'},
             {data: 'action', name:'action'}
-        ]
+        ],
+        order: [ [0, 'desc'] ]
     });
 }
 

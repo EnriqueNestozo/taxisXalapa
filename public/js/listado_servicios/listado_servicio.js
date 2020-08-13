@@ -13,6 +13,7 @@ $(document).ready(function() {
 
     $('#modalRegistroServicio').on('hidden.bs.modal', function () {
         $('#registroDiarioForm').trigger("reset");
+        $('#clave').val('').trigger('change');
         limpiarErrores();
         obtenerListadoPersonas();
         cargarSelectsMunicipio();
@@ -71,7 +72,7 @@ $(document).ready(function() {
 
     $('#persona, #telefono').keyup(function(){
         if( $('#persona').val() !='' || $('#telefono').val() !='' ){
-          console.log("entra");
+        //   console.log("entra");
           $('#personaDiv').removeClass('has-danger');
           $('#persona-error').hide();
           $('#telefonoDiv').removeClass('has-danger');
@@ -80,7 +81,7 @@ $(document).ready(function() {
           $('#busqueda-error').hide();
     
           if( $('busquedaSelect').val() == null){
-            console.log("entra2");
+            // console.log("entra2");
             $('#busquedaSelect').prop('disabled',true);
             $('#direccionSelect').empty();
             html = '';

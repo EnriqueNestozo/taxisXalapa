@@ -101,7 +101,7 @@ class UnidadController extends Controller
     */
     public function getUnidades()
     {
-        $listadounidades = Unidad::orderBy('numero')->get();
+        $listadounidades = Unidad::orderBy('id')->get();
         return response()->json($listadounidades,201);
     }
 

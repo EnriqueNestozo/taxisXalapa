@@ -35,7 +35,7 @@ function cargarListado(){
             {data: 'estatus', defaultContent:' '},
             {data: 'user.name'},
             {data: 'action', name:'action'}
-        ]
+        ],order: [ [0, 'desc'] ]
     });
 }
 
