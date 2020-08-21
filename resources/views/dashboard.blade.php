@@ -168,16 +168,16 @@
                 </span>Opciones avanzadas</span>
               </div>
 
-              <div id="Fader" class="slideup col-12 col-md-12 col-sm-12" style="margin-bottom:2em;">
+              <div id="Fader" class="slideup col-12 col-md-12 col-sm-12">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-4">
+                  <div class="col-lg-4 col-md-8 col-sm-8">
                     <label for="personaSelect">Cliente</label>
                     <select name="personaSelect" id="personaSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
-                  <div class="col-lg-2 col-md-2 col-sm-2">
-                    <label for="hora">Hora</label>
+                  <div class="col-lg-2 col-md-4 col-sm-4">
+                    <label for="hora">Turno</label>
                     <select name="hora" id="hora" class="form-control">
                       <option value="todas" selected>Todas</option>
                       <option value="1">6:00-13:59</option>
@@ -185,15 +185,21 @@
                       <option value="3">22:00-5:59</option>
                     </select>
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <label for="municipioSelect">Destino (municipio)</label>
                     <select name="municipioSelect" id="municipioSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-3">
+                  <div class="col-lg-3 col-md-4 col-sm-6">
                     <label for="coloniaSelect">Destino (colonia)</label>
                     <select name="coloniaSelect" id="coloniaSelect" class="form-control">
+                      <option value="todos" selected>Todos</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-sm-6">
+                    <label for="quienSelect">Quién registró</label>
+                    <select name="quienSelect" id="quienSelect" class="form-control">
                       <option value="todos" selected>Todos</option>
                     </select>
                   </div>
@@ -240,7 +246,7 @@
             transition: max-height 0.3s ease-in-out;
         }
         .slidedown {            
-            max-height: 90px ;                    
+            max-height: 400px ;                    
         }    
 </style>
 @push('js')
@@ -248,6 +254,7 @@
   var rutaListadoClientes= "{{route('api.get.clientes')}}";
   var rutaListadoClavesTaxis = "{{route('api.get.unidades')}}";
   var rutaListadoMunicipios= "{{route('api.get.municipios')}}";
+  var rutaUsuarios = "{{route('api.get.usuarios')}}"
 </script>
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap- 
 datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->

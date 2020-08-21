@@ -33,6 +33,7 @@
                       <td>Lunes</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="lunes" name="lunes" disabled>
+                        <span id="lunes-error" class="error text-danger" for="lunes" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
                     
@@ -51,6 +52,7 @@
                       <td>Martes</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="martes" name="martes" disabled>
+                        <span id="martes-error" class="error text-danger" for="martes" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
 
@@ -69,8 +71,8 @@
                       <td>Miercoles</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="miercoles" name="miercoles" disabled>
+                        <span id="miercoles-error" class="error text-danger" for="miercoles" style="display:none">Campo faltante</span>
                       </td>
-                      <span id="miercoles-error" class="error text-danger" for="miercoles" style="display:none">Campo faltante</span>
                     </tr>
 
                     <tr>
@@ -87,6 +89,7 @@
                       <td>Jueves</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="jueves" name="jueves" disabled>
+                        <span id="jueves-error" class="error text-danger" for="jueves" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
 
@@ -104,6 +107,7 @@
                       <td>Viernes</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="viernes" name="viernes" disabled> 
+                        <span id="viernes-error" class="error text-danger" for="viernes" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
 
@@ -121,6 +125,7 @@
                       <td>Sábado</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="sabado" name="sabado" disabled>
+                        <span id="sabado-error" class="error text-danger" for="sabado" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
 
@@ -138,6 +143,7 @@
                       <td>Domingo</td>
                       <td>
                         <input type="time" class="form-control is-invalid" id="domingo" name="domingo" disabled>
+                        <span id="domingo-error" class="error text-danger" for="doming" style="display:none">Campo faltante</span>
                       </td>
                     </tr>
                   </tbody>

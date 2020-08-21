@@ -72,6 +72,7 @@ $(document).ready(function() {
     obtenerListadoTaxis();
     obtenerListadoPersonas();
     cargarSelectsMunicipio();
+    buscarUsuarios();
     // obtenerListadoColonias();
 
     $("#opcionesAvanzadasTexto").click(function () {
@@ -224,7 +225,8 @@ function buscarDatos(){
                 cliente: $('#personaSelect').val(),
                 hora: $('#hora').val(),
                 municipio: $('#municipioSelect').val(),
-                colonia: $('#coloniaSelect').val()
+                colonia: $('#coloniaSelect').val(),
+                quien: $('#quienSelect').val()
             },
             headers: {
                 'Accept': 'application/json',
@@ -322,5 +324,40 @@ function cargarSelectsMunicipio(){
         .done(function ( v1) {
         $('#municipioSelect').select2({data:v1});
         $('#municipioSelect').val(87).trigger('change');
+    });
+}
+
+// function buscarUsuarios(){
+//     $.when( 
+//         $.ajax( rutaUsuarios ))
+//         .done(function ( v1) {
+//         $('#quienSelect').select2({data:v1});
+//     });
+// }
+
+function buscarUsuarios(){
+    var data = sessionStorage.getItem('token');
+    $.get({
+        url: rutaUsuarios,
+        dataType: 'json',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer '+data,
+        },
+        success: function( result ) {
+            $('#quienSelect').empty();
+            html = '';
+            html = html + '<option value="todos" selected style="min-width: 300px;">Todas</option>'
+            for (let index = 0; index < result.length; index++) {
+                html += '<option ';
+                html += ' value="'+result[index].id+'" ';
+                html += '>'+result[index].text+'</option>';
+            }
+            $('#quienSelect').append(html);
+        },
+        error: function(result){
+            console.log(result);
+            //babyjinx
+        }
     });
 }

@@ -155,7 +155,7 @@
         }
       });
     }else{
-      console.log("no validos");
+      alert("Ha ocurrido un error al validar y guardar los datos");
     }
   }
 

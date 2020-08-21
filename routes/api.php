@@ -100,6 +100,8 @@ Route::get('servicios-pendientes','ServicioController@numServiciosPendientes')->
 Route::get('lista-servicios-pendientes','ServicioController@listaServiciosPendientes')->name('api.servicios.pendientes.list')->middleware('auth:api');
 Route::get('servicios-datos/{idServicio}','ServicioController@obtenerDatosServicioPendiente')->name('api.servicios.datos')->middleware('auth:api');
 
+//Api para usuarios
+Route::get('usuarios-list','UserController@getUsers')->name('api.get.usuarios')->middleware('auth:api');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

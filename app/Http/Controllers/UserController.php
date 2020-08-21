@@ -43,14 +43,14 @@ class UserController extends Controller
         try{
             $usuario = null;
             DB::beginTransaction();
-            if($request->idUsuario){
-                $usuario = User::find($idUsuario);
-                $usuario->update($request->merge(['password' => Hash::make($request->get('password'))])->all());
-                $usuario->assignRole($request->rolSelect);
-            }else{
+            // if($request->idUsuario){
+            //     $usuario = User::find($request->correo);
+            //     $usuario->update($request->merge(['password' => Hash::make($request->get('password'))])->all());
+            //     $usuario->assignRole($request->rolSelect);
+            // }else{
                 $usuario = User::create($request->merge(['password' => Hash::make($request->get('password'))])->all());
                 $usuario->assignRole($request->rolSelect);
-            }
+            // }
             DB::commit();
             return response()->json($usuario,201);
         }catch(\PDOException $e){
@@ -107,5 +107,11 @@ class UserController extends Controller
     public function getUserData(){
         $users = User::with('roles')->get();
         return view('users.index',['users' => $users]);
+    }
+
+    public function getUsers(){
+        $listadoUsers = User::all();
+        $listadoUsers = User::select('id','name AS text')->orderBy('name')->get()->toArray();
+        return response()->json($listadoUsers,201);
     }
 }

@@ -29,6 +29,9 @@ class ReportesController extends Controller
         }else if($request->tipo_servicio =="programado"){
             $listadoRegistros = $query->where('tipo_registro',1);
         }
+        if($request->quien!='todos'){
+            $listadoRegistros = $query->where('user_id',$request->quien);
+        }
 
         if($request->base == 1){
             $listadoRegistros = $query->whereHas('unidad',function($q){

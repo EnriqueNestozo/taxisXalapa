@@ -110,17 +110,17 @@ function validarDatos(){
             datosErroneos = 1;
         }
     }
-    if( $('#direccionSelect').val() ==null  ){
+    if( $('#direccionSelect').val() ==''  ){
         if(
             ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
             ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
             ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
             $('#calle').val() == '' ){
-            marcarErrores();
             datosErroneos = 1;
         }
     }
+    marcarErrores();
     return datosErroneos;
 }
 
@@ -143,6 +143,13 @@ function limpiarErrores(){
     $('#telefono-error').hide();
     // $('#celularDiv').removeClass('has-danger');
     // $('#celular-error').hide();
+    $('#lunes-error').hide();
+    $('#martes-error').hide();
+    $('#miercoles-error').hide();
+    $('#jueves-error').hide();
+    $('#viernes-error').hide();
+    $('#sabado-error').hide();
+    $('#domingo-error').hide();
 }
 
 function marcarErrores(){
@@ -188,6 +195,27 @@ function marcarErrores(){
     //   $('#celularDiv').addClass('has-danger');
     //   $('#celular-error').show();
     // }
+    if( $('#lunes').val() == '' && $('#lunesCheck').is(':checked')){
+        $('#lunes-error').show();
+    }
+    if( $('#martes').val() == '' && $('#martesCheck').is(':checked')){
+        $('#martes-error').show();
+    }
+    if( $('#miercoles').val() == '' && $('#miercolesCheck').is(':checked')){
+        $('#miercoles-error').show();
+    }
+    if( $('#jueves').val() == '' && $('#juevesCheck').is(':checked')){
+        $('#jueves-error').show();
+    }
+    if( $('#viernes').val() == '' && $('#viernesCheck').is(':checked')){
+        $('#viernes-error').show();
+    }
+    if( $('#sabado').val() == '' && $('#sabadoCheck').is(':checked')){
+        $('#sabado-error').show();
+    }
+    if( $('#domingo').val() == '' && $('#domingoCheck').is(':checked')){
+        $('#domingo-error').show();
+    }
 }
 
 function registrarServicio(){
