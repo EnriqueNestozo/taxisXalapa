@@ -166,14 +166,20 @@ $(document).ready(function() {
           success: function( result ) {
             $('#municipioSelect').prop('disabled',false);
             $('#municipio').prop('disabled',false);
+            $('#municipio').val('');
             $('#localidadSelect').prop('disabled',false);
             $('#localidad').prop('disabled',false);
+            $('#localidad').val('');
             $('#municipioSelect').val(87).trigger('change');
             $('#coloniaSelect').prop('disabled',false);
             $('#colonia').prop('disabled',false);
+            $('#colonia').val('');
             $('#calle').prop('disabled',false);
+            $('#calle').val('');
             $('#entre_calles').prop('disabled',false);
+            $('#entre_calles').val('');
             $('#referencia').prop('disabled',false);
+            $('#referencia').val('');
             $('#telefono').val(result['telefono_fijo']);
             $('#persona').val(result['nombre']);
             // $('#celular').val(result['celular']);

@@ -170,7 +170,8 @@ function obtenerListadoDirecciones(){
             for (let index = 0; index < result.length; index++) {
                 html += '<option ';
                 html += ' value="'+result[index].id+'" ';
-                html += '>'+result[index].calle+', col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
+                html += (result[index].calle)? '>'+result[index].calle+', ' : '>';
+                html += 'col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
             }
             $('#direccionSelect').append(html);
         },
@@ -317,16 +318,18 @@ function validarDatos(){
             datosErroneos = 1;
         }
     }else{
-        if(
-            $('#hora').val() =='' || 
-            ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
-            ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
-            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-            $('#calle').val() == '' ){
-            marcarErrores();
-            console.log("faltan datos");
-            datosErroneos = 1;
+        if($('#direccionSelect').val() == ''){
+            if(
+                $('#hora').val() =='' || 
+                ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
+                ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
+                ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
+                ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
+                $('#calle').val() == '' ){
+                marcarErrores();
+                console.log("faltan datos");
+                datosErroneos = 1;
+            }
         }
     }
     
