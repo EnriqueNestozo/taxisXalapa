@@ -29,8 +29,9 @@ class ServicioController extends Controller
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
-                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? 'Calle '.$fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= ($fila['direccion']['colonia'])? 'Col. '.$fila['direccion']['colonia']->asentamiento.', ' : '';
+                $direccionCompleta .= $fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->rawColumns(['action','direccionCompleta'])
@@ -100,16 +101,18 @@ class ServicioController extends Controller
                 if($request->coloniaSelect){
                     $direccion->colonia_id = $request->coloniaSelect;
                 }else{
-                    $cat_colonia = new Cat_colonia();
-                    $cat_colonia->cve_ent = '30';
-                    $cat_colonia->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
-                    $datos_localidad = ($request->localidadSelect)? $localidad : Cat_localidad::find($cat_localidad->id);
-                    $cat_colonia->ciudad = $datos_localidad->nombre;
-                    $cat_colonia->zona = 'Urbano';
-                    $cat_colonia->asentamiento = $request->colonia;
-                    $cat_colonia->tipo = 'Colonia';
-                    $cat_colonia->save();
-                    $direccion->colonia_id = $cat_colonia->id;
+                    if($request->colonia){
+                        $cat_colonia = new Cat_colonia();
+                        $cat_colonia->cve_ent = '30';
+                        $cat_colonia->cve_mun = ($request->municipioSelect)? $request->municipioSelect : $cat_municipio->id;
+                        $datos_localidad = ($request->localidadSelect)? $localidad : Cat_localidad::find($cat_localidad->id);
+                        $cat_colonia->ciudad = $datos_localidad->nombre;
+                        $cat_colonia->zona = 'Urbano';
+                        $cat_colonia->asentamiento = $request->colonia;
+                        $cat_colonia->tipo = 'Colonia';
+                        $cat_colonia->save();
+                        $direccion->colonia_id = $cat_colonia->id;
+                    }
                 }
                 
                 $direccion->referencia = ($request->referencia)? $request->referencia : '';
@@ -317,8 +320,9 @@ class ServicioController extends Controller
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
-                $direccionCompleta = ($fila['direccion']->calle)? $fila['direccion']->calle.', ' : '';
-                $direccionCompleta .= 'Col. '.$fila['direccion']['colonia']->asentamiento. ', '.$fila['direccion']['localidad']->nombre;
+                $direccionCompleta = ($fila['direccion']->calle)? 'Calle '.$fila['direccion']->calle.', ' : '';
+                $direccionCompleta .= ($fila['direccion']['colonia'])? 'Col. '.$fila['direccion']['colonia']->asentamiento. ', ' : '';
+                $direccionCompleta .= $fila['direccion']['localidad']->nombre;
                 return $direccionCompleta;
             })
             ->rawColumns(['action','direccionCompleta'])

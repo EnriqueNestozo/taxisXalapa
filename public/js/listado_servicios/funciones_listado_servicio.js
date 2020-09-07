@@ -59,7 +59,8 @@ function obtenerListadoDirecciones(){
                 html += '<option ';
                 html += ' value="'+result[index].id+'" ';
                 html += (result[index].calle)? '>'+result[index].calle+', ' : '>';
-                html += 'col. '+result[0].colonia.asentamiento+', '+(result[0].localidad.nombre).toLowerCase() +'</option>';
+                html += (result[index].colonia)?'col. '+result[0].colonia.asentamiento+', ' : '';
+                html +=(result[0].localidad.nombre).toLowerCase() +'</option>';
             }
             $('#direccionSelect').append(html);
         },
@@ -114,9 +115,7 @@ function validarDatos(){
         if(
             ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
             ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
-            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-            ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-            $('#calle').val() == '' ){
+            ( $('#localidad').val() =='' && $('#localidadSelect').val() == null )  ){
             datosErroneos = 1;
         }
     }
@@ -173,14 +172,14 @@ function marcarErrores(){
         $('#localidadDiv').addClass('has-danger');
         $('#localidad-error').show();
     }
-    if( $('#colonia').val() =='' && $('#coloniaSelect').val() == ''  ){
-        $('#coloniaDiv').addClass('has-danger');
-        $('#colonia-error').show();
-    }
-    if( $('#calle').val()=='' ){
-      $('#calleDiv').addClass('has-danger');
-      $('#calle-error').show();
-    }
+    // if( $('#colonia').val() =='' && $('#coloniaSelect').val() == ''  ){
+    //     $('#coloniaDiv').addClass('has-danger');
+    //     $('#colonia-error').show();
+    // }
+    // if( $('#calle').val()=='' ){
+    //   $('#calleDiv').addClass('has-danger');
+    //   $('#calle-error').show();
+    // }
     // if( $('#referencia').val() =='' ){
     //   $('#referenciaDiv').addClass('has-danger');
     //   $('#referencia-error').show();
