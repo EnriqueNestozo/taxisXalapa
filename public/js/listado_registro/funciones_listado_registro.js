@@ -330,16 +330,17 @@ function validarDatos(){
             datosErroneos = 1;
         }
     }else{
-        if(
-            $('#hora').val() =='' || 
-            ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
-            ( $('#municipio').val() =='' && $('#municipioSelect').val() == '' ) || 
-            ( $('#localidad').val() =='' && $('#localidadSelect').val() == '' ) ){
-            marcarErrores();
-            datosErroneos = 1;
+        if($('#direccionSelect').val()==''){
+            if(
+                $('#hora').val() =='' || 
+                ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
+                ( $('#municipio').val() =='' && $('#municipioSelect').val() == '' ) || 
+                ( $('#localidad').val() =='' && $('#localidadSelect').val() == '' ) ){
+                marcarErrores();
+                datosErroneos = 1;
+            }
         }
     }
-    console.log(datosErroneos);
     return datosErroneos;
 }
 function validarDatosDestino(){
