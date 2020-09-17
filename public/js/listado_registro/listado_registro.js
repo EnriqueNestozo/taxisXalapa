@@ -59,7 +59,7 @@ $(document).ready(function() {
     $('#registroDiarioForm').trigger("reset");
     limpiarErrores();
     obtenerListadoPersonas();
-    cargarSelectsMunicipio();
+    // cargarSelectsMunicipio();
     $('#direccionSelect').empty();
     html = '';
     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -84,7 +84,7 @@ $(document).ready(function() {
     $('#destinoForm').trigger("reset");
     limpiarErroresDestino();
     // obtenerListadoPersonas();
-    cargarSelectsMunicipio();
+    // cargarSelectsMunicipio();
     $('#direccionDestinoSelect').empty();
     html = '';
     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'

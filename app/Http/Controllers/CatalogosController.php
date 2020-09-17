@@ -37,7 +37,7 @@ class CatalogosController extends Controller
 
     public function getColonias($idMunicipio)
     {
-        $colonias = Cat_colonia::select('id','asentamiento AS text')->where('cve_ent',30)->where('cve_mun',$idMunicipio)->orderBy('asentamiento')->get()->toArray();
+        $colonias = Cat_colonia::select('id','asentamiento AS text')->where('cve_ent',30)->where('cve_mun',$idMunicipio)->orderBy('asentamiento')->distinct('text')->get()->toArray();
         $arreglo = [
             'id' =>'',
             'text'=>'Seleccione una colonia...',
