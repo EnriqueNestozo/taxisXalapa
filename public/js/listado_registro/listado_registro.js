@@ -145,7 +145,8 @@ $(document).ready(function() {
   });
 
   $('#busquedaSelect').change(function(){
-    if( $('#busquedaSelect').val() != '' ){
+    if( $('#busquedaSelect').val() > 0  ){
+      console.log($('#busquedaSelect').val());
       $('#busquedaDiv').removeClass('has-danger');
       $('#busqueda-error').hide();
       $('#personaDiv').removeClass('has-danger');
@@ -189,7 +190,7 @@ $(document).ready(function() {
             console.log(result);
           }
         });
-        $('#persona').prop('disabled',true);
+        // $('#persona').prop('disabled',true);
       // }
     }else{
       $('#direccionSelect').empty();
@@ -203,14 +204,16 @@ $(document).ready(function() {
       $('#localidadSelect').prop('disabled',false);
       $('#coloniaSelect').prop('disabled',false);
       $('#busquedaSelect').prop('disabled',false);
-      $('#persona').prop('disabled',false);
       $('#persona').val('');
+      $('#persona').prop('disabled',false);
+      $('#persona').trigger('change');
       // html = '';
       // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
       // $('#municipioSelect').append(html);
       $('#telefono').val('');
       // $('#celular').val('');
       $('#telefono').prop('disabled',false);
+      $('#telefono').trigger('change');
       // $('#celular').prop('disabled',false);
     }
   });
@@ -237,6 +240,7 @@ $(document).ready(function() {
           }
         });
         $('#persona').prop('disabled',true);
+        $('#telefono').prop('disabled',true);
       }
     }else{
       $('#direccionDestinoSelect').empty();

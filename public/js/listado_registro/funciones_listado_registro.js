@@ -118,6 +118,7 @@ function editarRegistro(id_registro){
         $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
         $('#busquedaSelect').prop('disabled',true);
         $('#persona').prop('disabled',true);
+        $('#telefono').prop('disabled',true);
         setTimeout(function(){
             $('#direccionSelect').val(registro['direccion_id']).trigger('change');
             var objeto = direcciones.filter(obj => {
@@ -189,6 +190,11 @@ function eliminarRegistro(id_registro){
 function desplegarModalRegistro(){
     obtenerListadoPersonas();
     cargarSelectsMunicipio();
+    $('#persona').prop('disabled',false);
+    $('#persona').trigger('change');
+
+    $('#telefono').prop('disabled',false);
+    $('#telefono').trigger('change');
     var fecha = new Date();
     var minutos = "00";
     var horas = "00";
