@@ -201,6 +201,11 @@ function obtenerListadoPersonas(){
 function buscarDatos(){
     // $('#tablaReporteMensual').show();
     $('#myTable1').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'pdfhtml5',
+            'csv'
+        ],
         processing: true,
         serverSide: true,
         searching: true,

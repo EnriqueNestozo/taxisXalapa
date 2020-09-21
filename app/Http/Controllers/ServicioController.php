@@ -346,7 +346,7 @@ class ServicioController extends Controller
             4 => 'Jueves',
             5 => 'Viernes',
             6 => 'Sabado',
-            7 => 'Domingo',
+            0 => 'Domingo',
         ];
         $weekday = $daysSpanish[$fecha['wday']];
         $actualHour = date_format($date,"H:i:s");
