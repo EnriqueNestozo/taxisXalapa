@@ -187,6 +187,8 @@ function eliminarRegistro(id_registro){
 }
 
 function desplegarModalRegistro(){
+    obtenerListadoPersonas();
+    cargarSelectsMunicipio();
     var fecha = new Date();
     var minutos = "00";
     var horas = "00";

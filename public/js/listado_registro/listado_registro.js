@@ -1,7 +1,7 @@
 $(document).ready(function() {
   cargarListado();
   obtenerListadoClavesTaxis();
-  obtenerListadoPersonas();
+  
   $('#direccionSelect').select2({
     // tags: true,
     dropdownParent: $('#direccionDiv')
@@ -52,13 +52,11 @@ $(document).ready(function() {
   });
   $('#telefono').mask('000-000-00-00');
   // $('#celular').mask('000-000-00-00');
-  
-  cargarSelectsMunicipio();
 
   $('#modalRegistroDiario').on('hidden.bs.modal', function () {
     $('#registroDiarioForm').trigger("reset");
     limpiarErrores();
-    obtenerListadoPersonas();
+    // obtenerListadoPersonas();
     // cargarSelectsMunicipio();
     $('#direccionSelect').empty();
     html = '';
@@ -154,7 +152,7 @@ $(document).ready(function() {
       $('#persona-error').hide();
       $('#telefonoDiv').removeClass('has-danger');
       $('#telefono-error').hide();
-      if( $('#busquedaSelect').val() !='' ){
+      // if( $('#busquedaSelect').val() !='' ){
         obtenerListadoDirecciones();
         $.get({
           url: routeBase+ '/api/clientes/'+$('#busquedaSelect').val(),
@@ -192,12 +190,18 @@ $(document).ready(function() {
           }
         });
         $('#persona').prop('disabled',true);
-      }
+      // }
     }else{
       $('#direccionSelect').empty();
       html = '';
       html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
       $('#direccionSelect').append(html);
+      $('#direccionSelect').val('');
+      $('#municipioSelect').prop('disabled',false);
+      $('#municipioSelect').val(87);
+      $('#municipioSelect').trigger('change');
+      $('#localidadSelect').prop('disabled',false);
+      $('#coloniaSelect').prop('disabled',false);
       $('#busquedaSelect').prop('disabled',false);
       $('#persona').prop('disabled',false);
       $('#persona').val('');
@@ -250,6 +254,7 @@ $(document).ready(function() {
   });
 
   $('#direccionSelect').change(function(){
+    console.log("asodksd!"+$('#direccionSelect').val());
     if( $('#direccionSelect').val() !='' ){
       $('#municipioSelect').val('').trigger('change');
       $('#municipioSelect').prop('disabled',true).trigger('change');
