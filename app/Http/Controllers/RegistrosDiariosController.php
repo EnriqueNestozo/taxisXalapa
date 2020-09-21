@@ -294,8 +294,8 @@ class RegistrosDiariosController extends Controller
 
     public function show($idRegistro)
     {
-        $registro = RegistroDiario::find($idRegistro);
-        $clientes = Cliente::find($registro->cliente_id);
+        $registro = RegistroDiario::with('cliente')->find($idRegistro);
+        $clientes = $registro->cliente;
         $direcciones = Direccion::where('cliente_id',$registro->cliente_id)->get();
         $unidades = Unidad::all();
         $arreglo = [];
