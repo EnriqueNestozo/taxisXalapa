@@ -161,7 +161,7 @@
         <!--  Notifications Plugin    -->
         <script src="{{ asset('material') }}/js/plugins/bootstrap-notify.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-        <!-- <script src="{{ asset('material') }}/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script> -->
+        <script src="{{ asset('material') }}/js/material-dashboard.js?v=2.2.1" type="text/javascript"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <!-- <script src="{{ asset('material') }}/demo/demo.js"></script> -->
         <!-- <script src="{{ asset('material') }}/js/settings.js"></script> -->
