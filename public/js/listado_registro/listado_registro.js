@@ -1,7 +1,7 @@
 $(document).ready(function() {
   cargarListado();
   obtenerListadoClavesTaxis();
-  
+  obtenerListadoPersonas();
   $('#direccionSelect').select2({
     // tags: true,
     dropdownParent: $('#direccionDiv')
