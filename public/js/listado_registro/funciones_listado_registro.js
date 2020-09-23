@@ -124,7 +124,7 @@ function editarRegistro(id_registro){
             var objeto = direcciones.filter(obj => {
                 return obj['id'] == $('#direccionSelect').val()
             });
-            console.log(objeto[0]['calle']);
+            console.log(objeto[0]);
             $('#referencia').val(objeto[0]['referencia']);
             $('#entre_calles').val(objeto[0]['entre_calles']);
             
