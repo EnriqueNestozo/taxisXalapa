@@ -201,11 +201,6 @@ function obtenerListadoPersonas(){
 function buscarDatos(){
     // $('#tablaReporteMensual').show();
     $('#myTable1').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'pdfhtml5',
-            'csv'
-        ],
         processing: true,
         serverSide: true,
         searching: true,
@@ -213,10 +208,13 @@ function buscarDatos(){
         language: {
             url: routeBase+'/DataTables/DataTable_Spanish.json'
         },
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         buttons: [
             'copy', 'excel', 'pdf',
         ],
+        "lengthChange": true,
+        "lengthMenu": [[25, 50, 100, 500, 1000],[25, 50, 100, 500, "Max"]],
+        "pageLength": 50,
         ajax: {
             url: routeBase+'/api/reporte-registros',
             type: "GET",
