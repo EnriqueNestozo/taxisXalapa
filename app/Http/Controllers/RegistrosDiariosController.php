@@ -77,6 +77,7 @@ class RegistrosDiariosController extends Controller
     }
 
     public function create(Request $request){
+        // dd($request->all());
         $cliente = null;
         $direccion = null;
         if($request->idRegistro){

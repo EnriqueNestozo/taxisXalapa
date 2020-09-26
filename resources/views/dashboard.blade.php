@@ -215,6 +215,7 @@
                         <th>Hora</th>
                         <th>Cliente</th>
                         <th>Dirección</th>
+                        <th>Destino</th>
                         <th>Unidad</th>
                         <th>Estatus</th>
                         <th>Quien registró</th>
@@ -265,4 +266,4 @@ datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="{{ asset('js') }}/reportes/reportes.js"></script>
 
-@endpush
+@endpush  

@@ -132,18 +132,40 @@ function cargarDatos(idServicio){
             console.log(result);
             let datosGenerales = result[0];
             let datosPersona = result[1];
+            let direcciones = result[2];
             $('#idServicio').val(datosGenerales.id);
-            let direcciones = result[2][0];
             $('#busquedaSelect').val(datosGenerales.cliente_id).trigger('change');
-            // $('#personaSelect').prop('disabled',true);
             $('#hora').val(datosGenerales.horarios[0].hora).trigger('change');
-            if(datosGenerales.unidad_id !=null){
-                $('#clave').val(datosGenerales.unidad_id).trigger('change');
-            }
-            setTimeout(function(){
+            $('#persona').val(datosPersona.nombre);
+            $('#telefono').val(datosPersona.telefono_fijo);
+            // $('#persona').prop('disabled',true);
+            // $('#telefono').prop('disabled',true);
+            $('#idCliente').val(datosPersona.id);
+            $('#coloniaSelect').prop('disabled',true);
+            $('#colonia').prop('disabled',true);
+            let promesa = new Promise(function(resolve,reject){
+                // $('#personaSelect').prop('disabled',true);
+                if(datosGenerales.unidad_id !=null){
+                    $('#clave').val(datosGenerales.unidad_id).trigger('change');
+                }
+                $('#direccionSelect').empty();
+                html = '';
+                html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+                for (let index = 0; index < direcciones.length; index++) {
+                    console.log(direcciones[index].localidad);
+                    html += '<option ';
+                    html += ' value="'+direcciones[index].id+'" ';
+                    html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+                    html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+                    html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
+                }
+                $('#direccionSelect').append(html);
+                resolve("done!");
+            })
+            promesa.then(function(resolve,reject){
+                console.log("asodk, "+datosGenerales.direccion_id);
                 $('#direccionSelect').val(datosGenerales.direccion_id).trigger('change');
-                // $('#direccionSelect').prop('disabled',true);
-            },1000);
+            })
             let unidad = result[3];
         },
         error: function(result){
@@ -224,24 +246,7 @@ function registrarViaje(){
                 cargarListadoRegistros();
                 obtenerListadoPersonas();
                 if($('#idRegistro').val() == ''){
-                    swal({
-                        title: 'Registro realizado correctamente',
-                        text: "¿Quiere añadir el destino?",
-                        type: 'success',
-                        showCancelButton: true,
-                        confirmButtonClass: 'btn btn-success',
-                        cancelButtonClass: 'btn btn-danger',
-                        cancelButtonText: 'No',
-                        confirmButtonText: 'Si',
-                        buttonsStyling: false
-                    }).then(function(confirmation) {
-                        // console.log(confirmation);
-                        if (confirmation['dismiss'] != 'cancel') {
-                            agregarDestino(result['id'],result['cliente_id']);
-                            $('#registroDestinoBtn').show();
-                            $('#eliminarDestinoBtn').hide();
-                        }
-                    });
+                    md.showNotification('bottom','right','success','Registro modificado correctamente');
                 }else{
                     md.showNotification('bottom','right','success','Registro modificado correctamente');
                 }
@@ -322,9 +327,7 @@ function validarDatos(){
                 $('#hora').val() =='' || 
                 ( $('#persona').val() =='' && $('#busquedaSelect').val() == '' && $('#telefono').val() == '') || 
                 ( $('#municipio').val() =='' && $('#municipioSelect').val() == null ) || 
-                ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) || 
-                ( $('#colonia').val() =='' && $('#coloniaSelect').val() == null ) ||
-                $('#calle').val() == '' ){
+                ( $('#localidad').val() =='' && $('#localidadSelect').val() == null ) ){
                 marcarErrores();
                 console.log("faltan datos");
                 datosErroneos = 1;
@@ -390,35 +393,55 @@ function editarRegistro(id_registro){
             'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-        let registro = result[0];
-        let clientes = result[1];
-        let direcciones = result[2];
-        let unidades = result[3];
-        $('#hora').val(registro['hora']);
-        $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
-        $('#busquedaSelect').prop('disabled',true);
-        $('#persona').prop('disabled',true);
-        setTimeout(function(){
-            $('#direccionSelect').val(registro['direccion_id']).trigger('change');
-            var objeto = direcciones.filter(obj => {
-                return obj['id'] == $('#direccionSelect').val()
-            });
-            console.log(objeto[0]['calle']);
-            $('#referencia').val(objeto[0]['referencia']);
-            $('#entre_calles').val(objeto[0]['entre_calles']);
+            let registro = result[0];
+            let clientes = result[1];
+            let direcciones = result[2];
+            let unidades = result[3];
             
-        }, 1000);
-        
-        $('#telefono').val(clientes['telefono_fijo']).trigger('change');
-        // $('#celular').val(clientes['celular']).trigger('change');
-        if(registro['unidad_id']!=null){
-            console.log("unidad "+registro['unidad_id']);
-            $('#clave').val(registro['unidad_id']).trigger('change');
-        }else{
-            $('#clave').val('').trigger('change');
-        }
-        $('#idRegistro').val(registro['id']);
-        $('#idCliente').val(registro['cliente_id']);
+            //cargar datos persona
+            let promesa = new Promise(function (resolve, reject){
+                console.log(result);
+                console.log(direcciones);
+                $('#hora').val(registro['hora']);
+                // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+                $('#busquedaSelect').prop('disabled',true);
+                $('#persona').prop('disabled',false);
+                $('#telefono').prop('disabled',false);
+                $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+                $('#persona').val(clientes['nombre']).trigger('change');
+                $('#direccionSelect').empty();
+                html = '';
+                html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+                for (let index = 0; index < direcciones.length; index++) {
+                    console.log("dir   ..."+direcciones[index]);
+                    html += '<option ';
+                    html += ' value="'+direcciones[index].id+'" ';
+                    html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+                    html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+                    html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
+                }
+                $('#direccionSelect').append(html);
+                resolve('done!');
+            });
+            
+            promesa.then(function (resolve, reject){
+                $('#direccionSelect').val(registro['direccion_id']).trigger('change');
+                var objeto = direcciones.filter(obj => {
+                    return obj['id'] == $('#direccionSelect').val()
+                });
+                // console.log("objeto ..."+objeto[0]);
+                $('#referencia').val(objeto[0]['referencia']);
+                $('#entre_calles').val(objeto[0]['entre_calles']);
+            });
+            $('#destino').val(registro['destino']);
+            //Cargar unidad
+            if(registro['unidad_id']!=null){
+                $('#clave').val(registro['unidad_id']).trigger('change');
+            }else{
+                $('#clave').val('').trigger('change');
+            }
+            $('#idRegistro').val(registro['id']);
+            $('#idCliente').val(registro['cliente_id']);
         },
         error: function(result){
             console.log(result);

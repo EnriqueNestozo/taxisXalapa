@@ -230,7 +230,7 @@ class ServicioController extends Controller
             $query->whereBetween('hora', [$actualHour,$toHour]);
         }])->where('id',$idServicio)->first();
         $clientes = Cliente::find($servicio->cliente_id);
-        $direcciones = Direccion::where('cliente_id',$servicio->cliente_id)->get();
+        $direcciones = Direccion::with('municipio','localidad','colonia')->where('cliente_id',$servicio->cliente_id)->get();
         $unidades = Unidad::all();
         $arreglo = [];
         array_push($arreglo,$servicio,$clientes,$direcciones,$unidades);

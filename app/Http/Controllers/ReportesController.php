@@ -21,7 +21,7 @@ class ReportesController extends Controller
         // dd($request->all());
         $fechaInicio = $request->fecha_i." 00:00:00";
         $fechaFin = $request->fecha_f." 23:59:59"; 
-        $query = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->whereBetween('created_at',[$fechaInicio,$fechaFin]);
+        $query = RegistroDiario::with('cliente','unidad','direccion.colonia','user', 'direccion.localidad')->whereBetween('registros.created_at',[$fechaInicio,$fechaFin]);
         $listadoRegistros = $query;
 
         if($request->tipo_servicio =="diario"){

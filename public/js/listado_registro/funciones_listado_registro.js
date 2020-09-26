@@ -135,7 +135,7 @@ function editarRegistro(id_registro){
                     html += ' value="'+direcciones[index].id+'" ';
                     html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
                     html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
-                    html +=(direcciones[0].localidad.nombre).toLowerCase() +'</option>';
+                    html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
                 }
                 $('#direccionSelect').append(html);
                 resolve('done!');

@@ -247,9 +247,12 @@ function buscarDatos(){
                     }else{
                         return data.telefono_fijo
                     }
-                }
+                },
+                defaultContent:'',
+                orderable:false,
             },
             {data: "direccionCompleta", name: 'direccionCompleta'},
+            {data: "destino", name: 'destino'},
             {data: "unidad.numero", name:"unidad.numero", defaultContent:' '},
             {data: 'estatus'},
             {data: 'user.name'},

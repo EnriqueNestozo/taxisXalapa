@@ -1,7 +1,7 @@
 $(document).ready(function() {
     cargarListado();
     obtenerListadoClavesTaxis();
-    obtenerListadoPersonas();
+    // obtenerListadoPersonas();
     $('.special_select').select2({
       tags: true,
       // dropdownParent: $('#modalRegistroDiario')
@@ -34,7 +34,7 @@ $(document).ready(function() {
     $('#modalRegistroDiario').on('hidden.bs.modal', function () {
       $('#registroDiarioForm').trigger("reset");
       limpiarErrores();
-      obtenerListadoPersonas();
+      // obtenerListadoPersonas();
       cargarSelectsMunicipio();
       $('#direccionSelect').empty();
       html = '';
@@ -95,7 +95,7 @@ $(document).ready(function() {
         $('#busquedaDiv').removeClass('has-danger');
         $('#busqueda-error').hide();
   
-        if( $('busquedaSelect').val() == null){
+        if( $('busquedaSelect').val() == null && $('#idCliente').val() == ''){
           console.log("entra2");
           $('#busquedaSelect').prop('disabled',true);
           $('#direccionSelect').empty();
@@ -236,9 +236,10 @@ $(document).ready(function() {
         $('#municipioSelect').prop('disabled',false);
         $('#municipio').prop('disabled',false);
         $('#localidadSelect').prop('disabled',false);
+        $('#municipioSelect').val(87).trigger('change');
         $('#localidad').prop('disabled',false);
         $('#coloniaSelect').prop('disabled',false);
-        $('#colonia').prop('disabled',false);
+        // $('#colonia').prop('disabled',false);
         $('#calle').prop('disabled',false);
         $('#entre_calles').prop('disabled',false);
         $('#referencia').prop('disabled',false);
@@ -293,7 +294,7 @@ $(document).ready(function() {
       }
     });
   
-    $('#municipio').change(function(){
+    $('#municipio').keyup(function(){
       if( $('#municipio').val() !='' || $('#municipioSelect').val() !=-''){
         $('#municipioDiv').removeClass(' has-danger');
         $('#municipio-error').hide();
@@ -437,7 +438,7 @@ $(document).ready(function() {
       }
     });
   
-    $('#localidad').change(function(){
+    $('#localidad').keyup(function(){
       if( $('#localidad').val() !='' || $('#localidadSelect').val() !=-''){
         $('#localidadDiv').removeClass(' has-danger');
         $('#localidad-error').hide();
@@ -471,7 +472,7 @@ $(document).ready(function() {
       }
     });
   
-    $('#colonia').change(function(){
+    $('#colonia').keyup(function(){
       if( $('#colonia').val() !='' || $('#coloniaSelect').val() !=-''){
         $('#coloniaDiv').removeClass(' has-danger');
         $('#colonia-error').hide();
