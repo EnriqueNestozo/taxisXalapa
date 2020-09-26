@@ -87,6 +87,9 @@ class RegistrosDiariosController extends Controller
             $registroDiario->servicio_id= ($request->idServicio)? $request->idServicio : null;
             if($request->busquedaSelect !=null || $request->idCliente !=null ){
                 $cliente = ($request->busquedaSelect)? Cliente::find($request->busquedaSelect) : Cliente::find($request->idCliente);
+                $cliente->nombre = $request->persona;
+                $cliente->telefono_fijo = $request->telefono;
+                $cliente->save();
                 $registroDiario->cliente_id = ($request->busquedaSelect)? $request->busquedaSelect : $request->idCliente;
             }else{
                 $cliente = new Cliente();
@@ -161,6 +164,7 @@ class RegistrosDiariosController extends Controller
             $registroDiario->unidad_id = $request->clave;
             $registroDiario->estatus = ($request->clave)? Config::get("constantes.ESTATUS.LISTO") : Config::get("constantes.ESTATUS.SIN_UNIDAD");
             $registroDiario->user_id = $request->idUser;
+            $registroDiario->destino = $request->destino;
             $registroDiario->save();
 
             if($request->isRecurrente=='on'){
@@ -296,7 +300,7 @@ class RegistrosDiariosController extends Controller
     {
         $registro = RegistroDiario::with('cliente')->find($idRegistro);
         $clientes = $registro->cliente;
-        $direcciones = Direccion::where('cliente_id',$registro->cliente_id)->get();
+        $direcciones = Direccion::with('municipio','localidad','colonia')->where('cliente_id',$registro->cliente_id)->get();
         $unidades = Unidad::all();
         $arreglo = [];
         array_push($arreglo,$registro,$clientes,$direcciones,$unidades);

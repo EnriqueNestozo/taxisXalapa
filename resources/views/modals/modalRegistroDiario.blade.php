@@ -25,13 +25,13 @@
                     <span id="hora-error" class="error text-danger" for="hora" style="display:none">Campo faltante</span>
                 </div>
 
-                <div class="form-group" id="busquedaDiv">
+                <!-- <div class="form-group" id="busquedaDiv">
                   <label for="busquedaSelect" class="col-form-label">Búsqueda:</label>
                   <br>
                   <select class="special_select" id="busquedaSelect" name="busquedaSelect" style="width: 100%">
                   </select>
                   <span id="busqueda-error" class="error text-danger" for="persona" style="display:none">Campo faltante</span>
-                </div>
+                </div> -->
 
                 <div class="form-group" id="personaDiv">
                   <label for="persona" class="col-form-label">Persona:</label>
@@ -57,6 +57,11 @@
               <div class="col-12">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60163.0976120704!2d-96.91890004993273!3d19.533300130772247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85db321ca1f225d9%3A0x584837bc4340a47c!2sXalapa-Enr%C3%ADquez%2C%20Ver.!5e0!3m2!1ses!2smx!4v1584632991648!5m2!1ses!2smx" width="380" height="300" frameborder="0" style="border:0;" allowfullscreen aria-hidden="false" tabindex="0"></iframe>
               </div>
+            </div>
+            <br>
+            <div class="form-group" id="telefonoDiv">
+              <label for="destino" class="col-form-label">Destino:</label>
+              <input type="text" class="form-control" id="destino" maxlength="100" name="destino">
             </div>
           
           </div>

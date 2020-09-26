@@ -57,7 +57,7 @@ $(document).ready(function() {
     $('#registroDiarioForm').trigger("reset");
     limpiarErrores();
     // obtenerListadoPersonas();
-    // cargarSelectsMunicipio();
+    cargarSelectsMunicipio();
     $('#direccionSelect').empty();
     html = '';
     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -82,7 +82,7 @@ $(document).ready(function() {
     $('#destinoForm').trigger("reset");
     limpiarErroresDestino();
     // obtenerListadoPersonas();
-    // cargarSelectsMunicipio();
+    cargarSelectsMunicipio();
     $('#direccionDestinoSelect').empty();
     html = '';
     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una direccion...</option>'
@@ -130,7 +130,7 @@ $(document).ready(function() {
       $('#busquedaDiv').removeClass('has-danger');
       $('#busqueda-error').hide();
 
-      if( $('busquedaSelect').val() == null){
+      if( $('busquedaSelect').val() == null && $('#idCliente').val() == ''){
         console.log("entra2");
         $('#busquedaSelect').prop('disabled',true);
         $('#direccionSelect').empty();
@@ -258,7 +258,7 @@ $(document).ready(function() {
   });
 
   $('#direccionSelect').change(function(){
-    console.log("asodksd!"+$('#direccionSelect').val());
+    // console.log("asodksd!"+$('#direccionSelect').val());
     if( $('#direccionSelect').val() !='' ){
       $('#municipioSelect').val('').trigger('change');
       $('#municipioSelect').prop('disabled',true).trigger('change');

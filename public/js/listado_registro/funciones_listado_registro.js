@@ -37,6 +37,7 @@ function cargarListado(){
             {data: 'action', name:'action'}
         ],order: [ [0, 'desc'] ]
     });
+    cargarSelectsMunicipio();
 }
 
 function obtenerListadoDirecciones(){
@@ -57,7 +58,7 @@ function obtenerListadoDirecciones(){
                 html += '<option ';
                 html += ' value="'+result[index].id+'" ';
                 html += (result[index].calle)? '>'+result[index].calle+', ' : '>';
-                html += (result[index].colonia)?'col. '+result[0].colonia.asentamiento+', ' : '';
+                html += (result[index].colonia)?'col. '+result[index].colonia.asentamiento+', ' : '';
                 html +=(result[0].localidad.nombre).toLowerCase() +'</option>';
             }
             $('#direccionSelect').append(html);
@@ -110,36 +111,55 @@ function editarRegistro(id_registro){
             'Authorization': 'Bearer '+data,
         },
         success: function( result ) {
-        let registro = result[0];
-        let clientes = result[1];
-        let direcciones = result[2];
-        let unidades = result[3];
-        $('#hora').val(registro['hora']);
-        $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
-        $('#busquedaSelect').prop('disabled',true);
-        $('#persona').prop('disabled',true);
-        $('#telefono').prop('disabled',true);
-        setTimeout(function(){
-            $('#direccionSelect').val(registro['direccion_id']).trigger('change');
-            var objeto = direcciones.filter(obj => {
-                return obj['id'] == $('#direccionSelect').val()
+            let registro = result[0];
+            let clientes = result[1];
+            let direcciones = result[2];
+            let unidades = result[3];
+
+            //cargar datos persona
+            let promesa = new Promise(function (resolve, reject){
+                console.log(result);
+                $('#hora').val(registro['hora']);
+                // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+                $('#busquedaSelect').prop('disabled',true);
+                $('#persona').prop('disabled',false);
+                $('#telefono').prop('disabled',false);
+                $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+                $('#persona').val(clientes['nombre']).trigger('change');
+                $('#direccionSelect').empty();
+                html = '';
+                html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+                for (let index = 0; index < direcciones.length; index++) {
+                    // console.log(direcciones[index].colonia!=null);
+                    html += '<option ';
+                    html += ' value="'+direcciones[index].id+'" ';
+                    html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+                    html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+                    html +=(direcciones[0].localidad.nombre).toLowerCase() +'</option>';
+                }
+                $('#direccionSelect').append(html);
+                resolve('done!');
             });
-            console.log(objeto[0]);
-            $('#referencia').val(objeto[0]['referencia']);
-            $('#entre_calles').val(objeto[0]['entre_calles']);
             
-        }, 1000);
+            promesa.then(function (resolve, reject){
+                $('#direccionSelect').val(registro['direccion_id']).trigger('change');
+                var objeto = direcciones.filter(obj => {
+                    return obj['id'] == $('#direccionSelect').val()
+                });
+                // console.log("objeto ..."+objeto[0]);
+                $('#referencia').val(objeto[0]['referencia']);
+                $('#entre_calles').val(objeto[0]['entre_calles']);
+            });
+            $('#destino').val(registro['destino']);
+            //Cargar unidad
+            if(registro['unidad_id']!=null){
+                $('#clave').val(registro['unidad_id']).trigger('change');
+            }else{
+                $('#clave').val('').trigger('change');
+            }
+            $('#idRegistro').val(registro['id']);
+            $('#idCliente').val(registro['cliente_id']);
         
-        $('#telefono').val(clientes['telefono_fijo']).trigger('change');
-        $('#celular').val(clientes['celular']).trigger('change');
-        if(registro['unidad_id']!=null){
-            console.log("unidad "+registro['unidad_id']);
-            $('#clave').val(registro['unidad_id']).trigger('change');
-        }else{
-            $('#clave').val('').trigger('change');
-        }
-        $('#idRegistro').val(registro['id']);
-        $('#idCliente').val(registro['cliente_id']);
         },
         error: function(result){
             console.log(result);
@@ -188,8 +208,8 @@ function eliminarRegistro(id_registro){
 }
 
 function desplegarModalRegistro(){
-    obtenerListadoPersonas();
-    cargarSelectsMunicipio();
+    // obtenerListadoPersonas();
+    // cargarSelectsMunicipio();
     $('#persona').prop('disabled',false);
     $('#persona').trigger('change');
 
@@ -240,7 +260,7 @@ function registrarViaje(){
             $('#direccionSelect').append(html);
             // console.log("success registro");
             cargarListado();
-            obtenerListadoPersonas();
+            // obtenerListadoPersonas();
             $('#busquedaSelect').prop('disabled',false);
             $('#municipioSelect').prop('disabled',false);
             $('#persona').prop('disabled',false);
@@ -497,7 +517,7 @@ function registrarDestino(){
                 $('#modalDestino').modal('hide');
 
                 cargarListado();
-                obtenerListadoPersonas();
+                // obtenerListadoPersonas();
                 $('#busquedaDestinoSelect').prop('disabled',false);
                 $('#municipioDestinoSelect').prop('disabled',false);
                 $('#municipioDestino').prop('disabled',false);
