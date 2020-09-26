@@ -41,13 +41,13 @@ class RegistrosDiariosController extends Controller
                     $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Editar Registro' onClick='editarRegistro(".$fila->id.")'><i class='material-icons'>edit</i></button>";
                     $accion.= "<button class='btn btn-danger btn-link btn-sm' type='button' data-original-title='Eliminar Registro' onClick='eliminarRegistro(".$fila->id.")'><i class='material-icons'>close</i></button>";
                 }
-                if($fila['direccion_destino_id']==null){
-                    $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Agregar destino' onClick='agregarDestino(".$fila->id.",".$fila->cliente_id.")'><i class='material-icons'>location_on
-                    </i></button>"; 
-                }else{
-                    $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Agregar destino' onClick='mostrarDestino(".$fila.")'><i class='material-icons'>location_off
-                    </i></button>"; 
-                }
+                // if($fila['direccion_destino_id']==null){
+                //     $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Agregar destino' onClick='agregarDestino(".$fila->id.",".$fila->cliente_id.")'><i class='material-icons'>location_on
+                //     </i></button>"; 
+                // }else{
+                //     $accion.= "<button class='btn btn-primary btn-link btn-sm' type='button' data-original-title='Agregar destino' onClick='mostrarDestino(".$fila.")'><i class='material-icons'>location_off
+                //     </i></button>"; 
+                // }
                 return $accion;
             })
             ->addColumn('direccionCompleta',function($fila){
@@ -63,7 +63,11 @@ class RegistrosDiariosController extends Controller
                     $direccionCompletaDestino .= ($fila['direccionDestino']['colonia'])? 'Col. '.$fila['direccionDestino']['colonia']->asentamiento.', ' : '';
                     $direccionCompletaDestino .= $fila['direccionDestino']['localidad']->nombre;
                 }else{
-                    $direccionCompletaDestino = '<span class="badge" style="background-color:purple; color:white">Sin destino</span>';
+                    if($fila['destino']!=null){
+                        $direccionCompletaDestino = $fila['destino'];
+                    }else{
+                        $direccionCompletaDestino = '<span class="badge" style="background-color:purple; color:white">Sin destino</span>';
+                    }
                 }
                 return $direccionCompletaDestino;
             })

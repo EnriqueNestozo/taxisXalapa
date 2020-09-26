@@ -268,24 +268,7 @@ function registrarViaje(){
             console.log($('#idRegistro').val());
             
             if($('#idRegistro').val() == ''){
-                swal({
-                    title: 'Registro realizado correctamente',
-                    text: "¿Quiere añadir el destino?",
-                    type: 'success',
-                    showCancelButton: true,
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger',
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Si',
-                    buttonsStyling: false
-                    }).then(function(confirmation) {
-                    // console.log(confirmation);
-                    if (confirmation['dismiss'] != 'cancel') {
-                        agregarDestino(result['id'],result['cliente_id']);
-                        $('#registroDestinoBtn').show();
-                        $('#eliminarDestinoBtn').hide();
-                    }
-                });
+                md.showNotification('bottom','right','success','Registro realizado correctamente');
             }else{
                 md.showNotification('bottom','right','success','Registro modificado correctamente');
             }
