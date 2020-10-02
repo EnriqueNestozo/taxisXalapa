@@ -197,9 +197,9 @@ class ServicioController extends Controller
 
     public function show($idServicio)
     {
-        $servicio = Servicio::with('horarios')->where('id',$idServicio)->first();
-        $clientes = Cliente::find($servicio->cliente_id);
-        $direcciones = Direccion::where('cliente_id',$servicio->cliente_id)->get();
+        $servicio = Servicio::with('horarios', 'cliente')->where('id',$idServicio)->first();
+        $clientes = $servicio->cliente;
+        $direcciones = Direccion::with('municipio','localidad','colonia')->where('cliente_id',$servicio->cliente_id)->get();
         $unidades = Unidad::all();
         $arreglo = [];
         array_push($arreglo,$servicio,$clientes,$direcciones,$unidades);

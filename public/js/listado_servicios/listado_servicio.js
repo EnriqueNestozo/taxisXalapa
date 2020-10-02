@@ -80,7 +80,7 @@ $(document).ready(function() {
           $('#busquedaDiv').removeClass('has-danger');
           $('#busqueda-error').hide();
     
-          if( $('busquedaSelect').val() == null){
+          if( $('busquedaSelect').val() == null && $('#idCliente').val() == ''){
             // console.log("entra2");
             $('#busquedaSelect').prop('disabled',true);
             $('#direccionSelect').empty();
@@ -94,67 +94,67 @@ $(document).ready(function() {
         }
       });
     
-    $('#busquedaSelect').change(function(){
-        if(  $('#busquedaSelect').val() != '' ){
-            $('#busquedaDiv').removeClass('has-danger');
-            $('#busqueda-error').hide();
-            $('#personaDiv').removeClass('has-danger');
-            $('#persona-error').hide();
-            $('#telefonoDiv').removeClass('has-danger');
-            $('#telefono-error').hide();
-            if( $('#busquedaSelect').val() !='' ){
-            obtenerListadoDirecciones();
-            $.get({
-                url: routeBase+ '/api/clientes/'+$('#busquedaSelect').val(),
-                dataType: 'json',
-                headers: {
-                'Accept': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem('token'),
-                },
-                success: function( result ) {
-                    $('#municipioSelect').prop('disabled',false);
-                    $('#municipio').prop('disabled',false);
-                    $('#municipio').val('');
-                    $('#localidadSelect').prop('disabled',false);
-                    $('#localidad').prop('disabled',false);
-                    $('#localidad').val('');
-                    $('#municipioSelect').val(87).trigger('change');
-                    $('#coloniaSelect').prop('disabled',false);
-                    $('#colonia').prop('disabled',false);
-                    $('#colonia').val('');
-                    $('#calle').prop('disabled',false);
-                    $('#calle').val('');
-                    $('#entre_calles').prop('disabled',false);
-                    $('#entre_calles').val('');
-                    $('#referencia').prop('disabled',false);
-                    $('#referencia').val('');
+    // $('#busquedaSelect').change(function(){
+    //     if(  $('#busquedaSelect').val() != '' ){
+    //         $('#busquedaDiv').removeClass('has-danger');
+    //         $('#busqueda-error').hide();
+    //         $('#personaDiv').removeClass('has-danger');
+    //         $('#persona-error').hide();
+    //         $('#telefonoDiv').removeClass('has-danger');
+    //         $('#telefono-error').hide();
+    //         if( $('#busquedaSelect').val() !='' ){
+    //         obtenerListadoDirecciones();
+    //         $.get({
+    //             url: routeBase+ '/api/clientes/'+$('#busquedaSelect').val(),
+    //             dataType: 'json',
+    //             headers: {
+    //             'Accept': 'application/json',
+    //             'Authorization': 'Bearer '+sessionStorage.getItem('token'),
+    //             },
+    //             success: function( result ) {
+    //                 $('#municipioSelect').prop('disabled',false);
+    //                 $('#municipio').prop('disabled',false);
+    //                 $('#municipio').val('');
+    //                 $('#localidadSelect').prop('disabled',false);
+    //                 $('#localidad').prop('disabled',false);
+    //                 $('#localidad').val('');
+    //                 $('#municipioSelect').val(87).trigger('change');
+    //                 $('#coloniaSelect').prop('disabled',false);
+    //                 $('#colonia').prop('disabled',false);
+    //                 $('#colonia').val('');
+    //                 $('#calle').prop('disabled',false);
+    //                 $('#calle').val('');
+    //                 $('#entre_calles').prop('disabled',false);
+    //                 $('#entre_calles').val('');
+    //                 $('#referencia').prop('disabled',false);
+    //                 $('#referencia').val('');
 
-                $('#telefono').val(result['telefono_fijo']);
-                $('#persona').val(result['nombre']);
-                // $('#celular').val(result['celular']);
-                $('#telefono').prop('disabled',true);
-                $('#persona').prop('disabled',true);
-                // $('#celular').prop('disabled',true);
-                },
-                error: function(result){
-                console.log(result);
-                }
-            });
-            $('#persona').prop('disabled',true);
-            }
-        }else{
-            $('#busquedaSelect').prop('disabled',false);
-            $('#persona').prop('disabled',false);
+    //             $('#telefono').val(result['telefono_fijo']);
+    //             $('#persona').val(result['nombre']);
+    //             // $('#celular').val(result['celular']);
+    //             $('#telefono').prop('disabled',true);
+    //             $('#persona').prop('disabled',true);
+    //             // $('#celular').prop('disabled',true);
+    //             },
+    //             error: function(result){
+    //             console.log(result);
+    //             }
+    //         });
+    //         $('#persona').prop('disabled',true);
+    //         }
+    //     }else{
+    //         $('#busquedaSelect').prop('disabled',false);
+    //         $('#persona').prop('disabled',false);
             
-            // html = '';
-            // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
-            // $('#municipioSelect').append(html);
-            $('#telefono').val('');
-            // $('#celular').val('');
-            $('#telefono').prop('disabled',false);
-            // $('#celular').prop('disabled',false);
-        }
-    });
+    //         // html = '';
+    //         // html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
+    //         // $('#municipioSelect').append(html);
+    //         $('#telefono').val('');
+    //         // $('#celular').val('');
+    //         $('#telefono').prop('disabled',false);
+    //         // $('#celular').prop('disabled',false);
+    //     }
+    // });
     
     $('#direccionSelect').change(function(){
         if( $('#direccionSelect').val() !='' ){

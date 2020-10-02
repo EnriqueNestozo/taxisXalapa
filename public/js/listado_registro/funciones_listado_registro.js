@@ -116,40 +116,69 @@ function editarRegistro(id_registro){
             let direcciones = result[2];
             let unidades = result[3];
 
-            //cargar datos persona
-            let promesa = new Promise(function (resolve, reject){
-                console.log(result);
-                $('#hora').val(registro['hora']);
-                // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
-                $('#busquedaSelect').prop('disabled',true);
-                $('#persona').prop('disabled',false);
-                $('#telefono').prop('disabled',false);
-                $('#telefono').val(clientes['telefono_fijo']).trigger('change');
-                $('#persona').val(clientes['nombre']).trigger('change');
-                $('#direccionSelect').empty();
-                html = '';
-                html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
-                for (let index = 0; index < direcciones.length; index++) {
-                    // console.log(direcciones[index].colonia!=null);
-                    html += '<option ';
-                    html += ' value="'+direcciones[index].id+'" ';
-                    html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
-                    html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
-                    html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
-                }
-                $('#direccionSelect').append(html);
-                resolve('done!');
-            });
+            //CARGAR DATOS DE PERSONA EN EDITAR REGISTRO
+            /**
+             * LLAMANDO A UNA FUNCION ASYNC Y USANDO THEN
+             */
+            // setearDatos(registro, clientes, direcciones).then(function (resolve, reject){
+            //     $('#direccionSelect').val(registro['direccion_id']).trigger('change');
+            //     var objeto = direcciones.filter(obj => {
+            //         return obj['id'] == $('#direccionSelect').val()
+            //     });
+            //     // console.log("objeto ..."+objeto[0]);
+            //     $('#referencia').val(objeto[0]['referencia']);
+            //     $('#entre_calles').val(objeto[0]['entre_calles']);
+            // })
             
-            promesa.then(function (resolve, reject){
+            /**
+             * LLAMANDO A UNA FUNCION ASYNC CON AWAIT PARA QUE ESPERE A QUE SE RESUELVA ANTES DE CONTINUAR
+             */
+            (async function() {
+                await setearDatosEdit(registro, clientes, direcciones);
                 $('#direccionSelect').val(registro['direccion_id']).trigger('change');
                 var objeto = direcciones.filter(obj => {
                     return obj['id'] == $('#direccionSelect').val()
                 });
-                // console.log("objeto ..."+objeto[0]);
                 $('#referencia').val(objeto[0]['referencia']);
                 $('#entre_calles').val(objeto[0]['entre_calles']);
-            });
+            })();
+
+            /**
+             * USANDO PROMESAS PARA UNA VEZ QUE SE RESUELVA UNA EJECUTE LO QUE SIGUE
+             */
+            // let promesa = new Promise(function (resolve, reject){
+            //     console.log(result);
+            //     $('#hora').val(registro['hora']);
+            //     // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+            //     $('#busquedaSelect').prop('disabled',true);
+            //     $('#persona').prop('disabled',false);
+            //     $('#telefono').prop('disabled',false);
+            //     $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+            //     $('#persona').val(clientes['nombre']).trigger('change');
+            //     $('#direccionSelect').empty();
+            //     html = '';
+            //     html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+            //     for (let index = 0; index < direcciones.length; index++) {
+            //         // console.log(direcciones[index].colonia!=null);
+            //         html += '<option ';
+            //         html += ' value="'+direcciones[index].id+'" ';
+            //         html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+            //         html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+            //         html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
+            //     }
+            //     $('#direccionSelect').append(html);
+            //     resolve('done!');
+            // });
+            
+            // promesa.then(function (resolve, reject){
+            //     $('#direccionSelect').val(registro['direccion_id']).trigger('change');
+            //     var objeto = direcciones.filter(obj => {
+            //         return obj['id'] == $('#direccionSelect').val()
+            //     });
+            //     // console.log("objeto ..."+objeto[0]);
+            //     $('#referencia').val(objeto[0]['referencia']);
+            //     $('#entre_calles').val(objeto[0]['entre_calles']);
+            // });
             $('#destino').val(registro['destino']);
             //Cargar unidad
             if(registro['unidad_id']!=null){
@@ -166,6 +195,29 @@ function editarRegistro(id_registro){
         }
     });
     $('#modalRegistroDiario').modal('show');
+}
+
+async function setearDatosEdit(registro, clientes, direcciones) {
+    console.log(registro);
+    $('#hora').val(registro['hora']);
+    // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+    $('#busquedaSelect').prop('disabled',true);
+    $('#persona').prop('disabled',false);
+    $('#telefono').prop('disabled',false);
+    $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+    $('#persona').val(clientes['nombre']).trigger('change');
+    $('#direccionSelect').empty();
+    html = '';
+    html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección guardada...</option>'
+    for (let index = 0; index < direcciones.length; index++) {
+        // console.log(direcciones[index].colonia!=null);
+        html += '<option ';
+        html += ' value="'+direcciones[index].id+'" ';
+        html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+        html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+        html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
+    }
+    $('#direccionSelect').append(html);
 }
 
 function eliminarRegistro(id_registro){

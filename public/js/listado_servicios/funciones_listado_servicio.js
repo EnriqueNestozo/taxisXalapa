@@ -281,50 +281,15 @@ function editarServicio(id_registro){
         let direcciones = result[2];
         let unidades = result[3];
         // $('#hora').val(registro['hora']);
-        $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
-        $('#busquedaSelect').prop('disabled',true);
-        $('#persona').prop('disabled',true);
-        console.log(registro['horarios']);
-        registro['horarios'].forEach(element => {
-            if(element['dia']=="Lunes"){
-                $('#lunesCheck').prop('checked',true).trigger('change');
-                $('#lunes').val(element['hora']);
-            }
-            if(element['dia']=="Martes"){
-                $('#martesCheck').prop('checked',true).trigger('change');
-                $('#martes').val(element['hora']);
-            }
-            if(element['dia']=="Miercoles"){
-                $('#miercolesCheck').prop('checked',true).trigger('change');
-                $('#miercoles').val(element['hora']);
-            }
-            if(element['dia']=="Jueves"){
-                $('#juevesCheck').prop('checked',true).trigger('change');
-                $('#jueves').val(element['hora']);
-            }
-            if(element['dia']=="Viernes"){
-                $('#viernesCheck').prop('checked',true).trigger('change');
-                $('#viernes').val(element['hora']);
-            }
-            if(element['dia']=="Sábado"){
-                $('#sabadoCheck').prop('checked',true).trigger('change');
-                $('#sabado').val(element['hora']);
-            }
-            if(element['dia']=="Domingo"){
-                $('#domingoCheck').prop('checked',true).trigger('change');
-                $('#domingo').val(element['hora']);
-            }
-        });
-        setTimeout(function(){
+        (async function() {
+            await setearDatos(registro, direcciones, clientes);
             $('#direccionSelect').val(registro['direccion_id']).trigger('change');
             var objeto = direcciones.filter(obj => {
                 return obj['id'] == $('#direccionSelect').val()
             });
-            console.log(objeto[0]['calle']);
             $('#referencia').val(objeto[0]['referencia']);
             $('#entre_calles').val(objeto[0]['entre_calles']);
-            
-        }, 1000);
+        })();
         $('#telefono').val(clientes['telefono_fijo']).trigger('change');
         // $('#celular').val(clientes['celular']).trigger('change');
         if(registro['unidad_id']!=null){
@@ -339,6 +304,59 @@ function editarServicio(id_registro){
     });
     $('#modalRegistroServicio').modal('show');
 }
+
+async function setearDatos(registro, direcciones,clientes){
+    // $('#busquedaSelect').val(registro['cliente_id']).trigger('change');
+    // $('#busquedaSelect').prop('disabled',true);
+    $('#persona').prop('disabled',true);
+    $('#telefono').prop('disabled',true);
+    $('#telefono').val(clientes['telefono_fijo']).trigger('change');
+    $('#persona').val(clientes['nombre']).trigger('change');
+    registro['horarios'].forEach(element => {
+        if(element['dia']=="Lunes"){
+            $('#lunesCheck').prop('checked',true).trigger('change');
+            $('#lunes').val(element['hora']);
+        }
+        if(element['dia']=="Martes"){
+            $('#martesCheck').prop('checked',true).trigger('change');
+            $('#martes').val(element['hora']);
+        }
+        if(element['dia']=="Miercoles"){
+            $('#miercolesCheck').prop('checked',true).trigger('change');
+            $('#miercoles').val(element['hora']);
+        }
+        if(element['dia']=="Jueves"){
+            $('#juevesCheck').prop('checked',true).trigger('change');
+            $('#jueves').val(element['hora']);
+        }
+        if(element['dia']=="Viernes"){
+            $('#viernesCheck').prop('checked',true).trigger('change');
+            $('#viernes').val(element['hora']);
+        }
+        if(element['dia']=="Sábado"){
+            $('#sabadoCheck').prop('checked',true).trigger('change');
+            $('#sabado').val(element['hora']);
+        }
+        if(element['dia']=="Domingo"){
+            $('#domingoCheck').prop('checked',true).trigger('change');
+            $('#domingo').val(element['hora']);
+        }
+    });
+    $('#direccionSelect').empty();
+    html = '';
+    html = html + '<option value="" selected style="min-width: 300px;"> Seleccione una dirección...</option>'
+    for (let index = 0; index < direcciones.length; index++) {
+        // console.log(direcciones[index].colonia!=null);
+        html += '<option ';
+        html += ' value="'+direcciones[index].id+'" ';
+        html += (direcciones[index].calle)? '>'+direcciones[index].calle+', ' : '>';
+        html += (direcciones[index].colonia)?'col. '+direcciones[index].colonia.asentamiento+', ' : '';
+        html +=(direcciones[index].localidad.nombre).toLowerCase() +'</option>';
+    }
+    $('#direccionSelect').append(html);
+}
+
+
 
 function eliminarServicio(id_registro){
     var data = sessionStorage.getItem('token');

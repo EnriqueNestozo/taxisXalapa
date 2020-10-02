@@ -210,14 +210,14 @@
 
 
 
-                <div class="form-group" id="busquedaDiv">
+                <!-- <div class="form-group" id="busquedaDiv">
                   <label for="busqueda" class="col-form-label">Búsqueda:</label>
                   <br>
                   <select class="special_select" id="busquedaSelect" name="busquedaSelect" style="width: 100%">
                   </select>
-                  <!-- <input type="text" class="form-control" id="busqueda" maxlength="100" placeholder="Sino existe escriba el nombre" name="busqueda"> -->
+                  <input type="text" class="form-control" id="busqueda" maxlength="100" placeholder="Sino existe escriba el nombre" name="busqueda">
                   <span id="busqueda-error" class="error text-danger" for="busqueda" style="display:none">Campo faltante</span>
-                </div>
+                </div> -->
 
                 <div class="form-group" id="personaDiv">
                   <label for="persona" class="col-form-label">Persona:</label>
